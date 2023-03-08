@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "Core.h"
 #include "Collider.h"
+#include "PhysicsCore.h"
 
 Object::Object(int iD, std::string n, Transform t) :
 	Entity(iD, n),
@@ -114,6 +115,11 @@ bool Object::IsParentPossible(weak_Object par)
 	return true;
 }
 
+void Object::RegisterCollider(std::weak_ptr<Collider> col)
+{
+	Core::Get().GetPhysicsCore().AddCollider(col);
+}
+
 Object& Object::SetParent(weak_Object par, const bool applyPreviousTransform) {
 	auto oldParent = parent.lock();
 	auto newParent = par.lock();
@@ -139,7 +145,7 @@ Object& Object::SetParent(weak_Object par, const bool applyPreviousTransform) {
 
 bool Object::HasCollider()
 {
-	if (this->GetComponentOfClass<Collider>(false)) return true;
+	//if (!this->GetComponentOfClass<Collider>(false).expired()) return true;
 	return false;
 }
 
@@ -157,5 +163,13 @@ bool Object::RemoveComponent(std::type_index compClass)
 
 void Object::OnBeginOverlap(Collider* col)
 {
-	printf("%s collided with %s and triggered OnBeginOverlap function\n", this->name.c_str(), col->componentName.c_str());
+	printf("%s collided with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
+}
+
+void Object::OnEndOverlap(Collider* col)
+{
+	if (col)
+		printf("%s ended collision with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
+	else
+		printf("%s ended collision with nullptr \n", this->name.c_str());
 }

@@ -19,6 +19,6 @@ typedef std::shared_ptr<TTF_Font> shared_Font;
 
 typedef std::weak_ptr<SDL_Texture> weak_Texture;
 
-typedef std::vector<Collider*> ColliderList_t;
-typedef std::vector<Object*> ObjectList_t;
+//typedef std::vector<Collider*> ColliderList_t;
+//typedef std::vector<Object*> ObjectList_t;
 

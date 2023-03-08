@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Collider.h"
+#include "Core.h"
+#include "PhysicsCore.h"
 
 Collider::Collider(std::string name, weak_Object own) :
 	Component(name, own),

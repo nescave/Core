@@ -48,7 +48,6 @@ void Core::Update() {
     {
         auto& ent = tpl.second;
         if (ent->ShouldRender()) drawList.push((RenderObject*)&*ent);
-        if (ent->HasCollider()) colliderList.push_back((Object*)&*ent);
         ent->Update(dTime);
     }
 }
@@ -56,25 +55,25 @@ void Core::Update() {
 void Core::StartMainLoop(){
     Begin();
 
-    auto act1 = EntitySpawner::SpawnActor({ 300,260 }, { 180,120 }, GetAssetManager().GetLoadedTexture(5), "johny1").lock();
-    auto act2 = EntitySpawner::SpawnActor({ 0,0 }, { 120,80 }, GetAssetManager().LoadTexture("res/png.PNG")).lock();
-    auto txt1 = EntitySpawner::SpawnText({ 215, 420 }, Vector2i::zero, "", "Best", CoreFont::CALIBRI, { 255,0,0 }).lock();
-    auto txt2 = EntitySpawner::SpawnText({ 15, 420 }, Vector2i::zero, "", "Core").lock();
+    std::weak_ptr<Actor> act1 = EntitySpawner::SpawnActor({ 300,260 }, { 180,120 }, GetAssetManager().GetLoadedTexture(5), "johny1");
+    std::weak_ptr<Actor> act2 = EntitySpawner::SpawnActor({ 0,0 }, { 120,80 }, GetAssetManager().LoadTexture("res/png.PNG"));
+    std::weak_ptr<Text> txt1 = EntitySpawner::SpawnText({ 215, 420 }, Vector2i::zero, "", "Best", CoreFont::CALIBRI, { 255,0,0 });
+    std::weak_ptr<Text> txt2 = EntitySpawner::SpawnText({ 15, 420 }, Vector2i::zero, "", "Core");
 
-    act1->SetSortingPriority(ESortingPriority::EPIC);
-    act2->SetSortingPriority(ESortingPriority::LOW);
+    act1.lock()->SetSortingPriority(ESortingPriority::EPIC);
+    act2.lock()->SetSortingPriority(ESortingPriority::LOW);
 
-    act2->SetParent(act1);
-    act1->Rotate(45);
-    act2->Rotate(45);
+    act2.lock()->SetParent(act1);
+    act1.lock()->Rotate(45);
+    act2.lock()->Rotate(45);
 
-    act2->SetParent(weak_Object(), true);
+    act2.lock()->SetParent(weak_Object(), true);
 
-    act2->AddComponent<Collider>("dokidoki");
-    act1->AddComponent<Collider>("wakuwaku");
+    act2.lock()->AddComponent<Collider>("dokidoki");
+    act1.lock()->AddComponent<Collider>("wakuwaku");
 
-    if (act2->HasCollider()) printf("%s has collider \n", act2->name.c_str());
-    if (act1->HasCollider())printf("%s has collider \n", act1->name.c_str());
+    //if (act2.lock()->HasCollider()) printf("%s has collider \n", act2->name.c_str());
+    //if (act1.lock()->HasCollider())printf("%s has collider \n", act1->name.c_str());
 
     bool quit = false;
     while (!quit) {
@@ -85,12 +84,12 @@ void Core::StartMainLoop(){
         auto xMouse = std::to_string(mouse_pos.x);
         auto yMouse = std::to_string(mouse_pos.y);
 
-        if (txt2->GetText() != xMouse)txt2->SetText(xMouse).UpdateText();
-        if (txt1->GetText() != yMouse)txt1->SetText(yMouse).UpdateText();
+        if (txt2.lock()->GetText() != xMouse)txt2.lock()->SetText(xMouse).UpdateText();
+        if (txt1.lock()->GetText() != yMouse)txt1.lock()->SetText(yMouse).UpdateText();
 
         Update();
         //Sleep(5);
-        physicsCore->Update(colliderList);
+        physicsCore->Update();
         rendererCore->Update(drawList);
         quit = input->GetQuitEvent();
     }

@@ -1,13 +1,14 @@
 #pragma once
 #include "Component.h"
 
-class Collider : public Component
+class Collider : public Component, public std::enable_shared_from_this<Collider>
 {
 private:
 	float maxReach;
 	Transform transform;
 public:
 	bool moved;
+	std::unordered_set<int> savedCollisions;
 
 	Collider(std::string name, weak_Object own);
 	//virtual ~Collider();

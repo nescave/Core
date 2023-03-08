@@ -9,7 +9,7 @@ protected:
 	weak_Object parent;
 
 	std::map<const int, weak_Object> children;
-	std::map<size_t, shared_Component> components;
+	std::map<const int, shared_Component> components;
 
 	void ClearParent();
 	void ApplyTransform();
@@ -18,6 +18,8 @@ protected:
 	bool RemoveChild(weak_Object child);
 	//bool IsInChildHierarchy(shared_Object obj);
 	bool IsParentPossible(weak_Object par);
+
+	void RegisterCollider(std::weak_ptr<Collider> col);
 
 public:
 	Object(int iD, std::string n, Transform t);
@@ -56,6 +58,7 @@ public:
 	virtual void Begin(double dTime) { Entity::Begin(); }
 	virtual void Update(double dTime) { Entity::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
+	virtual void OnEndOverlap(Collider* col);
 
 	template <
 		typename T,
@@ -63,18 +66,28 @@ public:
 	>
 	std::weak_ptr<T> AddComponent(const std::string name) {
 		auto hash = typeid(T).hash_code();
+		if (components.find(hash) != components.end()){
+			printf("Component of type <%s> already added to this object! %s\n",typeid(T).name(), name.c_str());
+			return std::weak_ptr<T>();
+		}
 		auto sPtr = std::make_shared<T>(name, weak_from_this());
 		components.insert({ hash, sPtr });
+		if (typeid(T) == typeid(Collider)) RegisterCollider(sPtr);
 		return sPtr;
 	}
 	template<
 		typename T,
 		class = std::enable_if_t<std::is_base_of_v<Component, T>>
 	>
-	T* GetComponentOfClass(bool log = true) {
+	std::weak_ptr<T> GetComponentOfClass(bool log = true) {
 		//std::weak_ptr<T> oComp = &*components[typeid(T).hash_code()];
-		T* oComp = (T*) &*components[typeid(T).hash_code()];
-		if (log && !oComp) printf("No component matches %s class!\n", typeid(T).name());
+		auto hash = typeid(T).hash_code();
+		if (components.find(hash) == components.end()) {
+			if (log) printf("No component matches %s class!\n", typeid(T).name());
+			return std::weak_ptr<T>();
+		}
+
+		auto oComp = (std::weak_ptr<T>) components[typeid(T).hash_code()];
 		return oComp;
 	}
 };

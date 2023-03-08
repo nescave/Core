@@ -25,7 +25,6 @@ private:
     std::unique_ptr<Clock> clock;
 
     DrawQueue_t drawList;
-    ObjectList_t colliderList;
 
     Core() = default;
 

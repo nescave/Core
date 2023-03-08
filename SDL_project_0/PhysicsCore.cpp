@@ -14,21 +14,23 @@ bool PhysicsCore::IsPairIdentical(Vector2i lIdPair, Vector2i rIdPair)
 
 void PhysicsCore::CleanCollisonMap()
 {
-	collisionMap.clear();
-	//std::vector<int> clearTable;
-	//for (auto& tpl : collisionMap) {
-	//	if (tpl.second.expired()) clearTable.push_back(tpl.first);
-	//}
-	//for (auto id : clearTable) {
-	//	collisionMap.erase(id);
-	//}
+	std::vector<int> clearTable;
+	for (auto& tpl : collisionMap) {
+		if (tpl.second.expired()) clearTable.push_back(tpl.first);
+	}
+	for (auto id : clearTable) {
+		collisionMap.erase(id);
+	}
 }
 
-void PhysicsCore::UpdateCollisonMap(ColliderList_t newCol)
+void PhysicsCore::UpdateCollisonMap()
 {
 	CleanCollisonMap();
-	for (auto& col : newCol) {
-		collisionMap[col->GetOwnerId()] = col;
+	while (collidersToAdd.size() > 0) {
+		auto col = collidersToAdd.front().lock();
+		if (col)
+			collisionMap[col->GetOwnerId()] = col;
+		collidersToAdd.pop();
 	}
 }
 
@@ -36,7 +38,7 @@ std::vector<Collider*> PhysicsCore::GetOverlapingColliders(Collider* col)
 {
 	std::vector<Collider*> overlapingColliders;
 	for (auto& tpl : collisionMap) {
-		auto lCol = tpl.second;
+		auto lCol = &*tpl.second.lock();
 		if (col == lCol) continue;
 		if (lCol->PointOverlaps(col->GetPosition())) {
 			overlapingColliders.push_back(lCol);
@@ -62,21 +64,40 @@ bool PhysicsCore::Init()
 	return true;
 }
 
-void PhysicsCore::Update(ObjectList_t objs)
+void PhysicsCore::AddCollider(std::weak_ptr<Collider> col)
 {
-	ColliderList_t colliderList;
-	for (auto& obj : objs) {
-		colliderList.push_back(obj->GetComponentOfClass<Collider>());
-	}
-	UpdateCollisonMap(colliderList);
+	collidersToAdd.push(col);
+}
+
+void PhysicsCore::Update()
+{
+	//std::vector<std::weak_ptr<Collider>> colliderList;
+	UpdateCollisonMap();
+
 	for (auto& tpl : collisionMap) {
-		auto col = tpl.second;
+		auto col = &*tpl.second.lock();
+		if (!col) continue;
+		std::unordered_set<int> savedColsCpy = col->savedCollisions;
+
 		if (col->moved) {
 			auto overlapingColliders = GetOverlapingColliders(col);
 			for (auto& tickedCol : overlapingColliders) {
-				tickedCol->owner.lock()->OnBeginOverlap(col);
-				col->owner.lock()->OnBeginOverlap(tickedCol);
+				//tickedCol->owner.lock()->OnBeginOverlap(col);
+				auto tickedColID = tickedCol->GetOwnerId();
+				if (savedColsCpy.find(tickedColID) == savedColsCpy.end()) {
+					col->owner.lock()->OnBeginOverlap(tickedCol);
+					col->savedCollisions.insert(tickedColID);
+				}
+				else {
+					savedColsCpy.erase(tickedColID);
+				}
+				
 			}
+		}
+		for (auto id : savedColsCpy) {
+			auto detachedCol = collisionMap[id].expired() ? nullptr : &*collisionMap[id].lock();
+			col->owner.lock()->OnEndOverlap(detachedCol);
+			col->savedCollisions.erase(id);
 		}
 	}
 }
