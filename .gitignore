@@ -1,0 +1,14 @@
+.vs/
+App/Debug/
+Debug/
+SDL_project_0/Debug/
+x64/
+*.obj
+*.tlog
+*.lastbuildstate
+*.pch
+*.idb
+*.ilk
+*.log
+*.recipe
+*.pdb
