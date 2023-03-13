@@ -9,11 +9,10 @@ private:
     //void UpdateRect();
 
 public:
-    Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
-    //Actor(Vector2i pos, Vector2i s, shared_Texture tex);
-    //Actor(Vector2i pos, Vector2i s);
-    //Actor();
+    //Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
+    Actor();
 
+    virtual void OnSpawn();
     virtual void Update(double dTime) override;
 
     //Vector2i GetLocalPosition();
@@ -26,7 +25,7 @@ public:
     Actor& Rotate(double angle);
     Actor& Scale(Vector2f scale);
     Actor& Scale(float scale);
-
+    
     Actor& Accelerate(Vector2i force);
     Vector2f GetCurrentSpeed();
 };

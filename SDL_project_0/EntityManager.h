@@ -19,6 +19,7 @@ public:
     //bool Init();
     static EntityManager* Get();
 
+    uint32_t GetFreeEntityID();
     void DeleteEntity(uint32_t Id);
     std::unordered_map<uint32_t, shared_Entity>& GetGameEntities() { return gameEntities; } //temp
 };

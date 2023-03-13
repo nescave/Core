@@ -6,22 +6,18 @@ class Text;
 class Actor;
 
 struct ActorSpawnData {
-    uint32_t id;
-    std::string name;
-    Transform& transform;
     const Vector2i& size;
-    shared_Texture texture;
     EntityManager& eManager;
 
-    ActorSpawnData(uint32_t inId, std::string inName, Transform& inTransform, const Vector2i inSize, shared_Texture inTex, EntityManager& inEManager);
+    ActorSpawnData(const Vector2i inSize, EntityManager& inEManager);
 };
 
 class EntitySpawner
 {
 private:
     
-    static ActorSpawnData GetActorSpawnData(Transform& t, const Vector2i& s, shared_Texture tex, std::string n);
-    static ActorSpawnData GetTextSpawnData(Transform& t, const Vector2i& s, std::string n, std::string txt, CoreFont::ECoreFont font, SDL_Color col);
+    static ActorSpawnData GetActorSpawnData(shared_Texture tex, const Vector2i& s, std::string n);
+    static ActorSpawnData GetTextSpawnData(const Vector2i& s, std::string txt, CoreFont::ECoreFont font, SDL_Color col);
 public:
 
     //ActorSpawners----------------------------------------------------
@@ -29,29 +25,34 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Actor, T>>
     >
-    static std::weak_ptr<T> SpawnActor(Transform& t, const Vector2i& s = Vector2i::zero, shared_Texture tex = nullptr, std::string n = "") 
+    static std::weak_ptr<T> SpawnActor(Transform& t, shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "") 
     {
-        ActorSpawnData data = GetActorSpawnData(t, s, tex, n);
+        ActorSpawnData data = GetActorSpawnData(tex, s, n);
         Vector2i size = data.size; //whatthefuck.png
-        return data.eManager.AddEntity<T>(std::make_shared<T>(data.id, data.name, data.transform, size, data.texture));
+        auto actor = data.eManager.AddEntity<T>(std::make_shared<T>()).lock();
+        if (n != "") actor->name = n;
+        if (t != Transform()) actor->SetTransform(t);
+        if (size != Vector2i::zero) actor->SetScreenSize(size);
+        if (tex != nullptr) actor->SetTexture(tex);
+        return actor;
     }
     
     template<
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Actor, T>>
     >
-    static std::weak_ptr<T> SpawnActor(Transform&& t = Transform(), const Vector2i& s = Vector2i::zero, shared_Texture tex = nullptr, std::string n = "") 
+    static std::weak_ptr<T> SpawnActor(Transform&& t = Transform(), shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "") 
     {
-        return SpawnActor<T>(t, s, tex, n);
+        return SpawnActor<T>(t, tex, s, n);
     }
     
     template<
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Actor, T>>
     >
-    static std::weak_ptr<T> SpawnActor(const Vector2i& p, const Vector2i& s = Vector2i::zero, shared_Texture tex = nullptr, std::string n = "")
+    static std::weak_ptr<T> SpawnActor(const Vector2i& p, shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "")
     {
-        return SpawnActor<T>(Transform(p), s, tex, n);
+        return SpawnActor<T>(Transform(p), tex, s, n);
     }
     //ActorSpawners----------------------------------------------------
     

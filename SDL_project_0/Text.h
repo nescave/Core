@@ -10,7 +10,8 @@ private:
     CoreFont::ECoreFont font;
     std::string text;
     SDL_Color color;
-    
+    void UpdateText();
+
 public:
     Text(
         uint32_t iD,
@@ -23,12 +24,13 @@ public:
         SDL_Color col = {255,255,255}
     );
 
+    Text();
+
     bool ShouldRender() override { return texture.get(); }
-    void UpdateText();
 
     std::string GetText() { return text; }
 
-    Text& SetText(std::string txt) { text = txt; return *this; }
+    Text& SetAndUpdateText(std::string txt);
     Text& SetColor(SDL_Color col) { color = col; return *this; }
     Text& SetFont(CoreFont::ECoreFont fnt) { font = fnt; return *this; }
 };

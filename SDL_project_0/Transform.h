@@ -7,10 +7,17 @@ struct Transform
 	Vector2f scale;
 	Vector2f pivot = { .5f,.5f }; //only for SDL rotations | probably should move it to RenderObject
 
-	static const Transform same;
+	//static const Transform same;
 
 	Transform();
 	
+	bool operator ==(const Transform& rhT) {
+		return rhT.position == this->position && rhT.rotation == this->rotation && rhT.scale == this->scale && rhT.pivot == this->pivot;
+	}
+	bool operator !=(const Transform& rhT) {
+		return rhT.position != this->position || rhT.rotation != this->rotation || rhT.scale != this->scale || rhT.pivot != this->pivot;
+	}
+
 	Transform(Vector2i pos, double rot, Vector2f sc, Vector2f piv);
 	explicit Transform(Vector2i pos);
 	Transform(Vector2i pos, double rot);
