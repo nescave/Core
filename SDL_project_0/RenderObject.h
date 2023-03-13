@@ -10,10 +10,10 @@ protected:
     Vector2i screenSize;
     SDL_Rect rect;
     SDL_BlendMode blendMode;
-    int sortingPriority;
+    int_fast16_t sortingPriority;
     virtual void UpdateRect();
 public:
-    RenderObject(int iD, std::string n, Transform t, Vector2i s, shared_Texture tx);
+    RenderObject(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tx);
     //virtual ~RenderObject();
 
     bool ShouldRender() override { return texture != nullptr; } //for now keep it simple
@@ -22,10 +22,10 @@ public:
     SDL_Rect* GetRect() { UpdateRect(); return &rect; }
     shared_Texture GetTexture(){ return texture;}
     SDL_BlendMode GetBlendMode() { return blendMode; }
-    int GetSortingPriority() { return sortingPriority; }
+    int_fast16_t GetSortingPriority() { return sortingPriority; }
 
     RenderObject& SetBlendMode(SDL_BlendMode mode);
-    RenderObject& SetSortingPriority(ESortingPriority priority, int offset = 0);
+    RenderObject& SetSortingPriority(ESortingPriority priority, int_fast16_t offset = 0);
 
     virtual RenderObject& SetTexture(shared_Texture tx) { texture = tx; return *this; }
     

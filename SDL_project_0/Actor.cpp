@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Actor.h"
 
-Actor::Actor(int iD, std::string n, Transform t, Vector2i s, shared_Texture tex) :
+Actor::Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex) :
 	RenderObject(iD, n, t, s, tex)
 {}
 

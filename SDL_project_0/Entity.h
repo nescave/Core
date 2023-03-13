@@ -6,10 +6,10 @@ protected:
 	bool bUpdate;
 
 public:
-	const int id;
+	const uint32_t id;
 	std::string name;
 
-	Entity(int iD, std::string n);
+	Entity(uint32_t iD, std::string n);
 	//virtual ~Entity();
 
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }

@@ -9,7 +9,7 @@ private:
     //void UpdateRect();
 
 public:
-    Actor(int iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
+    Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
     //Actor(Vector2i pos, Vector2i s, shared_Texture tex);
     //Actor(Vector2i pos, Vector2i s);
     //Actor();

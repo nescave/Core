@@ -6,8 +6,8 @@ class AssetManager
 {
 private:
     std::set<shared_Texture> lockedTextures;
-    std::unordered_map<int, weak_Texture> textures;
-    std::unordered_map<int, shared_Font> fonts;
+    std::unordered_map<uint16_t, weak_Texture> textures; //65k textures and fonts should be enough
+    std::unordered_map<uint16_t, shared_Font> fonts;
 
 public:
 
@@ -16,18 +16,16 @@ public:
     bool Init();
     static AssetManager* Get();
     
-    //shared_Texture LoadTextureBMP(const char* path);
-    //shared_Texture LoadTextureBMP(const char* path, int texEnum);
-    shared_Texture SetTextureLock(int texEnum, bool lock = false);
+    shared_Texture SetTextureLock(uint16_t texEnum, bool lock = false);
     shared_Texture SetTextureLock(shared_Texture texture, bool lock = false);
     shared_Texture LoadTexture(const char* path, bool lock = false);
     shared_Texture LoadTexture(const char* path, int texEnum, bool lock = false);
-    shared_Texture GetLoadedTexture(int texEnum);
+    shared_Texture GetLoadedTexture(uint16_t texEnum);
 
-    shared_Font LoadFont(const char* path, int fontEnum, int fontSizeID);
-    shared_Font GetLoadedFont(int fontEnum) { return fonts[fontEnum]; }
+    shared_Font LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);
+    shared_Font GetLoadedFont(uint16_t fontEnum) { return fonts[fontEnum]; }
 
-    shared_Texture  MakeTextureFromText(int fontEnum, const char* text, const SDL_Color color);
+    shared_Texture  MakeTextureFromText(uint16_t fontEnum, const char* text, const SDL_Color color);
 
 };
 

@@ -4,11 +4,11 @@
 #include "Collider.h"
 #include "PhysicsCore.h"
 
-Object::Object(int iD, std::string n, Transform t) :
+Object::Object(uint32_t iD, std::string n, Transform t) :
 	Entity(iD, n),
 	transform(t),
 	parent(weak_Object()),
-	children(std::map<const int, weak_Object>())
+	children(std::map<const uint32_t, weak_Object>())
 {}
 Transform& Object::GetTransform()
 {
@@ -47,7 +47,7 @@ double Object::GetWorldRotation()
 bool Object::IsChild(weak_Object child)
 {
 	if(!HasChildren()) return false;
-	int searched = child.lock()->id;
+	const uint32_t searched = child.lock()->id;
 	if (children.find(searched) != children.end()) return true;
 	
 	return false;
@@ -82,7 +82,7 @@ bool Object::AddChild(weak_Object child) {
 }
 bool Object::RemoveChild(weak_Object child) {
 	
-	const int id = child.lock()->id;
+	const uint32_t id = child.lock()->id;
 	if (!IsChild(child)) {
 		printf("Can't remove child: Given object is not on a children list!\n");
 		return false;
@@ -151,13 +151,13 @@ bool Object::HasCollider()
 
 bool Object::RemoveComponent(std::type_index compClass)
 {
-	auto lComp = components[compClass.hash_code()];
+	auto lComp = components[(uint32_t)compClass.hash_code()];
 	if (!lComp) {
 		printf("No component of class %s!\n", compClass.name());
 		return false;
 	}
-	components[compClass.hash_code()] = nullptr;
-	components.erase(compClass.hash_code());
+	components[(uint32_t)compClass.hash_code()] = nullptr;
+	components.erase((uint32_t)compClass.hash_code());
 	return true;
 }
 

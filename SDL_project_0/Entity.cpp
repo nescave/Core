@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "EntityManager.h"
 
-Entity::Entity(int iD, std::string n) :
+Entity::Entity(uint32_t iD, std::string n) :
 	destroyed(false),
 	bUpdate(true),
 	id(iD),
@@ -11,7 +11,7 @@ Entity::Entity(int iD, std::string n) :
 {}
 
 void Entity::Begin() {
-	printf("%d checked!\n", id);
+	printf("%d checked!\n", (int)id);
 
 }
 void Entity::Update(double dTime) {

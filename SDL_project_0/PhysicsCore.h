@@ -7,7 +7,7 @@ private:
 	//std::unordered_map<std::tuple<int,int>, std::unordered_multimap<int, Collider>> collisionSectors;
 	//right now i will support only one collider component per object so this should be ok
 	//later multimap and some more logic may be needed here
-	std::unordered_map<int, std::weak_ptr<Collider>> collisionMap;
+	std::unordered_map<uint32_t, std::weak_ptr<Collider>> collisionMap;
 	
 	std::queue<std::weak_ptr<Collider>> collidersToAdd;
 

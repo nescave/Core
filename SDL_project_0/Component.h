@@ -12,6 +12,6 @@ public:
 	
 	Component(std::string name, weak_Object own);
 	virtual ~Component()=default;
-	virtual int GetOwnerId() { return owner.lock()->id; }
+	virtual uint32_t GetOwnerId() { return owner.lock()->id; }
 
 };

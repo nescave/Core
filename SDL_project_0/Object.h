@@ -8,8 +8,8 @@ protected:
 	Transform transform;
 	weak_Object parent;
 
-	std::map<const int, weak_Object> children;
-	std::map<const int, shared_Component> components;
+	std::map<const uint32_t, weak_Object> children;
+	std::map<const uint32_t, shared_Component> components;
 
 	void ClearParent();
 	void ApplyTransform();
@@ -22,7 +22,7 @@ protected:
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
 public:
-	Object(int iD, std::string n, Transform t);
+	Object(uint32_t iD, std::string n, Transform t);
 	//virtual ~Object();
 	Transform& GetTransform(); // { return transform; }
 	Vector2i& GetLocalPosition(); //{ return transform.position; }
@@ -39,7 +39,7 @@ public:
 	Vector2f GetRightVector();
 
 	weak_Object GetParent() { return parent; }
-	std::map<const int, weak_Object>& GetChildren() { return children; }
+	std::map<const uint32_t, weak_Object>& GetChildren() { return children; }
 	bool HasChildren() { return !children.empty(); }
 	bool IsChild(weak_Object child);
 
@@ -65,7 +65,7 @@ public:
 		class = std::enable_if_t<std::is_base_of_v<Component, T>>
 	>
 	std::weak_ptr<T> AddComponent(const std::string name) {
-		auto hash = typeid(T).hash_code();
+		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		if (components.find(hash) != components.end()){
 			printf("Component of type <%s> already added to this object! %s\n",typeid(T).name(), name.c_str());
 			return std::weak_ptr<T>();
@@ -81,7 +81,7 @@ public:
 	>
 	std::weak_ptr<T> GetComponentOfClass(bool log = true) {
 		//std::weak_ptr<T> oComp = &*components[typeid(T).hash_code()];
-		auto hash = typeid(T).hash_code();
+		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		if (components.find(hash) == components.end()) {
 			if (log) printf("No component matches %s class!\n", typeid(T).name());
 			return std::weak_ptr<T>();

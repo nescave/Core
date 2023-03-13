@@ -8,7 +8,7 @@ private:
 	Transform transform;
 public:
 	bool moved;
-	std::unordered_set<int> savedCollisions;
+	std::unordered_set<uint32_t> savedCollisions;
 
 	Collider(std::string name, weak_Object own);
 	//virtual ~Collider();

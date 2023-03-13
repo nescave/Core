@@ -77,7 +77,7 @@ void PhysicsCore::Update()
 	for (auto& tpl : collisionMap) {
 		auto col = &*tpl.second.lock();
 		if (!col) continue;
-		std::unordered_set<int> savedColsCpy = col->savedCollisions;
+		std::unordered_set<uint32_t> savedColsCpy = col->savedCollisions;
 
 		if (col->moved) {
 			auto overlapingColliders = GetOverlapingColliders(col);

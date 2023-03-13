@@ -55,8 +55,8 @@ void Core::Update() {
 void Core::StartMainLoop(){
     Begin();
 
-    std::weak_ptr<Actor> act1 = EntitySpawner::SpawnActor({ 300,260 }, { 180,120 }, GetAssetManager().GetLoadedTexture(5), "johny1");
-    std::weak_ptr<Actor> act2 = EntitySpawner::SpawnActor({ 0,0 }, { 120,80 }, GetAssetManager().LoadTexture("res/png.PNG"));
+    std::weak_ptr<Actor> act1 = EntitySpawner::SpawnActor<Actor>({ 300,260 }, { 180,120 }, GetAssetManager().GetLoadedTexture(5), "johny1");
+    std::weak_ptr<Actor> act2 = EntitySpawner::SpawnActor<Actor>({ 0,0 }, { 120,80 }, GetAssetManager().LoadTexture("res/png.PNG"));
     std::weak_ptr<Text> txt1 = EntitySpawner::SpawnText({ 215, 420 }, Vector2i::zero, "", "Best", CoreFont::CALIBRI, { 255,0,0 });
     std::weak_ptr<Text> txt2 = EntitySpawner::SpawnText({ 15, 420 }, Vector2i::zero, "", "Core");
 
@@ -84,8 +84,8 @@ void Core::StartMainLoop(){
         auto xMouse = std::to_string(mouse_pos.x);
         auto yMouse = std::to_string(mouse_pos.y);
 
-        if (txt2.lock()->GetText() != xMouse)txt2.lock()->SetText(xMouse).UpdateText();
-        if (txt1.lock()->GetText() != yMouse)txt1.lock()->SetText(yMouse).UpdateText();
+        if (txt2.lock() && txt2.lock()->GetText() != xMouse)txt2.lock()->SetText(xMouse).UpdateText();
+        if (txt1.lock() && txt1.lock()->GetText() != yMouse)txt1.lock()->SetText(yMouse).UpdateText();
 
         Update();
         //Sleep(5);

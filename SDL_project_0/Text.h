@@ -13,7 +13,7 @@ private:
     
 public:
     Text(
-        int iD, 
+        uint32_t iD,
         std::string n, 
         Transform t, 
         Vector2i s, 

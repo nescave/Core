@@ -13,7 +13,7 @@ EntityManager* EntityManager::Get()
     return emInst;
 }
 
-void EntityManager::DeleteEntity(int id)
+void EntityManager::DeleteEntity(uint32_t id)
 {
     if (gameEntities.find(id) != gameEntities.end()) {
         gameEntities.erase(gameEntities.find(id));

@@ -12,20 +12,20 @@ struct FontDeleter {
 	}
 };
 
-template<typename T>
-int GetFirstFreeID(std::unordered_map<int, std::weak_ptr<T>> map) {
-    int i = 0;
+template<typename T1,typename T2>
+uint32_t GetFirstFreeID(std::unordered_map<T1, std::weak_ptr<T2>> map) {
+    uint32_t i = 0;
     while (map.find(i) != map.end()) {
-        if (map[i].lock().get() == nullptr)break;
+        if (map[i].lock() == nullptr)break;
         ++i;
     }
     return i;
 }
-template<typename T>
-int GetFirstFreeID(std::unordered_map<int, std::shared_ptr<T>> map) {
-    int i = 0;
+template<typename T1, typename T2>
+uint32_t GetFirstFreeID(std::unordered_map<T1, std::shared_ptr<T2>> map) {
+    uint32_t i = 0;
     while (map.find(i) != map.end()) {
-        if (map[i].get() == nullptr)break;
+        if (map[i] == nullptr)break;
         ++i;
     }
     return i;
