@@ -6,7 +6,7 @@ class Text;
 class Actor;
 
 struct ActorSpawnData {
-    const Vector2i& size;
+    const Vector2i size;
     EntityManager& eManager;
 
     ActorSpawnData(const Vector2i inSize, EntityManager& inEManager);
@@ -34,7 +34,7 @@ public:
         if (t != Transform()) actor->SetTransform(t);
         if (size != Vector2i::zero) actor->SetScreenSize(size);
         if (tex != nullptr) actor->SetTexture(tex);
-        actor->Begin();
+        actor->OnSpawn();
         return actor;
     }
     

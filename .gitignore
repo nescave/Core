@@ -12,3 +12,11 @@ x64/
 *.log
 *.recipe
 *.pdb
+/SDL_project_0/res/pngs/status_heap_decrease.png~
+/SDL_project_0/res/PORTRT4.bmp
+/SDL_project_0/res/PORTRT3.bmp
+/SDL_project_0/res/PORTRT2.bmp
+/SDL_project_0/res/PORTRT1.bmp
+/SDL_project_0/res/PORTRT0.bmp
+/SDL_project_0/res/png.PNG
+/SDL_project_0/res/knight.bmp

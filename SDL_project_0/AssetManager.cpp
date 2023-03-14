@@ -12,11 +12,24 @@ AssetManager::AssetManager() {
     if(amInst==nullptr) amInst = this;
 }
 
-bool AssetManager::Init()
+bool AssetManager::Init(bool LoadCoreResources)
 {
     rendererCore = &Core::Get().GetRendererCore();
     if (!rendererCore) return false;
-    LoadFont("res/calibri.ttf", CoreFont::CALIBRI, 54);
+    if (LoadCoreResources) {
+        LoadFont("res/calibri.ttf", CoreFont::CALIBRI, 54);
+
+        //coreTexturesLoading
+        
+        LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true);
+        LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true);
+        LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true);
+        LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true);
+        LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true);
+        
+        //coreTexturesLoading
+
+    }
     return true;
 }
 

@@ -175,13 +175,17 @@
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\knight.bmp" />
-    <Image Include="res\png.PNG" />
-    <Image Include="res\PORTRT0.bmp" />
-    <Image Include="res\PORTRT1.bmp" />
-    <Image Include="res\PORTRT2.bmp" />
-    <Image Include="res\PORTRT3.bmp" />
-    <Image Include="res\PORTRT4.bmp" />
+    <Image Include="res\pngs\blueInfo.png" />
+    <Image Include="res\pngs\greenArrow.png" />
+    <Image Include="res\pngs\greenSquare.png" />
+    <Image Include="res\pngs\orangeTriangle.png" />
+    <Image Include="res\pngs\orangeWarrning.png" />
+    <Image Include="res\pngs\pause.png" />
+    <Image Include="res\pngs\play.png" />
+    <Image Include="res\pngs\redArrow.png" />
+    <Image Include="res\pngs\redDot.png" />
+    <Image Include="res\pngs\redDotCross.png" />
+    <Image Include="res\pngs\redRhombus.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h" />

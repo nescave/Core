@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderObject.h"
 
+
 class Actor :
     public RenderObject
 {
@@ -12,7 +13,7 @@ public:
     //Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
     Actor();
 
-    virtual void OnSpawn(); //happens during actor spawning before actor is fully initialized (constructor behaviour)
+    virtual void OnSpawn() override;
     virtual void Update(double dTime) override;
 
     //Vector2i GetLocalPosition();

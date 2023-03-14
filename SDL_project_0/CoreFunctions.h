@@ -1,7 +1,7 @@
 #pragma once
 struct TextureDeleter {
 	void operator() (SDL_Texture* t) {
-		//printf("texture deleted! \n");
+        //if (!message.empty()) printf((message + " \n").c_str());
 		SDL_DestroyTexture(t);
 	}
 };

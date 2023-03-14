@@ -12,6 +12,8 @@ protected:
     SDL_BlendMode blendMode;
     int_fast16_t sortingPriority;
     virtual void UpdateRect();
+    RenderObject& SetScreenSize();
+
 public:
     RenderObject(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tx);
     //virtual ~RenderObject();
@@ -27,12 +29,8 @@ public:
     RenderObject& SetBlendMode(SDL_BlendMode mode);
     RenderObject& SetSortingPriority(ESortingPriority priority, int_fast16_t offset = 0);
 
-    virtual RenderObject& SetTexture(shared_Texture tx) { texture = tx; return *this; }
-    
-    virtual RenderObject& SetScreenSize(Vector2i s, bool resetScale = true) { 
-        screenSize = s; 
-        if (resetScale) transform.scale = Vector2f::one; 
-        return *this; 
-    }
+    RenderObject& SetTexture(shared_Texture tx);
+  
+    RenderObject& SetScreenSize(Vector2i s, bool resetScale = true);
 
 };

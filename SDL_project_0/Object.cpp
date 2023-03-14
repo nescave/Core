@@ -9,7 +9,9 @@ Object::Object(uint32_t iD, std::string n, Transform t) :
 	transform(t),
 	parent(weak_Object()),
 	children(std::map<const uint32_t, weak_Object>())
-{}
+{
+	core = &Core::Get();
+}
 Transform& Object::GetTransform()
 {
 	return transform;
@@ -161,6 +163,10 @@ bool Object::RemoveComponent(std::type_index compClass)
 	return true;
 }
 
+void Object::OnSpawn() {
+	printf("Object's OnSpawn called\n"); // debug
+}
+
 void Object::OnBeginOverlap(Collider* col)
 {
 	printf("%s collided with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
@@ -171,5 +177,5 @@ void Object::OnEndOverlap(Collider* col)
 	if (col)
 		printf("%s ended collision with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
 	else
-		printf("%s ended collision with nullptr \n", this->name.c_str());
+		printf("%s ended collision with destroyed actor \n", this->name.c_str());
 }

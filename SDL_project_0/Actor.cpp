@@ -7,12 +7,11 @@
 //{}
 
 Actor::Actor() : RenderObject(EntityManager::Get()->GetFreeEntityID(), ((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())), Transform(), Vector2i::zero, nullptr)
-{
-	Actor::OnSpawn();
-}
+{}
 
 void Actor::OnSpawn()
 {
+	printf("Actor's OnSpawn called \n");
 }
 
 void Actor::Update(double dTime) {

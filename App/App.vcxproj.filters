@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{53e9572b-03a2-46d5-908e-433ce6217b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\headers">
+      <UniqueIdentifier>{b83fadef-a7ce-4a69-8e8c-97825963c990}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Objects\Serf.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Serf.h">
+      <Filter>Source Files\Objects\headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

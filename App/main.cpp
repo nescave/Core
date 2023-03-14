@@ -19,16 +19,10 @@ void deleteObj() { //temp
 
 int main(int argc, char* args[])
 {
-
     Core& core = Core::Get();
     if (!core.Init()) return 1;
-    AssetManager* aManager = AssetManager::Get();
-    aManager->SetTextureLock(core.GetAssetManager().LoadTexture("res/knight.bmp", 5), true);
-    SDL_Color color = { 255,255,255,255 };
 
-    Input::RegisterAction(ECoreActionButton::LMB, deleteObj);//temp
-
-    EntitySpawner::SpawnActor<Serf>(Vector2i(120, 80), aManager->GetLoadedTexture(5));
+    EntitySpawner::SpawnActor<Serf>(Vector2i(120, 80));
 
     core.StartMainLoop();
 

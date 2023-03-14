@@ -10,10 +10,9 @@ private:
     std::unordered_map<uint16_t, shared_Font> fonts;
 
 public:
-
     AssetManager();
     //~AssetManager();
-    bool Init();
+    bool Init(bool LoadCoreResources);
     static AssetManager* Get();
     
     shared_Texture SetTextureLock(uint16_t texEnum, bool lock = false);
@@ -26,6 +25,6 @@ public:
     shared_Font GetLoadedFont(uint16_t fontEnum) { return fonts[fontEnum]; }
 
     shared_Texture  MakeTextureFromText(uint16_t fontEnum, const char* text, const SDL_Color color);
-
+    void LoadCoreTextures();
 };
 

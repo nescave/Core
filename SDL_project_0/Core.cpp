@@ -22,7 +22,7 @@ bool Core::Init() {
 
     if (!rendererCore->Init(SCREEN_WIDTH, SCREEN_HEIGHT)) return false;
     if (!physicsCore->Init()) return false;
-    if (!assetManager->Init()) return false;
+    if (!assetManager->Init(true)) return false;
     if (!input->Init()) return false;
     
     return true;

@@ -2,11 +2,14 @@
 #include "Entity.h"
 #include "CoreTypes.h"
 
+class Core;
+
 class Object : public Entity, public std::enable_shared_from_this<Object>
 {
 protected:
 	Transform transform;
 	weak_Object parent;
+	Core* core;
 
 	std::map<const uint32_t, weak_Object> children;
 	std::map<const uint32_t, shared_Component> components;
@@ -54,7 +57,7 @@ public:
 	virtual bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
 
-
+	virtual void OnSpawn(); //happens during actor spawning before actor is fully initialized (constructor behaviour)
 	virtual void Begin() { Entity::Begin(); } //happens after full initialization
 	virtual void Update(double dTime) { Entity::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
