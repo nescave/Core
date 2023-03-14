@@ -34,6 +34,7 @@ public:
         if (t != Transform()) actor->SetTransform(t);
         if (size != Vector2i::zero) actor->SetScreenSize(size);
         if (tex != nullptr) actor->SetTexture(tex);
+        actor->Begin();
         return actor;
     }
     

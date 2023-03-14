@@ -32,18 +32,15 @@ Core& Core::Get() {
     return instance;
 }
 
-void Core::Begin() {
-    for (auto& tpl : entityManager->GetGameEntities())
-    {
-        auto& obj = tpl.second;
-        if (obj == nullptr) return;
-
-        obj->Begin();
-    }
-}
+void Core::Begin() {}
 
 void Core::Update() {
     double dTime = clock->GetDeltaTime();
+    for (auto& ent : entityManager->GetCreatedEntities()) 
+    {
+        ent.lock()->Begin();
+    }
+    entityManager->ClearCreatedEntities();
     for (auto& tpl : entityManager->GetGameEntities())
     {
         auto& ent = tpl.second;
@@ -53,7 +50,7 @@ void Core::Update() {
 }
 
 void Core::StartMainLoop(){
-    Begin();
+    Begin(); //not sure if it's needed
 
     bool quit = false;
     while (!quit) {

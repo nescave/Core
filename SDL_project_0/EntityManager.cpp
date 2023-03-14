@@ -25,3 +25,8 @@ void EntityManager::DeleteEntity(uint32_t id)
         gameEntities.erase(gameEntities.find(id));
     }
 }
+
+void EntityManager::ClearCreatedEntities()
+{
+    createdEntities.clear();
+}

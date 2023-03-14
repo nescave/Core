@@ -55,7 +55,7 @@ public:
 	bool RemoveComponent(std::type_index compClass);
 
 
-	virtual void Begin(double dTime) { Entity::Begin(); }
+	virtual void Begin() { Entity::Begin(); } //happens after full initialization
 	virtual void Update(double dTime) { Entity::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
 	virtual void OnEndOverlap(Collider* col);
