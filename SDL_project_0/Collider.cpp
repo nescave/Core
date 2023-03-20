@@ -2,20 +2,25 @@
 #include "Collider.h"
 #include "Core.h"
 #include "PhysicsCore.h"
+#include "RenderObject.h"
 
-Collider::Collider(weak_Object own, std::string n) :
-	maxReach(10),
-	moved(true)
+Collider& Collider::SetMaxReach(Object* own)
 {
-	auto lOwner = owner.lock();
-	Vector2f lPivot = { .5,.5 };
-	if (lOwner)
-		lPivot = lOwner->GetTransform().pivot;
-	transform = Transform(Vector2i::zero, 0, Vector2f::one, lPivot);
+	auto rObj = static_cast<RenderObject*>(&*own);
+	if (!rObj) return *this;
+	Vector2i scrSize = rObj->GetScreenSize();
+	return SetMaxReach((float)((scrSize * rObj->GetTransform().pivot).Length()));
 }
 
-Collider::Collider(weak_Object own) :
-	Collider(own, "")
+Collider& Collider::SetMaxReach(float reach)
+{
+	maxReach = reach;
+	return *this;
+}
+
+Collider::Collider() :
+	maxReach(10),
+	moved(true)
 {}
 
 void Collider::UpdateCollider(Vector2i size)
@@ -39,6 +44,18 @@ bool Collider::PointOverlaps(Vector2i& point)
 {
 	double dist = Vector2i::Distance(point, this->GetPosition());
 	return dist < this->GetReach();
+}
+
+void Collider::OnSpawn()
+{
+	auto ownerPtr = owner.lock();
+	if (!ownerPtr) return;
+	ownerPtr->RegisterCollider(weak_from_this());
+	
+	SetMaxReach(&*ownerPtr);
+	
+	//Vector2f lPivot = { .5,.5 };
+	//lPivot = lOwner->GetTransform().pivot;
 }
 
 //Vector2i Collider::GetPosition() {

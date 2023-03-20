@@ -7,12 +7,14 @@ class Collider :
 {
 private:
 	float maxReach;
+	Collider& SetMaxReach(Object* own);
+	Collider& SetMaxReach(float reach);
+
 public:
 	bool moved;
 	std::unordered_set<uint32_t> savedCollisions;
 
-	Collider(weak_Object own, std::string name);
-	Collider(weak_Object own);
+	Collider();
 	//virtual ~Collider();
 	virtual float GetReach() { return maxReach; }
 	virtual void UpdateCollider(Vector2i size);
@@ -22,5 +24,7 @@ public:
 	//virtual bool ColliderOverlaps()
 	//Vector2i GetPosition() override;
 	//Transform GetTransform() override;
+
+	void OnSpawn() override;
 
 };

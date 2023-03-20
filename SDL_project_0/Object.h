@@ -8,6 +8,7 @@ class RenderableComponent;
 
 class Object : public Entity, public std::enable_shared_from_this<Object>
 {
+	friend class Collider;
 protected:
 	Transform transform;
 	weak_Object parent;
@@ -82,7 +83,6 @@ public:
 		components.insert({ hash, comp });
 
 		comp->OnSpawn();
-		//if (typeid(T) == typeid(Collider)) RegisterCollider(sPtr);
 		return comp;
 	}
 	template<

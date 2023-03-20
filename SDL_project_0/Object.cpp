@@ -174,8 +174,7 @@ bool Object::HasRenderableComponents()
 {
 	if(!HasComponents()) return false;
 	for (auto& tpl : components) {
-		auto comp = tpl.second;
-		if (static_cast<RenderableComponent*>(&*comp)) return true;
+		if (std::dynamic_pointer_cast<RenderableComponent>(tpl.second)) return true;
 	}
 	return false;
 }
@@ -185,8 +184,8 @@ std::vector<RenderableComponent*> Object::GetRenderableComponents()
 	std::vector<RenderableComponent*> rComps;
 	if (!HasRenderableComponents()) return rComps;
 	for (auto& tpl : components) {
-		auto comp = static_cast<RenderableComponent*>(&*tpl.second);
-		if (comp) rComps.push_back(comp);
+		auto comp = std::dynamic_pointer_cast<RenderableComponent>(tpl.second);
+		if (comp) rComps.push_back(&*comp);
 	}
 	return rComps;
 }

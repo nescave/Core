@@ -4,6 +4,8 @@
 #include "AssetManager.h"
 #include "CoreTextures.h"
 #include "Text.h"
+#include "Collider.h"
+
 
 void Serf::Begin()
 {
@@ -20,5 +22,7 @@ void Serf::OnSpawn()
 	auto textComp = AddComponent<Text>().lock();
 	textComp->SetAndUpdateText("WakuWaku").SetAnchor(Anchor::Center);
 	textComp->SetScale({.3f,.3f});
+
+	auto collider = AddComponent<Collider>().lock();
 	//textComp->Set
 }
