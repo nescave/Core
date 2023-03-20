@@ -1,34 +1,23 @@
 #pragma once
-#include "RenderObject.h"
+#include "RenderableComponent.h"
 #include "CoreFonts.h"
 
 class Text :
-    public RenderObject
+    public RenderableComponent
 {
 private:
-    
     CoreFont::ECoreFont font;
     std::string text;
     SDL_Color color;
+    
     void UpdateText();
 
 public:
-    Text(
-        uint32_t iD,
-        std::string n, 
-        Transform t, 
-        Vector2i s, 
-        shared_Texture tex, 
-        CoreFont::ECoreFont ft = CoreFont::CALIBRI, 
-        std::string txt = "baka", 
-        SDL_Color col = {255,255,255}
-    );
-
-    Text();
-
-    bool ShouldRender() override { return texture.get(); }
+    Text(weak_Object own, std::string txt, SDL_Color col, CoreFont::ECoreFont ft);
+    explicit Text(weak_Object own);
 
     std::string GetText() { return text; }
+    shared_Texture GetTextureFromText();
 
     Text& SetAndUpdateText(std::string txt);
     Text& SetColor(SDL_Color col) { color = col; return *this; }

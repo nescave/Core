@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "RendererCore.h"
 #include "RenderObject.h"
+#include "RenderableComponent.h"
 //#include "Core.h"
 #include "AssetManager.h"
 
@@ -67,7 +68,7 @@ void RendererCore::UpdateScreen() {
 //    return true;
 //}
 
-void RendererCore::DrawRenderObject(RenderObject* rObj) {
+void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
 
 //geometry render test (as stupid as SDL copy rendering)
     //auto pos = rObj->GetWorldPosition();
@@ -92,18 +93,18 @@ void RendererCore::DrawRenderObject(RenderObject* rObj) {
 
     SDL_RenderCopyEx(
         renderer,
-        rObj->GetTexture().get(),
-        NULL, 
-        rObj->GetRect(), 
-        rObj->GetWorldRotation(),
-        rObj->GetSDLPivot(), 
+        drawCall->renderElement->GetTexture().get(),
+        NULL,
+        &drawCall->rect,
+        drawCall->rotation,
+        &drawCall->rotationPivot,
         SDL_FLIP_NONE
     );
 }
-void RendererCore::DrawSorted(DrawQueue_t& rObjs) {
-    while (rObjs.size()) {
-        DrawRenderObject(rObjs.top());
-        rObjs.pop();
+void RendererCore::DrawSorted(DrawQueue_t& drawCalls) {
+    while (drawCalls.size()) {
+        ExecuteDrawCall(&drawCalls.top());
+        drawCalls.pop();
     }
 }
 bool RendererCore::Update(DrawQueue_t& rObjs) {

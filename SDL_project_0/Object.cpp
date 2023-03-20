@@ -2,16 +2,31 @@
 #include "Object.h"
 #include "Core.h"
 #include "Collider.h"
+#include "RenderableComponent.h"
 #include "PhysicsCore.h"
+#include "EntityManager.h"
 
-Object::Object(uint32_t iD, std::string n, Transform t) :
-	Entity(iD, n),
+Object::Object(std::string n, Transform& t) :
+	Entity(n),
 	transform(t),
 	parent(weak_Object()),
-	children(std::map<const uint32_t, weak_Object>())
-{
-	core = &Core::Get();
-}
+	children(std::map<const uint32_t, weak_Object>()),
+	core(& Core::Get())
+{}
+Object::Object(Transform& t) :
+	Entity(),
+	transform(t),
+	parent(weak_Object()),
+	children(std::map<const uint32_t, weak_Object>()),
+	core(&Core::Get())
+{}
+Object::Object(Transform && t) :
+	Object(t)
+{}
+Object::Object() :
+	Object(Transform())
+{}
+
 Transform& Object::GetTransform()
 {
 	return transform;
@@ -28,22 +43,36 @@ Vector2f& Object::GetLocalPivot()
 {
 	return transform.pivot;
 }
-Transform Object::GetUnifiedTransform() //transform probably should be passed by reference but thats problematic
+Transform Object::GetWorldTransform() //transform probably should be passed by reference but thats problematic
 {
 	auto lParent = parent.lock();
 	if (!lParent) return transform;
-	return transform.CombineTransform(lParent->GetUnifiedTransform());
+	return transform.CombineTransform(lParent->GetWorldTransform());
 }
 
 Vector2i Object::GetWorldPosition()
 {
 
-	return GetUnifiedTransform().position;
+	return GetWorldTransform().position;
 }
 
 double Object::GetWorldRotation()
 {
-	return GetUnifiedTransform().rotation;
+	return GetWorldTransform().rotation;
+}
+
+const Vector2f Object::GetUpVector()
+{
+	Vector2f vec = Vector2f::up;
+	vec.Rotate(transform.rotation);
+	return vec;
+}
+
+const Vector2f Object::GetRightVector()
+{
+	Vector2f vec = Vector2f::right;
+	vec.Rotate(transform.rotation);
+	return vec;
 }
 
 bool Object::IsChild(weak_Object child)
@@ -55,13 +84,23 @@ bool Object::IsChild(weak_Object child)
 	return false;
 }
 
+Object& Object::SetTransform(Transform t)
+{
+	transform = t;
+	return *this;
+}
+Object& Object::SetPosition(Vector2i pos)
+{
+	transform.position = pos;
+	return *this;
+}
 void Object::ClearParent()
 {
 	parent = weak_Object();
 }
 
 void Object::ApplyTransform() {
-	transform = GetUnifiedTransform();
+	transform = GetWorldTransform();
 }
 
 bool Object::ClearChildren()
@@ -145,6 +184,27 @@ Object& Object::SetParent(weak_Object par, const bool applyPreviousTransform) {
 	return *this;
 }
 
+bool Object::HasRenderableComponents()
+{
+	if(!HasComponents()) return false;
+	for (auto& tpl : components) {
+		auto comp = tpl.second;
+		if (static_cast<RenderableComponent*>(&*comp)) return true;
+	}
+	return false;
+}
+
+std::vector<RenderableComponent*> Object::GetRenderableComponents()
+{
+	std::vector<RenderableComponent*> rComps;
+	if (!HasRenderableComponents()) return rComps;
+	for (auto& tpl : components) {
+		auto comp = static_cast<RenderableComponent*>(&*tpl.second);
+		if (comp) rComps.push_back(comp);
+	}
+	return rComps;
+}
+
 bool Object::HasCollider()
 {
 	//if (!this->GetComponentOfClass<Collider>(false).expired()) return true;
@@ -163,19 +223,15 @@ bool Object::RemoveComponent(std::type_index compClass)
 	return true;
 }
 
-void Object::OnSpawn() {
-	printf("Object's OnSpawn called\n"); // debug
-}
-
 void Object::OnBeginOverlap(Collider* col)
 {
-	printf("%s collided with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
+	printf("%s collided with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());
 }
 
 void Object::OnEndOverlap(Collider* col)
 {
 	if (col)
-		printf("%s ended collision with %s \n", this->name.c_str(), col->owner.lock()->name.c_str());
+		printf("%s ended collision with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());
 	else
 		printf("%s ended collision with destroyed actor \n", this->name.c_str());
 }

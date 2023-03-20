@@ -1,60 +1,57 @@
 #include "stdafx.h"
 #include "RenderObject.h"
 
-RenderObject::RenderObject(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tx) :
-	Object(iD, n, t),
-	screenSize(s),
-	texture(tx),
-	sortingPriority((uint16_t)ESortingPriority::AVERAGE),
-	blendMode(SDL_BLENDMODE_BLEND)
+RenderObject::RenderObject(std::string n, Transform& t, const Vector2i s, shared_Texture tx) :
+	Object(n, t),
+	Renderable(tx, s)
+{}
+RenderObject::RenderObject(Transform& t, const Vector2i s, shared_Texture tx) :
+	Object(t),
+	Renderable(tx, s)
+{}
+RenderObject::RenderObject(Vector2i s, shared_Texture tx) :
+	Renderable(tx, s)
+{}
+
+RenderObject::RenderObject(shared_Texture tx) :
+	Renderable(tx)
+{}
+
+RenderObject::RenderObject() :
+	RenderObject(nullptr)
+{}
+
+Renderable& RenderObject::SetScreenSize(Vector2i s, bool resetScale)
 {
-	UpdateRect();
-}
-
-void RenderObject::UpdateRect() 
-{
-	auto transf = GetUnifiedTransform();
-	rect.x = transf.position.x;
-	rect.y = transf.position.y;
-	rect.w = (uint32_t)(transf.scale.x * screenSize.x);
-	rect.h = (uint32_t)(transf.scale.y * screenSize.y);
-}
-
-
-RenderObject& RenderObject::SetBlendMode(SDL_BlendMode mode) 
-{
-	blendMode = mode;
-	if (texture) {
-		SDL_SetTextureBlendMode(texture.get(), blendMode);
-	}
-	return *this;
-}
-RenderObject& RenderObject::SetSortingPriority(ESortingPriority priority, int_fast16_t offset ) 
-{
-	sortingPriority = (int_fast16_t)priority + offset;
-	return *this;
-}
-
-RenderObject& RenderObject::SetTexture(shared_Texture tx)
-{ 
-	if (!tx) return *this;
-	texture = tx;
-	if (screenSize == Vector2i::zero)	SetScreenSize();
-	return *this; 
-}
-
-
-RenderObject& RenderObject::SetScreenSize()
-{
-	if (texture) {
-		SDL_QueryTexture(&*texture, NULL, NULL, &screenSize.x, &screenSize.y);
-	}
-	return *this;
-}
-
-RenderObject& RenderObject::SetScreenSize(Vector2i s, bool resetScale)
-{
-	screenSize = s;
 	if (resetScale) transform.scale = Vector2f::one;
+	Renderable::SetScreenSize(s, false);
 	return *this;
+}
+
+Vector2i RenderObject::GetAnchorOffset(Anchor anch)
+{
+	Vector2i scaledScSize = screenSize * transform.scale;
+		switch (anch){
+		case Anchor::TopLeft:
+			return Vector2i(-scaledScSize.x / 2, -scaledScSize.y / 2);;
+		case Anchor::Top:
+			return Vector2i(0, -scaledScSize.y / 2);
+		case Anchor::TopRight:
+			return Vector2i(scaledScSize.x / 2, -scaledScSize.y / 2);
+		case Anchor::Left:
+			return Vector2i(-scaledScSize.x / 2, 0);
+		case Anchor::Center:
+			return Vector2i::zero;
+		case Anchor::Right:
+			return Vector2i(scaledScSize.x / 2, 0);
+		case Anchor::BottomLeft:
+			return Vector2i(-scaledScSize.x / 2, scaledScSize.y / 2);
+		case Anchor::Bottom:
+			return Vector2i(0, scaledScSize.y / 2);
+		case Anchor::BottomRight:
+			return Vector2i(scaledScSize.x / 2, scaledScSize.y / 2);;
+		default:
+			break;
+		}
+	return Vector2i();
 }

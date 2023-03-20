@@ -1,12 +1,17 @@
 #include "stdafx.h"
 #include "EntityManager.h"
 #include "CoreFunctions.h"
+#include "Entity.h"
 
 static EntityManager* emInst;
+void EntityManager::AddEntity(shared_Entity ent)
+{
+    gameEntities.insert({ ent->id, ent });
+    createdEntities.push_back(ent);
+}
 EntityManager::EntityManager()
 {
     if (emInst == nullptr) emInst = this;
-
 }
 
 EntityManager* EntityManager::Get()

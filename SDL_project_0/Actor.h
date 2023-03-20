@@ -11,7 +11,6 @@ private:
 
 public:
     //Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex);
-    Actor();
 
     virtual void OnSpawn() override;
     virtual void Update(double dTime) override;

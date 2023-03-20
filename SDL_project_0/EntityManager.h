@@ -8,12 +8,8 @@ private:
     std::unordered_map<uint32_t, shared_Entity> gameEntities;
     std::vector<weak_Entity> createdEntities;
 
-    template <typename T>
-    std::weak_ptr<T> AddEntity(std::shared_ptr<T> ent) {
-        gameEntities.insert({ ent->id, ent });
-        createdEntities.push_back(ent);
-        return ent;
-    }
+    //template unnecessary, stupid return 
+    void AddEntity(shared_Entity ent);
 
 public:
     friend class EntitySpawner;

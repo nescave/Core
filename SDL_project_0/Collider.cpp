@@ -3,11 +3,20 @@
 #include "Core.h"
 #include "PhysicsCore.h"
 
-Collider::Collider(std::string name, weak_Object own) :
-	Component(name, own),
+Collider::Collider(weak_Object own, std::string n) :
+	ComponentTransform(own, n),
 	maxReach(10),
-	transform(Vector2i::zero, 0, Vector2f::one, owner.lock()->GetTransform().pivot),
 	moved(true)
+{
+	auto lOwner = owner.lock();
+	Vector2f lPivot = { .5,.5 };
+	if (lOwner)
+		lPivot = lOwner->GetTransform().pivot;
+	transform = Transform(Vector2i::zero, 0, Vector2f::one, lPivot);
+}
+
+Collider::Collider(weak_Object own) :
+	Collider(own, "")
 {}
 
 void Collider::UpdateCollider(Vector2i size)
@@ -33,7 +42,7 @@ bool Collider::PointOverlaps(Vector2i& point)
 	return dist < this->GetReach();
 }
 
-Vector2i Collider::GetPosition() {
-	auto oTransform = transform.CombineTransform(owner.lock()->GetUnifiedTransform());
-	return oTransform.position;
-}
+//Vector2i Collider::GetPosition() {
+//	auto oTransform = transform.CombineTransform(owner.lock()->GetUnifiedTransform());
+//	return oTransform.position;
+//}

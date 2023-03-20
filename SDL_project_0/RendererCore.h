@@ -14,7 +14,7 @@ private:
 	void UpdateScreen();
 
 	//bool AddRenderObjects(std::queue<RenderObject*> rObjs);
-	void DrawRenderObject(RenderObject* rObj);
+	void ExecuteDrawCall(const DrawCall * drawCall);
 	void DrawSorted(DrawQueue_t& rObjs);
 
 public:

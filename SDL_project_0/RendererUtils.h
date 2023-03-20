@@ -1,4 +1,5 @@
 #pragma once
+class Renderable;
 class RenderObject;
 class Collider;
 
@@ -10,11 +11,20 @@ enum class ESortingPriority {
     HIGHEST = 1
 };
 
-struct RenderObjectComparator {
-    using _FIRST_ARGUMENT_TYPE_NAME = RenderObject;
-    using _SECOND_ARGUMENT_TYPE_NAME = RenderObject;
+struct DrawCall {
+    Renderable* renderElement;
+    double rotation;
+    SDL_Rect rect;
+    SDL_Point rotationPivot;
+
+    DrawCall(Renderable* rEl, Transform wTrans);
+};
+
+struct DrawCallComparator {
+    using _FIRST_ARGUMENT_TYPE_NAME = DrawCall;
+    using _SECOND_ARGUMENT_TYPE_NAME = DrawCall;
     using _RESULT_TYPE_NAME = bool;
-    bool operator()( RenderObject* lho,  RenderObject* rho) const;
+    bool operator()( DrawCall& lho,  DrawCall& rho) const;
 };
 
 ////temporary collider utils
@@ -26,4 +36,4 @@ struct RenderObjectComparator {
 //    bool operator() (Collider* lhc, Collider* rhc) const;
 //};
 
-typedef std::priority_queue<RenderObject*, std::vector<RenderObject*>, RenderObjectComparator> DrawQueue_t;
+typedef std::priority_queue<DrawCall, std::vector<DrawCall>, DrawCallComparator> DrawQueue_t;

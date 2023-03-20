@@ -17,7 +17,7 @@ bool AssetManager::Init(bool LoadCoreResources)
     rendererCore = &Core::Get().GetRendererCore();
     if (!rendererCore) return false;
     if (LoadCoreResources) {
-        LoadFont("res/calibri.ttf", CoreFont::CALIBRI, 54);
+        LoadFont("res/calibrib.ttf", CoreFont::CALIBRI, 16);
 
         //coreTexturesLoading
         

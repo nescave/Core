@@ -8,7 +8,7 @@
 #include "CoreActionButtons.h"
 #include "CoreFonts.h"
 #include "Serf.h"
-
+#include "Text.h"
 //#undef main
 
 void deleteObj() { //temp
@@ -22,7 +22,9 @@ int main(int argc, char* args[])
     Core& core = Core::Get();
     if (!core.Init()) return 1;
 
-    EntitySpawner::SpawnActor<Serf>(Vector2i(120, 80));
+    weak_Object a = EntitySpawner::SpawnObject<Serf>(Vector2i(120, 80));
+
+    Serf serf;
 
     core.StartMainLoop();
 

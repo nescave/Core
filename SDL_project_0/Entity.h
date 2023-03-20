@@ -9,13 +9,15 @@ public:
 	const uint32_t id;
 	std::string name;
 
-	Entity(uint32_t iD, std::string n);
+	Entity(std::string n);
+	Entity();
 	//virtual ~Entity();
 
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }
 	virtual bool ShouldRender() { return false; }
 	virtual bool HasCollider() { return false; }
 
+	virtual void OnSpawn();
 	virtual void Begin();
 	virtual void Update(double dTime);
 	virtual void OnDestroy();

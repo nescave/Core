@@ -85,7 +85,7 @@ void PhysicsCore::Update()
 				//tickedCol->owner.lock()->OnBeginOverlap(col);
 				auto tickedColID = tickedCol->GetOwnerId();
 				if (savedColsCpy.find(tickedColID) == savedColsCpy.end()) {
-					col->owner.lock()->OnBeginOverlap(tickedCol);
+					col->GetOwner()->OnBeginOverlap(tickedCol);
 					col->savedCollisions.insert(tickedColID);
 				}
 				else {
@@ -96,7 +96,7 @@ void PhysicsCore::Update()
 		}
 		for (auto id : savedColsCpy) {
 			auto detachedCol = collisionMap[id].expired() ? nullptr : &*collisionMap[id].lock();
-			col->owner.lock()->OnEndOverlap(detachedCol);
+			col->GetOwner()->OnEndOverlap(detachedCol);
 			col->savedCollisions.erase(id);
 		}
 	}

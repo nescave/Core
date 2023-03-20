@@ -3,19 +3,27 @@
 #include "Entity.h"
 #include "EntityManager.h"
 
-Entity::Entity(uint32_t iD, std::string n) :
+Entity::Entity(std::string n) :
 	destroyed(false),
 	bUpdate(true),
-	id(iD),
+	id(EntityManager::Get()->GetFreeEntityID()),
 	name(n)
 {}
 
+Entity::Entity() :
+	Entity(((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())))
+{}
+
+void Entity::OnSpawn()
+{
+	printf("%s Spawns!\n", name.c_str());
+}
+
 void Entity::Begin() {
-	printf("%d checked!\n", (int)id);
+	printf("%s Begins!\n", name.c_str());
 
 }
 void Entity::Update(double dTime) {
-	if (destroyed && !bUpdate) return;
 }
 
 void Entity::OnDestroy()

@@ -44,7 +44,15 @@ void Core::Update() {
     for (auto& tpl : entityManager->GetGameEntities())
     {
         auto& ent = tpl.second;
-        if (ent->ShouldRender()) drawList.push((RenderObject*)&*ent);
+        if (ent->ShouldRender()) {
+            RenderObject* rObj = static_cast<RenderObject*>(&*ent);
+            if (rObj) {
+                drawList.push(DrawCall(rObj, rObj->GetWorldTransform()));
+            }
+            for (auto comp : rObj->GetRenderableComponents()) {
+                drawList.push(DrawCall(comp, comp->GetWorldTransform()));
+            }
+        }
         ent->Update(dTime);
     }
 }

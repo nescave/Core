@@ -1,8 +1,10 @@
 #pragma once
 #include "Entity.h"
 #include "CoreTypes.h"
+#include "AnchorEnum.h"
 
 class Core;
+class RenderableComponent;
 
 class Object : public Entity, public std::enable_shared_from_this<Object>
 {
@@ -19,63 +21,69 @@ protected:
 	bool ClearChildren();
 	bool AddChild(weak_Object child);
 	bool RemoveChild(weak_Object child);
-	//bool IsInChildHierarchy(shared_Object obj);
 	bool IsParentPossible(weak_Object par);
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
 public:
-	Object(uint32_t iD, std::string n, Transform t);
-	//virtual ~Object();
+	Object(std::string n, Transform& t);
+	Object(Transform& t);
+	Object(Transform&& t);
+	Object();
 	Transform& GetTransform(); // { return transform; }
 	Vector2i& GetLocalPosition(); //{ return transform.position; }
 	double GetLocalRotation(); // { return transform.rotation; }
 	virtual Vector2f& GetLocalPivot(); // { return transform.pivot; }
 	
-	Transform GetUnifiedTransform();
+	Transform GetWorldTransform();
 
 	Vector2i GetWorldPosition();
 	double GetWorldRotation();
-	Vector2f GetWorldPivot();
+	//Vector2f GetWorldPivot();
 
-	Vector2f GetUpVector();
-	Vector2f GetRightVector();
+	const Vector2f GetUpVector();
+	const Vector2f GetRightVector();
 
 	weak_Object GetParent() { return parent; }
 	std::map<const uint32_t, weak_Object>& GetChildren() { return children; }
 	bool HasChildren() { return !children.empty(); }
 	bool IsChild(weak_Object child);
 
-	virtual Object& SetTransform(Transform t) { transform = t; return *this; }
-	virtual Object& SetPosition(Vector2i pos) { transform.position = pos; return *this; }
+	virtual Object& SetTransform(Transform t);
+	virtual Object& SetPosition(Vector2i pos);
 	virtual Object& SetRotation(float rot) { transform.rotation = fmod(rot, 360); return *this; }
 	virtual Object& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
 	virtual Object& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
 	
 	Object& SetParent(weak_Object par, const bool applyPreviousTransform = false);
 
+	bool HasComponents() { return !components.empty(); }
+	bool HasRenderableComponents();
+	std::vector<RenderableComponent*> GetRenderableComponents();
 	virtual bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
 
-	virtual void OnSpawn(); //happens during actor spawning before actor is fully initialized (constructor behaviour)
-	virtual void Begin() { Entity::Begin(); } //happens after full initialization
+	virtual void OnSpawn() { Entity::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
+	virtual void Begin() { Entity::Begin(); }					//happens after full initialization
 	virtual void Update(double dTime) { Entity::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
 	virtual void OnEndOverlap(Collider* col);
+
+	virtual Vector2i GetAnchorOffset(Anchor anch) {return Vector2i::zero;}
 
 	template <
 		typename T,
 		class = std::enable_if_t<std::is_base_of_v<Component, T>>
 	>
-	std::weak_ptr<T> AddComponent(const std::string name) {
+	std::weak_ptr<T> AddComponent() {
 		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		if (components.find(hash) != components.end()){
-			printf("Component of type <%s> already added to this object! %s\n",typeid(T).name(), name.c_str());
+			printf("Component of type <%s> already added to this object! \n",typeid(T).name());
 			return std::weak_ptr<T>();
 		}
-		auto sPtr = std::make_shared<T>(name, weak_from_this());
+		auto sPtr = std::make_shared<T>(weak_from_this());
 		components.insert({ hash, sPtr });
-		if (typeid(T) == typeid(Collider)) RegisterCollider(sPtr);
+		//if (typeid(T) == typeid(Collider)) RegisterCollider(sPtr);
 		return sPtr;
 	}
 	template<

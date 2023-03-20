@@ -1,36 +1,23 @@
 #pragma once
 #include "Object.h"
-#include "RendererUtils.h"
+#include "Renderable.h"
 #include "CoreTypes.h"
 
-class RenderObject : public Object
+class RenderObject : public Object, public Renderable
 {
 protected:
-    shared_Texture texture;
-    Vector2i screenSize;
-    SDL_Rect rect;
-    SDL_BlendMode blendMode;
-    int_fast16_t sortingPriority;
-    virtual void UpdateRect();
-    RenderObject& SetScreenSize();
 
 public:
-    RenderObject(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tx);
+    RenderObject(std::string n, Transform& t, const Vector2i s, shared_Texture tx);
+    RenderObject(Transform& t, const Vector2i s, shared_Texture tx);
+    RenderObject(Vector2i s, shared_Texture tx);
+    RenderObject(shared_Texture tx);
+    RenderObject();
+
     //virtual ~RenderObject();
 
     bool ShouldRender() override { return texture != nullptr; } //for now keep it simple
-    Vector2i GetSDLPivot() { return transform.pivot * screenSize; }
 
-    SDL_Rect* GetRect() { UpdateRect(); return &rect; }
-    shared_Texture GetTexture(){ return texture;}
-    SDL_BlendMode GetBlendMode() { return blendMode; }
-    int_fast16_t GetSortingPriority() { return sortingPriority; }
-
-    RenderObject& SetBlendMode(SDL_BlendMode mode);
-    RenderObject& SetSortingPriority(ESortingPriority priority, int_fast16_t offset = 0);
-
-    RenderObject& SetTexture(shared_Texture tx);
-  
-    RenderObject& SetScreenSize(Vector2i s, bool resetScale = true);
-
+    virtual Renderable& SetScreenSize(Vector2i s, bool resetScale = true) override;
+    Vector2i GetAnchorOffset(Anchor anch) override;
 };
