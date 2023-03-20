@@ -19,6 +19,6 @@ void Serf::OnSpawn()
 
 	auto textComp = AddComponent<Text>().lock();
 	textComp->SetAndUpdateText("WakuWaku").SetAnchor(Anchor::Center);
-	textComp->SetScale({.3,.3});
+	textComp->SetScale({.3f,.3f});
 	//textComp->Set
 }

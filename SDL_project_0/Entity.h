@@ -1,16 +1,21 @@
 #pragma once
+class EntitySpawner;
+
 class Entity
 {
+	friend class EntitySpawner;
+
+private:
+
 protected:
 	bool destroyed;
 	bool bUpdate;
-
+	
+	Entity();
 public:
 	const uint32_t id;
 	std::string name;
 
-	Entity(std::string n);
-	Entity();
 	//virtual ~Entity();
 
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }

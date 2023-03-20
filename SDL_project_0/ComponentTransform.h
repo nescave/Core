@@ -8,10 +8,8 @@ protected:
 	Transform transform;
 	Anchor anchor;
 
-public:
-	ComponentTransform(weak_Object own, std::string n);
-	ComponentTransform(weak_Object own);
 	ComponentTransform();
+public:
 
 	ComponentTransform& SetTransform(Transform& t);
 	ComponentTransform& SetPosition(Vector2i& pos);
@@ -33,5 +31,6 @@ public:
 
 	Anchor GetAnchor() { return anchor; }
 
+	void OnSpawn() override;
 };
 

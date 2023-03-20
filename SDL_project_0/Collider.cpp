@@ -4,7 +4,6 @@
 #include "PhysicsCore.h"
 
 Collider::Collider(weak_Object own, std::string n) :
-	ComponentTransform(own, n),
 	maxReach(10),
 	moved(true)
 {

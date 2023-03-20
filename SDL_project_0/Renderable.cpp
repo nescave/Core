@@ -1,19 +1,11 @@
 #include "stdafx.h"
 #include "Renderable.h"
 
-Renderable::Renderable(shared_Texture tx, const Vector2i s) :
-	texture(tx),
-	screenSize(s),
+Renderable::Renderable() :
+	texture(nullptr),
+	screenSize(Vector2i::zero),
 	sortingPriority((uint16_t)ESortingPriority::AVERAGE),
 	blendMode(SDL_BLENDMODE_BLEND)
-{}
-
-Renderable::Renderable(shared_Texture tx) :
-	Renderable(tx, GetSizeFromTexture(tx))
-{}
-
-Renderable::Renderable() :
-	Renderable(nullptr)
 {}
 
 const Vector2i Renderable::GetSizeFromTexture(shared_Texture tex)

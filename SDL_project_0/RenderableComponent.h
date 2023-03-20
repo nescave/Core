@@ -9,7 +9,8 @@ class RenderableComponent :
 protected:
 
 public:
-	RenderableComponent(weak_Object own, shared_Texture tx = nullptr);
 	RenderableComponent();
+
+	void OnSpawn() override;
 };
 

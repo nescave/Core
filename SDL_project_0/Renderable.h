@@ -11,11 +11,9 @@ protected:
     int_fast16_t sortingPriority;
 
     const Vector2i GetSizeFromTexture(shared_Texture tex = nullptr);
+    Renderable();
 
 public:
-    Renderable(shared_Texture tx, const Vector2i s);
-    Renderable(shared_Texture tx);
-    Renderable();
     const Vector2i& GetScreenSize() { return screenSize; }
     shared_Texture GetTexture() { return texture; }
     SDL_BlendMode GetBlendMode() { return blendMode; }

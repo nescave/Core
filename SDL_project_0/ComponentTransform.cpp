@@ -2,18 +2,9 @@
 #include "ComponentTransform.h"
 #include "RenderObject.h"
 
-ComponentTransform::ComponentTransform(weak_Object own, std::string n) :
-	Component(own, n),
+ComponentTransform::ComponentTransform() :
 	transform(),
 	anchor(Anchor::Center)
-{}
-
-ComponentTransform::ComponentTransform(weak_Object own) :
-	ComponentTransform(own, "")
-{}
-
-ComponentTransform::ComponentTransform() :
-	ComponentTransform(weak_Object())
 {}
 
 ComponentTransform& ComponentTransform::SetTransform(Transform & t)
@@ -76,4 +67,9 @@ double ComponentTransform::GetRotation()
 Vector2f ComponentTransform::GetScale()
 {
 	return GetWorldTransform().scale;
+}
+
+void ComponentTransform::OnSpawn()
+{
+	Component::OnSpawn();
 }

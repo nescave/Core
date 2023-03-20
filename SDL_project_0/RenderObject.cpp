@@ -1,24 +1,7 @@
 #include "stdafx.h"
 #include "RenderObject.h"
 
-RenderObject::RenderObject(std::string n, Transform& t, const Vector2i s, shared_Texture tx) :
-	Object(n, t),
-	Renderable(tx, s)
-{}
-RenderObject::RenderObject(Transform& t, const Vector2i s, shared_Texture tx) :
-	Object(t),
-	Renderable(tx, s)
-{}
-RenderObject::RenderObject(Vector2i s, shared_Texture tx) :
-	Renderable(tx, s)
-{}
-
-RenderObject::RenderObject(shared_Texture tx) :
-	Renderable(tx)
-{}
-
-RenderObject::RenderObject() :
-	RenderObject(nullptr)
+RenderObject::RenderObject()
 {}
 
 Renderable& RenderObject::SetScreenSize(Vector2i s, bool resetScale)

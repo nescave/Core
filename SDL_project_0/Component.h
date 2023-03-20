@@ -4,19 +4,20 @@
 
 class Component 
 {
+	friend class Object;
 protected:
 	weak_Object owner;
 
+	Component();
 public:
 	std::string componentName;
 	
-	Component(weak_Object own, std::string name);
-	Component(weak_Object own);
-	Component();
 	virtual ~Component()=default;
 
 	shared_Object GetOwner() { return owner.lock(); }
 	virtual uint32_t GetOwnerId() { return owner.lock()->id; }
 	virtual bool ShouldRender() { return false; }
+
+	virtual void OnSpawn();
 
 };

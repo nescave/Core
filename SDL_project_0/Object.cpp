@@ -6,25 +6,11 @@
 #include "PhysicsCore.h"
 #include "EntityManager.h"
 
-Object::Object(std::string n, Transform& t) :
-	Entity(n),
-	transform(t),
-	parent(weak_Object()),
-	children(std::map<const uint32_t, weak_Object>()),
-	core(& Core::Get())
-{}
-Object::Object(Transform& t) :
-	Entity(),
-	transform(t),
+Object::Object() :
+	transform(Transform()),
 	parent(weak_Object()),
 	children(std::map<const uint32_t, weak_Object>()),
 	core(&Core::Get())
-{}
-Object::Object(Transform && t) :
-	Object(t)
-{}
-Object::Object() :
-	Object(Transform())
 {}
 
 Transform& Object::GetTransform()

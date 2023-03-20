@@ -13,8 +13,7 @@ private:
     void UpdateText();
 
 public:
-    Text(weak_Object own, std::string txt, SDL_Color col, CoreFont::ECoreFont ft);
-    explicit Text(weak_Object own);
+    Text();
 
     std::string GetText() { return text; }
     shared_Texture GetTextureFromText();
@@ -22,5 +21,7 @@ public:
     Text& SetAndUpdateText(std::string txt);
     Text& SetColor(SDL_Color col) { color = col; return *this; }
     Text& SetFont(CoreFont::ECoreFont fnt) { font = fnt; return *this; }
+
+    void OnSpawn() override;
 };
 

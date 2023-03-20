@@ -3,15 +3,11 @@
 #include "Entity.h"
 #include "EntityManager.h"
 
-Entity::Entity(std::string n) :
+Entity::Entity() :
 	destroyed(false),
 	bUpdate(true),
 	id(EntityManager::Get()->GetFreeEntityID()),
-	name(n)
-{}
-
-Entity::Entity() :
-	Entity(((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())))
+	name(((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())))
 {}
 
 void Entity::OnSpawn()

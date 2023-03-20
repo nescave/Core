@@ -2,17 +2,16 @@
 #include "RenderableComponent.h"
 #include "RenderObject.h"
 
-RenderableComponent::RenderableComponent(weak_Object own, shared_Texture tx) :
-	ComponentTransform(own)
+RenderableComponent::RenderableComponent()
+{}
+
+void RenderableComponent::OnSpawn()
 {
-	auto lOwner = &*own.lock();
-	if (lOwner) 
+	ComponentTransform::OnSpawn();
+	auto lOwner = owner.lock();
+	if (lOwner)
 	{
-		RenderObject* rObj = static_cast<RenderObject*>(lOwner);
-		sortingPriority = rObj->GetSortingPriority();
+		RenderObject* rObj = static_cast<RenderObject*>(&*lOwner);
+		sortingPriority = rObj->GetSortingPriority() -1;
 	}
 }
-
-RenderableComponent::RenderableComponent() :
-	RenderableComponent(weak_Object())
-{}

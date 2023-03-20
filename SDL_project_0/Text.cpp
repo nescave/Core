@@ -3,18 +3,11 @@
 #include "AssetManager.h"
 #include "EntityManager.h"
 
-Text::Text(weak_Object own, std::string txt, SDL_Color col, CoreFont::ECoreFont ft) : 
-	RenderableComponent(own),
-	font(ft),
-	text(txt),
-	color(col)
+Text::Text() : 
+	text(""),
+	font(CoreFont::CALIBRI),
+	color({ 255,255,255,0 })
 {}
-
-Text::Text(weak_Object own) : 
-	Text(own, "", { 255,255,255,0 }, CoreFont::CALIBRI)
-{
-
-}
 
 void Text::UpdateText()
 {
@@ -36,4 +29,9 @@ Text& Text::SetAndUpdateText(std::string txt)
 	}
 	if (text == "") text = owner.lock()->name.append("_text");
 	return *this;
+}
+
+void Text::OnSpawn()
+{
+	RenderableComponent::OnSpawn();
 }

@@ -26,9 +26,6 @@ protected:
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
 public:
-	Object(std::string n, Transform& t);
-	Object(Transform& t);
-	Object(Transform&& t);
 	Object();
 	Transform& GetTransform(); // { return transform; }
 	Vector2i& GetLocalPosition(); //{ return transform.position; }
@@ -77,14 +74,16 @@ public:
 	>
 	std::weak_ptr<T> AddComponent() {
 		uint32_t hash = (uint32_t)typeid(T).hash_code();
-		if (components.find(hash) != components.end()){
-			printf("Component of type <%s> already added to this object! \n",typeid(T).name());
-			return std::weak_ptr<T>();
-		}
-		auto sPtr = std::make_shared<T>(weak_from_this());
-		components.insert({ hash, sPtr });
+		
+		auto comp = std::make_shared<T>();
+
+		comp->owner = weak_from_this();
+		comp->componentName = name.append("_component_").append(std::to_string(components.size()));
+		components.insert({ hash, comp });
+
+		comp->OnSpawn();
 		//if (typeid(T) == typeid(Collider)) RegisterCollider(sPtr);
-		return sPtr;
+		return comp;
 	}
 	template<
 		typename T,

@@ -17,8 +17,8 @@ DrawCall::DrawCall(Renderable* rEl, Transform wTrans) :
 	rotation(wTrans.rotation)
 {
 	Vector2i scrSize = renderElement->GetScreenSize();
-	rect.x = wTrans.position.x - (scrSize.x / 2 * wTrans.scale.x);
-	rect.y = wTrans.position.y - (scrSize.y / 2 * wTrans.scale.y);
+	rect.x = wTrans.position.x - (int)(scrSize.x / 2 * wTrans.scale.x);
+	rect.y = wTrans.position.y - (int)(scrSize.y / 2 * wTrans.scale.y);
 	rect.w = (uint32_t)(scrSize.x * wTrans.scale.x);
 	rect.h = (uint32_t)(scrSize.y * wTrans.scale.y);
 	rotationPivot.x = rect.w / 2;
