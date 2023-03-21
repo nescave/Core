@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RendererCore.h"
-#include "RenderObject.h"
+#include "RenderableObject.h"
 #include "RenderableComponent.h"
 //#include "Core.h"
 #include "AssetManager.h"

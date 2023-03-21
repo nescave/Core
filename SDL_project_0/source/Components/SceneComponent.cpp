@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "ComponentTransform.h"
-#include "RenderObject.h"
+#include "SceneComponent.h"
+#include "RenderableObject.h"
 
 ComponentTransform::ComponentTransform() :
 	transform(),

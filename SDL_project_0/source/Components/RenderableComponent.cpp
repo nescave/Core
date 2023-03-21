@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RenderableComponent.h"
-#include "RenderObject.h"
+#include "RenderableObject.h"
 
 RenderableComponent::RenderableComponent()
 {}

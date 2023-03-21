@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "ComponentTransform.h"
+#include "SceneComponent.h"
 
 class Collider : 
 	public ComponentTransform,  public std::enable_shared_from_this<Collider>

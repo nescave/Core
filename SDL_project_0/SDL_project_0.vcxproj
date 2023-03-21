@@ -155,33 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AssetManager.cpp" />
-    <ClCompile Include="Clock.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ComponentTransform.cpp" />
-    <ClCompile Include="Core.cpp" />
-    <ClCompile Include="CoreFunctions.cpp" />
-    <ClCompile Include="CoreTypes.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="EntitySpawner.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="PhysicsCore.cpp" />
-    <ClCompile Include="Random.cpp" />
-    <ClCompile Include="Renderable.cpp" />
-    <ClCompile Include="RenderableComponent.cpp" />
-    <ClCompile Include="RendererCore.cpp" />
-    <ClCompile Include="RendererUtils.cpp" />
-    <ClCompile Include="RenderObject.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Text.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="UI.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="res\pngs\blueInfo.png" />
     <Image Include="res\pngs\greenArrow.png" />
     <Image Include="res\pngs\greenSquare.png" />
@@ -195,36 +168,63 @@
     <Image Include="res\pngs\redRhombus.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentTransform.h" />
-    <ClInclude Include="CoreActionButtons.h" />
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="Clock.h" />
-    <ClInclude Include="Core.h" />
-    <ClInclude Include="CoreFonts.h" />
-    <ClInclude Include="CoreFunctions.h" />
-    <ClInclude Include="CoreTextures.h" />
-    <ClInclude Include="CoreTypes.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="EntitySpawner.h" />
+    <ClInclude Include="headers\Actor.h" />
     <ClInclude Include="headers\AnchorEnum.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="PhysicsCore.h" />
-    <ClInclude Include="Random.h" />
-    <ClInclude Include="Renderable.h" />
-    <ClInclude Include="RenderableComponent.h" />
-    <ClInclude Include="RendererCore.h" />
-    <ClInclude Include="RendererUtils.h" />
-    <ClInclude Include="RenderObject.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Text.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="UI.h" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="headers\AssetManager.h" />
+    <ClInclude Include="headers\Clock.h" />
+    <ClInclude Include="headers\Collider.h" />
+    <ClInclude Include="headers\Component.h" />
+    <ClInclude Include="headers\SceneComponent.h" />
+    <ClInclude Include="headers\Core.h" />
+    <ClInclude Include="headers\CoreActionButtons.h" />
+    <ClInclude Include="headers\CoreFonts.h" />
+    <ClInclude Include="headers\CoreFunctions.h" />
+    <ClInclude Include="headers\CoreTextures.h" />
+    <ClInclude Include="headers\CoreTypes.h" />
+    <ClInclude Include="headers\Entity.h" />
+    <ClInclude Include="headers\EntityManager.h" />
+    <ClInclude Include="headers\EntitySpawner.h" />
+    <ClInclude Include="headers\InputManager.h" />
+    <ClInclude Include="headers\SceneObject.h" />
+    <ClInclude Include="headers\PhysicsCore.h" />
+    <ClInclude Include="headers\Random.h" />
+    <ClInclude Include="headers\Renderable.h" />
+    <ClInclude Include="headers\RenderableComponent.h" />
+    <ClInclude Include="headers\RendererCore.h" />
+    <ClInclude Include="headers\RendererUtils.h" />
+    <ClInclude Include="headers\RenderableObject.h" />
+    <ClInclude Include="headers\stdafx.h" />
+    <ClInclude Include="headers\Text.h" />
+    <ClInclude Include="headers\Transform.h" />
+    <ClInclude Include="headers\UI.h" />
+    <ClInclude Include="headers\Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Assets\AssetManager.cpp" />
+    <ClCompile Include="source\Components\Collider.cpp" />
+    <ClCompile Include="source\Components\Component.cpp" />
+    <ClCompile Include="source\Components\SceneComponent.cpp" />
+    <ClCompile Include="source\Components\RenderableComponent.cpp" />
+    <ClCompile Include="source\Components\Text.cpp" />
+    <ClCompile Include="source\Core\Core.cpp" />
+    <ClCompile Include="source\Core\CoreFunctions.cpp" />
+    <ClCompile Include="source\Core\CoreTypes.cpp" />
+    <ClCompile Include="source\Core\EntityManager.cpp" />
+    <ClCompile Include="source\Core\EntitySpawner.cpp" />
+    <ClCompile Include="source\Core\InputManager.cpp" />
+    <ClCompile Include="source\Core\PhysicsCore.cpp" />
+    <ClCompile Include="source\Core\RendererCore.cpp" />
+    <ClCompile Include="source\Objects\Actor.cpp" />
+    <ClCompile Include="source\Objects\Entity.cpp" />
+    <ClCompile Include="source\Objects\SceneObject.cpp" />
+    <ClCompile Include="source\Objects\Renderable.cpp" />
+    <ClCompile Include="source\Objects\RenderableObject.cpp" />
+    <ClCompile Include="source\Objects\UI.cpp" />
+    <ClCompile Include="source\utils\Clock.cpp" />
+    <ClCompile Include="source\utils\Random.cpp" />
+    <ClCompile Include="source\utils\RendererUtils.cpp" />
+    <ClCompile Include="source\utils\stdafx.cpp" />
+    <ClCompile Include="source\utils\Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

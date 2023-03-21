@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "SceneObject.h"
 #include "Renderable.h"
 #include "CoreTypes.h"
 

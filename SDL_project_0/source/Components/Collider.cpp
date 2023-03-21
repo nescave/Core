@@ -2,7 +2,7 @@
 #include "Collider.h"
 #include "Core.h"
 #include "PhysicsCore.h"
-#include "RenderObject.h"
+#include "RenderableObject.h"
 
 Collider& Collider::SetMaxReach(Object* own)
 {

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RendererUtils.h"
-#include "RenderObject.h"
+#include "RenderableObject.h"
 #include "Collider.h"
 
 bool DrawCallComparator::operator()( DrawCall& lho, DrawCall& rho) const {

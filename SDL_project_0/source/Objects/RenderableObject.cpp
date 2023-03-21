@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "RenderObject.h"
+#include "RenderableObject.h"
 
 RenderObject::RenderObject()
 {}

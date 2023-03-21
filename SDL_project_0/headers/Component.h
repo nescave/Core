@@ -1,6 +1,6 @@
 #pragma once
 #include "CoreTypes.h"
-#include "Object.h"
+#include "SceneObject.h"
 
 class Component 
 {

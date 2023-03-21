@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Object.h"
+#include "SceneObject.h"
 #include "Core.h"
 #include "Collider.h"
 #include "RenderableComponent.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "ComponentTransform.h"
+#include "SceneComponent.h"
 #include "Renderable.h"
 
 class RenderableComponent : 
