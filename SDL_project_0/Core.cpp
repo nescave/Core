@@ -4,7 +4,7 @@
 #include "PhysicsCore.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
-#include "Input.h"
+#include "InputManager.h"
 #include "Clock.h"
 #include "Text.h"
 #include "Actor.h"
@@ -17,10 +17,10 @@ bool Core::Init() {
     physicsCore = std::make_unique<PhysicsCore>();
     assetManager = std::make_unique<AssetManager>();
     entityManager = std::make_unique<EntityManager>();
-    input = std::make_unique<Input>();
+    input = std::make_unique<InputManager>();
     clock = std::make_unique<Clock>();
 
-    if (!rendererCore->Init(SCREEN_WIDTH, SCREEN_HEIGHT)) return false;
+    if (!rendererCore->Init(screen_width, screen_height)) return false;
     if (!physicsCore->Init()) return false;
     if (!assetManager->Init(true)) return false;
     if (!input->Init()) return false;
@@ -35,7 +35,7 @@ Core& Core::Get() {
 void Core::Begin() {}
 
 void Core::Update() {
-    double dTime = clock->GetDeltaTime();
+    const double dTime = clock->GetDeltaTime();
     for (auto& ent : entityManager->GetCreatedEntities()) 
     {
         ent.lock()->Begin();
@@ -45,7 +45,7 @@ void Core::Update() {
     {
         auto& ent = tpl.second;
         if (ent->ShouldRender()) {
-            RenderObject* rObj = static_cast<RenderObject*>(&*ent);
+            auto rObj = dynamic_cast<RenderObject*>(&*ent);
             if (rObj) {
                 drawList.push(DrawCall(rObj, rObj->GetWorldTransform()));
             }

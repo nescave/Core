@@ -12,7 +12,7 @@ Text::Text() :
 void Text::UpdateText()
 {
 	texture = GetTextureFromText();
-	SetScreenSize(GetSizeFromTexture(texture));
+	SetSize(GetSizeFromTexture(texture));
 	//AssetManager::Get()->SetTextureLock(texture, false);
 }
 

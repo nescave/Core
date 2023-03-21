@@ -20,12 +20,12 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Object, T>>
     >
-    static std::weak_ptr<T> SpawnObject(Transform& t, shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "") 
+    static std::weak_ptr<T> SpawnObject(Transform& t, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
         std::shared_ptr<T> actor = std::make_shared<T>();
         GetEntityManager().AddEntity(actor);
         actor->SetTransform(t);
-        actor->SetScreenSize(s);
+        actor->SetSize(s);
         actor->SetTexture(tex);
         actor->name = n;
         actor->OnSpawn();
@@ -36,7 +36,7 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Object, T>>
     >
-    static std::weak_ptr<T> SpawnObject(Transform&& t = Transform(), shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "") 
+    static std::weak_ptr<T> SpawnObject(Transform&& t = Transform(), shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
         return SpawnObject<T>(t, tex, s, n);
     }
@@ -45,7 +45,7 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<Object, T>>
     >
-    static std::weak_ptr<T> SpawnObject(const Vector2i& p, shared_Texture tex = nullptr, const Vector2i& s = Vector2i::zero, std::string n = "")
+    static std::weak_ptr<T> SpawnObject(const Vector2d& p, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "")
     {
         return SpawnObject<T>(Transform(p), tex, s, n);
     }

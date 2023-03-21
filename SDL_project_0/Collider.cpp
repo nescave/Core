@@ -8,7 +8,7 @@ Collider& Collider::SetMaxReach(Object* own)
 {
 	auto rObj = static_cast<RenderObject*>(&*own);
 	if (!rObj) return *this;
-	Vector2i scrSize = rObj->GetScreenSize();
+	Vector2d scrSize = rObj->GetSize();
 	return SetMaxReach((float)((scrSize * rObj->GetTransform().pivot).Length()));
 }
 

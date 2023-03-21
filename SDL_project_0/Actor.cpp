@@ -15,7 +15,7 @@ void Actor::Update(double dTime) {
 	Object::Update(dTime);
 }
 
-Actor& Actor::Translate(Vector2i vector){
+Actor& Actor::Translate(Vector2d vector){
 	transform.position += vector;
 	return *this;
 }

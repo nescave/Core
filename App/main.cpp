@@ -4,13 +4,18 @@
 #include <Entity.h>
 #include <EntitySpawner.h>
 #include <AssetManager.h>
-#include <Input.h>
+#include <InputManager.h>
 #include "CoreActionButtons.h"
 #include "CoreFonts.h"
 #include "Serf.h"
 #include "Text.h"
 //#undef main
 
+void RotMe() {
+    auto& objs = EntityManager::Get()->GetGameEntities();
+    auto obj = static_cast<Actor*>(&*objs[0]);
+    obj->Rotate(5);
+}
 void deleteObj() { //temp
     auto& objs = EntityManager::Get()->GetGameEntities();
     if(objs.begin()!= objs.end())
@@ -24,7 +29,8 @@ int main(int argc, char* args[])
 
     weak_Object a = EntitySpawner::SpawnObject<Serf>(Vector2i(120, 80));
 
-    Serf serf;
+    //InputManager::RegisterAction(ECoreActionButton::RMB, deleteObj);
+    //InputManager::RegisterAction(ECoreActionButton::LMB, Serf_F);
 
     core.StartMainLoop();
 

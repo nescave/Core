@@ -1,24 +1,24 @@
 #include "stdafx.h"
 #include "Transform.h"
 
-Transform::Transform(Vector2i pos, double rot, Vector2f sc, Vector2f piv) :
+Transform::Transform(Vector2d pos, double rot, Vector2f sc, Vector2f piv) :
 	position(pos),
 	rotation(rot),
 	scale(sc),
 	pivot(piv)
 {}
-Transform::Transform(Vector2i pos, double rot, Vector2f sc) : 
+Transform::Transform(Vector2d pos, double rot, Vector2f sc) : 
 	position(pos),
 	rotation(rot),
 	scale(sc) 
 {}
-Transform::Transform() : Transform(Vector2i::zero, 0, Vector2f::one)
+Transform::Transform() : Transform(Vector2d::zero, 0, Vector2f::one)
 {}
-Transform::Transform(Vector2i pos) :Transform(pos, 0, Vector2f::one)
+Transform::Transform(Vector2d pos) :Transform(pos, 0, Vector2f::one)
 {}
-Transform::Transform(Vector2i pos, double rot) : Transform(pos, rot, Vector2f::one)
+Transform::Transform(Vector2d pos, double rot) : Transform(pos, rot, Vector2f::one)
 {}
-Transform::Transform(Vector2i pos, Vector2f sc) : Transform(pos, 0, sc)
+Transform::Transform(Vector2d pos, Vector2f sc) : Transform(pos, 0, sc)
 {}
 
 Transform Transform::CombineTransform(Transform transf)

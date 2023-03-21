@@ -3,12 +3,12 @@
 
 Renderable::Renderable() :
 	texture(nullptr),
-	screenSize(Vector2i::zero),
-	sortingPriority((uint16_t)ESortingPriority::AVERAGE),
-	blendMode(SDL_BLENDMODE_BLEND)
+	size(Vector2d::zero),
+	blendMode(SDL_BLENDMODE_BLEND),
+	sortingPriority((uint16_t)ESortingPriority::AVERAGE)
 {}
 
-const Vector2i Renderable::GetSizeFromTexture(shared_Texture tex)
+Vector2i Renderable::GetSizeFromTexture(shared_Texture tex)
 {
 	if (!tex) return Vector2i::zero;
 	Vector2i vec;
@@ -35,13 +35,13 @@ Renderable& Renderable::SetTexture(shared_Texture tx)
 {
 	if (!tx) return *this;
 	texture = tx;
-	if (screenSize == Vector2i::zero) SetScreenSize(GetSizeFromTexture(tx), true);
+	if (size == Vector2d::zero) SetSize(GetSizeFromTexture(tx), true);
 	return *this;
 }
 
 
-Renderable& Renderable::SetScreenSize(Vector2i s, bool)
+Renderable& Renderable::SetSize(Vector2d s, bool)
 {
-	screenSize = s;
+	size = s;
 	return *this;
 }

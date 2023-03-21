@@ -11,6 +11,6 @@ public:
 
     bool ShouldRender() override { return texture != nullptr; } 
 
-    virtual Renderable& SetScreenSize(Vector2i s, bool resetScale = true) override;
-    Vector2i GetAnchorOffset(Anchor anch) override;
+    virtual Renderable& SetSize(Vector2d s, bool resetScale = true) override;
+    Vector2d GetAnchorOffset(Anchor anch) override;
 };

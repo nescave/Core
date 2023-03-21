@@ -13,7 +13,7 @@ ComponentTransform& ComponentTransform::SetTransform(Transform & t)
 	return *this;
 }
 
-ComponentTransform& ComponentTransform::SetPosition(Vector2i& pos)
+ComponentTransform& ComponentTransform::SetPosition(Vector2d& pos)
 {
 	transform.position = pos;
 	return *this;
@@ -39,12 +39,12 @@ ComponentTransform& ComponentTransform::SetAnchor(Anchor anch)
 
 Transform ComponentTransform::GetWorldTransform()
 {
-	auto lOwner = owner.lock();
-	RenderObject* rObj = static_cast<RenderObject*>(&*lOwner);
+	auto ownerPtr = owner.lock();
+	RenderObject* rObj = dynamic_cast<RenderObject*>(&*ownerPtr);
 	if (!rObj) {
-		return transform.CombineTransform(lOwner->GetWorldTransform());
+		return transform.CombineTransform(ownerPtr->GetWorldTransform());
 	}
-	Transform anchorTransf = Transform(lOwner->GetWorldTransform());
+	Transform anchorTransf = rObj->GetWorldTransform();
 	anchorTransf.position += rObj->GetAnchorOffset(anchor);
 	return transform.CombineTransform(anchorTransf);
 }
@@ -54,7 +54,7 @@ Transform& ComponentTransform::GetLocalTransform()
 	return transform;
 }
 
-Vector2i ComponentTransform::GetPosition()
+Vector2d ComponentTransform::GetPosition()
 {
 	return GetWorldTransform().position;
 }

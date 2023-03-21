@@ -14,13 +14,15 @@ bool DrawCallComparator::operator()( DrawCall& lho, DrawCall& rho) const {
 
 DrawCall::DrawCall(Renderable* rEl, Transform wTrans) :
 	renderElement(rEl),
-	rotation(wTrans.rotation)
+	rotation(wTrans.rotation),
+	rect(),
+	rotationPivot()
 {
-	Vector2i scrSize = renderElement->GetScreenSize();
-	rect.x = wTrans.position.x - (int)(scrSize.x / 2 * wTrans.scale.x);
-	rect.y = wTrans.position.y - (int)(scrSize.y / 2 * wTrans.scale.y);
-	rect.w = (uint32_t)(scrSize.x * wTrans.scale.x);
-	rect.h = (uint32_t)(scrSize.y * wTrans.scale.y);
+	Vector2i scrSize = (Vector2i)renderElement->GetSize();
+	rect.x = int(wTrans.position.x - (double(scrSize.x) / 2 * wTrans.scale.x));
+	rect.y = int(wTrans.position.y - (double(scrSize.y) / 2 * wTrans.scale.y));
+	rect.w = (uint32_t)(double(scrSize.x) * wTrans.scale.x);
+	rect.h = (uint32_t)(double(scrSize.y) * wTrans.scale.y);
 	rotationPivot.x = rect.w / 2;
 	rotationPivot.y = rect.h / 2;
 }

@@ -17,7 +17,7 @@ Transform& Object::GetTransform()
 {
 	return transform;
 }
-Vector2i& Object::GetLocalPosition()
+Vector2d& Object::GetLocalPosition()
 {
 	return transform.position;
 }
@@ -36,7 +36,7 @@ Transform Object::GetWorldTransform() //transform probably should be passed by r
 	return transform.CombineTransform(lParent->GetWorldTransform());
 }
 
-Vector2i Object::GetWorldPosition()
+Vector2d Object::GetWorldPosition()
 {
 
 	return GetWorldTransform().position;
@@ -47,14 +47,14 @@ double Object::GetWorldRotation()
 	return GetWorldTransform().rotation;
 }
 
-const Vector2f Object::GetUpVector()
+const Vector2d Object::GetUpVector()
 {
 	Vector2f vec = Vector2f::up;
 	vec.Rotate(transform.rotation);
 	return vec;
 }
 
-const Vector2f Object::GetRightVector()
+const Vector2d Object::GetRightVector()
 {
 	Vector2f vec = Vector2f::right;
 	vec.Rotate(transform.rotation);
@@ -75,7 +75,7 @@ Object& Object::SetTransform(Transform t)
 	transform = t;
 	return *this;
 }
-Object& Object::SetPosition(Vector2i pos)
+Object& Object::SetPosition(Vector2d pos)
 {
 	transform.position = pos;
 	return *this;
@@ -117,17 +117,6 @@ bool Object::RemoveChild(weak_Object child) {
 	children.erase(id);
 	return true;
 }
-
-//bool Object::IsInChildHierarchy(shared_Object obj)
-//{
-	//if (!this->HasChildren()) return false;
-	//for (auto child : children) {
-	//	auto tested = child.lock();
-	//	if (tested == obj) return true;
-	//	if (tested->IsInChildHierarchy(obj)) return true;
-	//}
-	//return false;
-//}
 
 bool Object::IsParentPossible(weak_Object par)
 {

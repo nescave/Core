@@ -1,17 +1,16 @@
 #include "stdafx.h"
-#include "Input.h"
+#include "InputManager.h"
 #include "CoreActionButtons.h"
 
-Input::~Input()
+InputManager::~InputManager()
 {
 	//for (auto v : actionsMap) {
 	//	delete &v;
 	//}
 }
 
-bool Input::Init()
+bool InputManager::Init()
 {
-
 	//default input defined HERE for now
 	AddActionButton(CONFIRM, SDLK_RETURN);
 	AddActionButton(CANCEL, SDLK_ESCAPE);
@@ -19,7 +18,7 @@ bool Input::Init()
 	RegisterAction(CANCEL, [this]() {this->quitEvent = true; });
 	return true;
 }
-void Input::AddActionButton(int actionButtonEnum, SDL_Keycode key)
+void InputManager::AddActionButton(int actionButtonEnum, SDL_Keycode key)
 {
 	if (actionButtons.find(key) != actionButtons.end()) {
 		printf("%d button already exists!", actionButtonEnum);
@@ -29,7 +28,7 @@ void Input::AddActionButton(int actionButtonEnum, SDL_Keycode key)
 	actionsMap.emplace(actionButtonEnum, buttonAction() );
 }
 
-void Input::AddActionMouseButton(int actionButtonEnum, int button)
+void InputManager::AddActionMouseButton(int actionButtonEnum, int button)
 {
 	if (mouseActionButtons.find(actionButtonEnum) != mouseActionButtons.end()) {
 		printf("%d button already exists!", actionButtonEnum);
@@ -39,17 +38,17 @@ void Input::AddActionMouseButton(int actionButtonEnum, int button)
 	actionsMap.emplace(actionButtonEnum, buttonAction());
 }
 
-void Input::RegisterAction(int actionButtonEnum, std::function<void()> f)
+void InputManager::RegisterAction(int actionButtonEnum, std::function<void()> f)
 {
 	actionsMap[actionButtonEnum].push_back(f);
 }
 
-Vector2i Input::GetPointerPosition()
+Vector2i InputManager::GetPointerPosition()
 {
 	return mousePosition;
 }
 
-void Input::ProcessInput()
+void InputManager::ProcessInput()
 {
 	while (SDL_PollEvent(&e)) {
 		switch (e.type)

@@ -12,7 +12,7 @@ public:
     virtual void OnSpawn() override;
     virtual void Update(double dTime) override;
 
-    Actor& Translate(Vector2i vector);
+    Actor& Translate(Vector2d vector);
     Actor& Rotate(double angle);
     Actor& Scale(Vector2f scale);
     Actor& Scale(float scale);

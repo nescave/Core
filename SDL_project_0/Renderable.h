@@ -6,15 +6,15 @@ class Renderable
 {
 protected:
     shared_Texture texture;
-    Vector2i screenSize;
+    Vector2d size;
     SDL_BlendMode blendMode;
     int_fast16_t sortingPriority;
 
-    const Vector2i GetSizeFromTexture(shared_Texture tex = nullptr);
+    Vector2i GetSizeFromTexture(shared_Texture tex = nullptr);
     Renderable();
 
 public:
-    const Vector2i& GetScreenSize() { return screenSize; }
+    Vector2d GetSize() { return size; }
     shared_Texture GetTexture() { return texture; }
     SDL_BlendMode GetBlendMode() { return blendMode; }
     int_fast16_t GetSortingPriority() { return sortingPriority; }
@@ -24,6 +24,6 @@ public:
     Renderable& SetTexture(shared_Texture tx);
 
 
-    virtual Renderable& SetScreenSize(Vector2i s, bool = true);
+    virtual Renderable& SetSize(Vector2d s, bool = true);
 };
 

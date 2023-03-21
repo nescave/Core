@@ -2,6 +2,8 @@
 #include <math.h>
 #include "Random.h"
 
+#define PI 3.1415926535897
+
 template<typename T>
 struct Vector2
 {
@@ -25,6 +27,8 @@ struct Vector2
 	
 	template <typename T2>
 	operator Vector2<T2>() { return Vector2<T2>((T2)this->x, (T2)this->y); }
+	// template <typename T2>
+	// operator T2(){ return Vector<T2>((T2)this->x, (T2)this->y);}
 	
 	operator SDL_Point() { 
 		SDL_Point point;
@@ -72,6 +76,12 @@ struct Vector2
 		this->y *= rV;
 		return *this;
 	}
+	template <typename T2>
+	Vector2& operator*=(const Vector2<T2>& rVec) {
+		this->x *= rVec.x;
+		this->y *= rVec.y;
+		return *this;
+	}
 	Vector2 operator/(const double scale) const {
 		Vector2 vec(this->x / scale, this->y / scale);
 		return vec;
@@ -99,8 +109,9 @@ struct Vector2
 		return sqrt(this->LengthSqr());
 	}
 	Vector2 Rotate(double angle) {
-		T x = (T)((double)this->x * cos(angle) + (double)this->y * sin(angle));
-		T y = (T)((double)this->x * sin(-angle) + (double)this->y * cos(angle));
+		double rad = angle/180.0f * PI;
+		T x = (T)((double)this->x * cos(rad) - (double)this->y * sin(rad));
+		T y = (T)((double)this->x * sin(-rad) + (double)this->y * cos(rad));
 		return Vector2<T>(x,y);
 	}
 	static Vector2 Random(T xMin, T xMax, T yMin, T yMax) {

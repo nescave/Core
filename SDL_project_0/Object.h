@@ -29,18 +29,18 @@ protected:
 public:
 	Object();
 	Transform& GetTransform(); // { return transform; }
-	Vector2i& GetLocalPosition(); //{ return transform.position; }
+	Vector2d& GetLocalPosition(); //{ return transform.position; }
 	double GetLocalRotation(); // { return transform.rotation; }
 	virtual Vector2f& GetLocalPivot(); // { return transform.pivot; }
 	
 	Transform GetWorldTransform();
 
-	Vector2i GetWorldPosition();
+	Vector2d GetWorldPosition();
 	double GetWorldRotation();
 	//Vector2f GetWorldPivot();
 
-	const Vector2f GetUpVector();
-	const Vector2f GetRightVector();
+	const Vector2d GetUpVector();
+	const Vector2d GetRightVector();
 
 	weak_Object GetParent() { return parent; }
 	std::map<const uint32_t, weak_Object>& GetChildren() { return children; }
@@ -48,7 +48,7 @@ public:
 	bool IsChild(weak_Object child);
 
 	virtual Object& SetTransform(Transform t);
-	virtual Object& SetPosition(Vector2i pos);
+	virtual Object& SetPosition(Vector2d pos);
 	virtual Object& SetRotation(float rot) { transform.rotation = fmod(rot, 360); return *this; }
 	virtual Object& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
 	virtual Object& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
@@ -67,7 +67,7 @@ public:
 	virtual void OnBeginOverlap(Collider* col);
 	virtual void OnEndOverlap(Collider* col);
 
-	virtual Vector2i GetAnchorOffset(Anchor anch) {return Vector2i::zero;}
+	virtual Vector2d GetAnchorOffset(Anchor anch) {return Vector2d::zero;}
 
 	template <
 		typename T,
