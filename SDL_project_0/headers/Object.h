@@ -1,7 +1,7 @@
 #pragma once
 class EntitySpawner;
 
-class Entity
+class Object
 {
 	friend class EntitySpawner;
 
@@ -11,7 +11,7 @@ protected:
 	bool destroyed;
 	bool bUpdate;
 	
-	Entity();
+	Object();
 public:
 	const uint32_t id;
 	std::string name;

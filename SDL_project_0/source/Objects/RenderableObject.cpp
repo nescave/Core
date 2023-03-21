@@ -1,17 +1,17 @@
 #include "stdafx.h"
 #include "RenderableObject.h"
 
-RenderObject::RenderObject()
+RenderableObject::RenderableObject()
 {}
 
-Renderable& RenderObject::SetSize(Vector2d s, bool resetScale)
+Renderable& RenderableObject::SetSize(Vector2d s, bool resetScale)
 {
 	if (resetScale) transform.scale = Vector2f::one;
 	Renderable::SetSize(s, false);
 	return *this;
 }
 
-Vector2d RenderObject::GetAnchorOffset(Anchor anch)
+Vector2d RenderableObject::GetAnchorOffset(Anchor anch)
 {
 	Vector2d scaledScSize = size * transform.scale;
 	Vector2d offset = Vector2d();

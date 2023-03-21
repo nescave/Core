@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "EntitySpawner.h"
+#include "ObjectSpawner.h"
 #include "Actor.h"
 #include "Text.h"
 #include "Core.h"

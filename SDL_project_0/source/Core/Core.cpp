@@ -3,13 +3,13 @@
 #include "RendererCore.h"
 #include "PhysicsCore.h"
 #include "AssetManager.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 #include "InputManager.h"
 #include "Clock.h"
 #include "Text.h"
 #include "Actor.h"
 #include "Collider.h"
-#include "EntitySpawner.h"
+#include "ObjectSpawner.h"
 #include "CoreFunctions.h"
 
 bool Core::Init() {
@@ -45,7 +45,7 @@ void Core::Update() {
     {
         auto& ent = tpl.second;
         if (ent->ShouldRender()) {
-            auto rObj = dynamic_cast<RenderObject*>(&*ent);
+            auto rObj = dynamic_cast<RenderableObject*>(&*ent);
             if (rObj) {
                 drawList.push(DrawCall(rObj, rObj->GetWorldTransform()));
             }

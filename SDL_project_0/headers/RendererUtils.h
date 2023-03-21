@@ -1,6 +1,6 @@
 #pragma once
 class Renderable;
-class RenderObject;
+class RenderableObject;
 class Collider;
 
 enum class ESortingPriority {

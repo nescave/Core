@@ -181,9 +181,9 @@
     <ClInclude Include="headers\CoreFunctions.h" />
     <ClInclude Include="headers\CoreTextures.h" />
     <ClInclude Include="headers\CoreTypes.h" />
-    <ClInclude Include="headers\Entity.h" />
-    <ClInclude Include="headers\EntityManager.h" />
-    <ClInclude Include="headers\EntitySpawner.h" />
+    <ClInclude Include="headers\Object.h" />
+    <ClInclude Include="headers\ObjectManager.h" />
+    <ClInclude Include="headers\ObjectSpawner.h" />
     <ClInclude Include="headers\InputManager.h" />
     <ClInclude Include="headers\SceneObject.h" />
     <ClInclude Include="headers\PhysicsCore.h" />
@@ -196,7 +196,7 @@
     <ClInclude Include="headers\stdafx.h" />
     <ClInclude Include="headers\Text.h" />
     <ClInclude Include="headers\Transform.h" />
-    <ClInclude Include="headers\UI.h" />
+    <ClInclude Include="headers\BaseGUI.h" />
     <ClInclude Include="headers\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,7 +219,7 @@
     <ClCompile Include="source\Objects\SceneObject.cpp" />
     <ClCompile Include="source\Objects\Renderable.cpp" />
     <ClCompile Include="source\Objects\RenderableObject.cpp" />
-    <ClCompile Include="source\Objects\UI.cpp" />
+    <ClCompile Include="source\Objects\BaseGUI.cpp" />
     <ClCompile Include="source\utils\Clock.cpp" />
     <ClCompile Include="source\utils\Random.cpp" />
     <ClCompile Include="source\utils\RendererUtils.cpp" />

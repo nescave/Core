@@ -4,64 +4,64 @@
 #include "Collider.h"
 #include "RenderableComponent.h"
 #include "PhysicsCore.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 
-Object::Object() :
+SceneObject::SceneObject() :
 	transform(Transform()),
 	parent(weak_Object()),
 	children(std::map<const uint32_t, weak_Object>()),
 	core(&Core::Get())
 {}
 
-Transform& Object::GetTransform()
+Transform& SceneObject::GetTransform()
 {
 	return transform;
 }
-Vector2d& Object::GetLocalPosition()
+Vector2d& SceneObject::GetLocalPosition()
 {
 	return transform.position;
 }
-double Object::GetLocalRotation()
+double SceneObject::GetLocalRotation()
 {
 	return transform.rotation;
 }
-Vector2f& Object::GetLocalPivot()
+Vector2f& SceneObject::GetLocalPivot()
 {
 	return transform.pivot;
 }
-Transform Object::GetWorldTransform() //transform probably should be passed by reference but thats problematic
+Transform SceneObject::GetWorldTransform() //transform probably should be passed by reference but thats problematic
 {
 	auto lParent = parent.lock();
 	if (!lParent) return transform;
 	return transform.CombineTransform(lParent->GetWorldTransform());
 }
 
-Vector2d Object::GetWorldPosition()
+Vector2d SceneObject::GetWorldPosition()
 {
 
 	return GetWorldTransform().position;
 }
 
-double Object::GetWorldRotation()
+double SceneObject::GetWorldRotation()
 {
 	return GetWorldTransform().rotation;
 }
 
-const Vector2d Object::GetUpVector()
+const Vector2d SceneObject::GetUpVector()
 {
 	Vector2f vec = Vector2f::up;
 	vec.Rotate(transform.rotation);
 	return vec;
 }
 
-const Vector2d Object::GetRightVector()
+const Vector2d SceneObject::GetRightVector()
 {
 	Vector2f vec = Vector2f::right;
 	vec.Rotate(transform.rotation);
 	return vec;
 }
 
-bool Object::IsChild(weak_Object child)
+bool SceneObject::IsChild(weak_Object child)
 {
 	if(!HasChildren()) return false;
 	const uint32_t searched = child.lock()->id;
@@ -70,26 +70,26 @@ bool Object::IsChild(weak_Object child)
 	return false;
 }
 
-Object& Object::SetTransform(Transform t)
+SceneObject& SceneObject::SetTransform(Transform t)
 {
 	transform = t;
 	return *this;
 }
-Object& Object::SetPosition(Vector2d pos)
+SceneObject& SceneObject::SetPosition(Vector2d pos)
 {
 	transform.position = pos;
 	return *this;
 }
-void Object::ClearParent()
+void SceneObject::ClearParent()
 {
 	parent = weak_Object();
 }
 
-void Object::ApplyTransform() {
+void SceneObject::ApplyTransform() {
 	transform = GetWorldTransform();
 }
 
-bool Object::ClearChildren()
+bool SceneObject::ClearChildren()
 {
 	for (auto tpl : children) {
 		tpl.second.lock()->SetParent(weak_Object());
@@ -98,7 +98,7 @@ bool Object::ClearChildren()
 	return children.empty();
 }
 
-bool Object::AddChild(weak_Object child) {
+bool SceneObject::AddChild(weak_Object child) {
 
 	if (IsChild(child)) {
 		printf("Can't add child: it is a child already!\n");
@@ -107,7 +107,7 @@ bool Object::AddChild(weak_Object child) {
 	children.insert({ child.lock()->id, child });
 	return true;
 }
-bool Object::RemoveChild(weak_Object child) {
+bool SceneObject::RemoveChild(weak_Object child) {
 	
 	const uint32_t id = child.lock()->id;
 	if (!IsChild(child)) {
@@ -118,7 +118,7 @@ bool Object::RemoveChild(weak_Object child) {
 	return true;
 }
 
-bool Object::IsParentPossible(weak_Object par)
+bool SceneObject::IsParentPossible(weak_Object par)
 {
 	auto parentToCheck = par.lock();
 	while (parentToCheck) {
@@ -131,12 +131,12 @@ bool Object::IsParentPossible(weak_Object par)
 	return true;
 }
 
-void Object::RegisterCollider(std::weak_ptr<Collider> col)
+void SceneObject::RegisterCollider(std::weak_ptr<Collider> col)
 {
 	Core::Get().GetPhysicsCore().AddCollider(col);
 }
 
-Object& Object::SetParent(weak_Object par, const bool applyPreviousTransform) {
+SceneObject& SceneObject::SetParent(weak_Object par, const bool applyPreviousTransform) {
 	auto oldParent = parent.lock();
 	auto newParent = par.lock();
 	
@@ -159,7 +159,7 @@ Object& Object::SetParent(weak_Object par, const bool applyPreviousTransform) {
 	return *this;
 }
 
-bool Object::HasRenderableComponents()
+bool SceneObject::HasRenderableComponents()
 {
 	if(!HasComponents()) return false;
 	for (auto& tpl : components) {
@@ -168,7 +168,7 @@ bool Object::HasRenderableComponents()
 	return false;
 }
 
-std::vector<RenderableComponent*> Object::GetRenderableComponents()
+std::vector<RenderableComponent*> SceneObject::GetRenderableComponents()
 {
 	std::vector<RenderableComponent*> rComps;
 	if (!HasRenderableComponents()) return rComps;
@@ -179,13 +179,13 @@ std::vector<RenderableComponent*> Object::GetRenderableComponents()
 	return rComps;
 }
 
-bool Object::HasCollider()
+bool SceneObject::HasCollider()
 {
 	//if (!this->GetComponentOfClass<Collider>(false).expired()) return true;
 	return false;
 }
 
-bool Object::RemoveComponent(std::type_index compClass)
+bool SceneObject::RemoveComponent(std::type_index compClass)
 {
 	auto lComp = components[(uint32_t)compClass.hash_code()];
 	if (!lComp) {
@@ -197,12 +197,12 @@ bool Object::RemoveComponent(std::type_index compClass)
 	return true;
 }
 
-void Object::OnBeginOverlap(Collider* col)
+void SceneObject::OnBeginOverlap(Collider* col)
 {
 	printf("%s collided with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());
 }
 
-void Object::OnEndOverlap(Collider* col)
+void SceneObject::OnEndOverlap(Collider* col)
 {
 	if (col)
 		printf("%s ended collision with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());

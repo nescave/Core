@@ -3,10 +3,10 @@
 #include "Renderable.h"
 #include "CoreTypes.h"
 
-class RenderObject : public Object, public Renderable
+class RenderableObject : public SceneObject, public Renderable
 {
 protected:
-    RenderObject();
+    RenderableObject();
 public:
 
     bool ShouldRender() override { return texture != nullptr; } 

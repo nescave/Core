@@ -1,10 +1,10 @@
 #pragma once
 #include "CoreFonts.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 #include <optional>
 
-class Entity;
 class Object;
+class SceneObject;
 class Actor;
 class Text;
 
@@ -18,7 +18,7 @@ public:
     //ActorSpawners----------------------------------------------------
     template<
         typename T,
-        class = std::enable_if_t<std::is_base_of_v<Object, T>>
+        class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
     static std::weak_ptr<T> SpawnObject(Transform& t, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
@@ -34,7 +34,7 @@ public:
     
     template<
         typename T,
-        class = std::enable_if_t<std::is_base_of_v<Object, T>>
+        class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
     static std::weak_ptr<T> SpawnObject(Transform&& t = Transform(), shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
@@ -43,7 +43,7 @@ public:
     
     template<
         typename T,
-        class = std::enable_if_t<std::is_base_of_v<Object, T>>
+        class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
     static std::weak_ptr<T> SpawnObject(const Vector2d& p, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "")
     {
@@ -52,8 +52,8 @@ public:
     //ActorSpawners----------------------------------------------------
     template<
         typename T,
-        class = std::enable_if_t<std::is_base_of_v<Entity, T>>,
-        class = std::enable_if_t<!std::is_base_of_v<Object, T>>
+        class = std::enable_if_t<std::is_base_of_v<Object, T>>,
+        class = std::enable_if_t<!std::is_base_of_v<SceneObject, T>>
     >
     static std::weak_ptr<T> SpawnEntity(std::string n = "") 
     {

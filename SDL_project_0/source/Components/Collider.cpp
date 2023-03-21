@@ -4,9 +4,9 @@
 #include "PhysicsCore.h"
 #include "RenderableObject.h"
 
-Collider& Collider::SetMaxReach(Object* own)
+Collider& Collider::SetMaxReach(SceneObject* own)
 {
-	auto rObj = static_cast<RenderObject*>(&*own);
+	auto rObj = static_cast<RenderableObject*>(&*own);
 	if (!rObj) return *this;
 	Vector2d scrSize = rObj->GetSize();
 	return SetMaxReach((float)((scrSize * rObj->GetTransform().pivot).Length()));

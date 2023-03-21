@@ -1,40 +1,40 @@
 #include "stdafx.h"
 #include "Core.h"
-#include "Entity.h"
-#include "EntityManager.h"
+#include "Object.h"
+#include "ObjectManager.h"
 
-Entity::Entity() :
+Object::Object() :
 	destroyed(false),
 	bUpdate(true),
 	id(EntityManager::Get()->GetFreeEntityID()),
 	name(((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())))
 {}
 
-void Entity::OnSpawn()
+void Object::OnSpawn()
 {
 	printf("%s Spawns!\n", name.c_str());
 }
 
-void Entity::Begin() {
+void Object::Begin() {
 	printf("%s Begins!\n", name.c_str());
 
 }
-void Entity::Update(double dTime) {
+void Object::Update(double dTime) {
 }
 
-void Entity::OnDestroy()
+void Object::OnDestroy()
 {
 	printf("%s deleted!\n", name.c_str());
 }
 
-void Entity::Destroy()
+void Object::Destroy()
 {
 	destroyed = true;
 	OnDestroy();
 	Core::Get().GetEntityManager().DeleteEntity(id);
 }
 
-bool Entity::IsValid()
+bool Object::IsValid()
 {
 	return destroyed;
 }

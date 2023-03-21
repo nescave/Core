@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include <Core.h>
-#include <Entity.h>
-#include <EntitySpawner.h>
+#include <Object.h>
+#include <ObjectSpawner.h>
 #include <AssetManager.h>
 #include <InputManager.h>
 #include "CoreActionButtons.h"

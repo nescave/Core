@@ -3,11 +3,11 @@
 #include "SceneComponent.h"
 
 class Collider : 
-	public ComponentTransform,  public std::enable_shared_from_this<Collider>
+	public SceneComponent,  public std::enable_shared_from_this<Collider>
 {
 private:
 	float maxReach;
-	Collider& SetMaxReach(Object* own);
+	Collider& SetMaxReach(SceneObject* own);
 	Collider& SetMaxReach(float reach);
 
 public:

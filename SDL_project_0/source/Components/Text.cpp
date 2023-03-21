@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Text.h"
 #include "AssetManager.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 
 Text::Text() : 
 	text(""),

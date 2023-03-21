@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Actor.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 
 //Actor::Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex) :
 //	RenderObject(iD, n, t, s, tex)
@@ -12,7 +12,7 @@ void Actor::OnSpawn()
 }
 
 void Actor::Update(double dTime) {
-	Object::Update(dTime);
+	SceneObject::Update(dTime);
 }
 
 Actor& Actor::Translate(Vector2d vector){

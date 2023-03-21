@@ -3,7 +3,7 @@
 
 
 class Actor :
-    public RenderObject
+    public RenderableObject
 {
 private:
 

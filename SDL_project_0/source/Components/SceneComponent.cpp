@@ -2,45 +2,45 @@
 #include "SceneComponent.h"
 #include "RenderableObject.h"
 
-ComponentTransform::ComponentTransform() :
+SceneComponent::SceneComponent() :
 	transform(),
 	anchor(Anchor::Center)
 {}
 
-ComponentTransform& ComponentTransform::SetTransform(Transform & t)
+SceneComponent& SceneComponent::SetTransform(Transform & t)
 {
 	transform = t;
 	return *this;
 }
 
-ComponentTransform& ComponentTransform::SetPosition(Vector2d& pos)
+SceneComponent& SceneComponent::SetPosition(Vector2d& pos)
 {
 	transform.position = pos;
 	return *this;
 }
 
-ComponentTransform& ComponentTransform::SetRotation(double rot)
+SceneComponent& SceneComponent::SetRotation(double rot)
 {
 	transform.rotation = rot;
 	return *this;
 }
 
-ComponentTransform& ComponentTransform::SetScale(Vector2f& sc)
+SceneComponent& SceneComponent::SetScale(Vector2f& sc)
 {
 	transform.scale = sc;
 	return *this;
 }
 
-ComponentTransform& ComponentTransform::SetAnchor(Anchor anch)
+SceneComponent& SceneComponent::SetAnchor(Anchor anch)
 {
 	anchor = anch;
 	return *this;
 }
 
-Transform ComponentTransform::GetWorldTransform()
+Transform SceneComponent::GetWorldTransform()
 {
 	auto ownerPtr = owner.lock();
-	RenderObject* rObj = dynamic_cast<RenderObject*>(&*ownerPtr);
+	RenderableObject* rObj = dynamic_cast<RenderableObject*>(&*ownerPtr);
 	if (!rObj) {
 		return transform.CombineTransform(ownerPtr->GetWorldTransform());
 	}
@@ -49,27 +49,27 @@ Transform ComponentTransform::GetWorldTransform()
 	return transform.CombineTransform(anchorTransf);
 }
 
-Transform& ComponentTransform::GetLocalTransform()
+Transform& SceneComponent::GetLocalTransform()
 {
 	return transform;
 }
 
-Vector2d ComponentTransform::GetPosition()
+Vector2d SceneComponent::GetPosition()
 {
 	return GetWorldTransform().position;
 }
 
-double ComponentTransform::GetRotation()
+double SceneComponent::GetRotation()
 {
 	return GetWorldTransform().rotation;
 }
 
-Vector2f ComponentTransform::GetScale()
+Vector2f SceneComponent::GetScale()
 {
 	return GetWorldTransform().scale;
 }
 
-void ComponentTransform::OnSpawn()
+void SceneComponent::OnSpawn()
 {
 	Component::OnSpawn();
 }

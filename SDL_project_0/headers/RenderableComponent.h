@@ -3,7 +3,7 @@
 #include "Renderable.h"
 
 class RenderableComponent : 
-	public ComponentTransform,
+	public SceneComponent,
 	public Renderable
 {
 protected:

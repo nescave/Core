@@ -1,12 +1,12 @@
 #pragma once
-#include "Entity.h"
+#include "Object.h"
 #include "CoreTypes.h"
 #include "AnchorEnum.h"
 
 class Core;
 class RenderableComponent;
 
-class Object : public Entity, public std::enable_shared_from_this<Object>
+class SceneObject : public Object, public std::enable_shared_from_this<SceneObject>
 {
 	friend class Collider;
 protected:
@@ -27,7 +27,7 @@ protected:
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
 public:
-	Object();
+	SceneObject();
 	Transform& GetTransform(); // { return transform; }
 	Vector2d& GetLocalPosition(); //{ return transform.position; }
 	double GetLocalRotation(); // { return transform.rotation; }
@@ -47,13 +47,13 @@ public:
 	bool HasChildren() { return !children.empty(); }
 	bool IsChild(weak_Object child);
 
-	virtual Object& SetTransform(Transform t);
-	virtual Object& SetPosition(Vector2d pos);
-	virtual Object& SetRotation(float rot) { transform.rotation = fmod(rot, 360); return *this; }
-	virtual Object& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
-	virtual Object& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
+	virtual SceneObject& SetTransform(Transform t);
+	virtual SceneObject& SetPosition(Vector2d pos);
+	virtual SceneObject& SetRotation(float rot) { transform.rotation = fmod(rot, 360); return *this; }
+	virtual SceneObject& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
+	virtual SceneObject& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
 	
-	Object& SetParent(weak_Object par, const bool applyPreviousTransform = false);
+	SceneObject& SetParent(weak_Object par, const bool applyPreviousTransform = false);
 
 	bool HasComponents() { return !components.empty(); }
 	bool HasRenderableComponents();
@@ -61,9 +61,9 @@ public:
 	virtual bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
 
-	virtual void OnSpawn() { Entity::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
-	virtual void Begin() { Entity::Begin(); }					//happens after full initialization
-	virtual void Update(double dTime) { Entity::Update(dTime); }
+	virtual void OnSpawn() { Object::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
+	virtual void Begin() { Object::Begin(); }					//happens after full initialization
+	virtual void Update(double dTime) { Object::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
 	virtual void OnEndOverlap(Collider* col);
 

@@ -4,7 +4,7 @@
 
 class Component 
 {
-	friend class Object;
+	friend class SceneObject;
 protected:
 	weak_Object owner;
 

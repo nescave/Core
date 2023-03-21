@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "EntityManager.h"
+#include "ObjectManager.h"
 #include "CoreFunctions.h"
-#include "Entity.h"
+#include "Object.h"
 
 static EntityManager* emInst;
 void EntityManager::AddEntity(shared_Entity ent)

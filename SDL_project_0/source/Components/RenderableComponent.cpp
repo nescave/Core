@@ -7,11 +7,11 @@ RenderableComponent::RenderableComponent()
 
 void RenderableComponent::OnSpawn()
 {
-	ComponentTransform::OnSpawn();
+	SceneComponent::OnSpawn();
 	auto lOwner = owner.lock();
 	if (lOwner)
 	{
-		RenderObject* rObj = static_cast<RenderObject*>(&*lOwner);
+		RenderableObject* rObj = static_cast<RenderableObject*>(&*lOwner);
 		sortingPriority = rObj->GetSortingPriority() -1;
 	}
 }

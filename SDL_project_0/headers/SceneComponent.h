@@ -2,26 +2,26 @@
 #include "Component.h"
 #include "AnchorEnum.h"
 
-class ComponentTransform : public Component
+class SceneComponent : public Component
 {
 protected:
 	Transform transform;
 	Anchor anchor;
 
-	ComponentTransform();
+	SceneComponent();
 public:
 
-	ComponentTransform& SetTransform(Transform& t);
-	ComponentTransform& SetPosition(Vector2d& pos);
-	ComponentTransform& SetRotation(double rot);
-	ComponentTransform& SetScale(Vector2f& sc);
+	SceneComponent& SetTransform(Transform& t);
+	SceneComponent& SetPosition(Vector2d& pos);
+	SceneComponent& SetRotation(double rot);
+	SceneComponent& SetScale(Vector2f& sc);
 
-	ComponentTransform& SetTransform(Transform&& t) { return SetTransform(t); }
-	ComponentTransform& SetPosition(Vector2d&& pos) { return SetPosition(pos); }
-	ComponentTransform& SetScale(Vector2f&& sc) { return SetScale(sc); }
+	SceneComponent& SetTransform(Transform&& t) { return SetTransform(t); }
+	SceneComponent& SetPosition(Vector2d&& pos) { return SetPosition(pos); }
+	SceneComponent& SetScale(Vector2f&& sc) { return SetScale(sc); }
 
 
-	ComponentTransform& SetAnchor(Anchor anch);
+	SceneComponent& SetAnchor(Anchor anch);
 
 	virtual Transform GetWorldTransform();
 	virtual Transform& GetLocalTransform();

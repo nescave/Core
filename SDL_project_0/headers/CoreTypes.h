@@ -1,15 +1,15 @@
 #pragma once
-class Entity;
 class Object;
+class SceneObject;
 class Component;
-class RenderObject;
+class RenderableObject;
 class Collider;
 
-typedef std::shared_ptr<Entity> shared_Entity;
-typedef std::weak_ptr<Entity> weak_Entity;
+typedef std::shared_ptr<Object> shared_Entity;
+typedef std::weak_ptr<Object> weak_Entity;
 
-typedef std::shared_ptr<Object> shared_Object;
-typedef std::weak_ptr<Object> weak_Object;
+typedef std::shared_ptr<SceneObject> shared_Object;
+typedef std::weak_ptr<SceneObject> weak_Object;
 
 typedef std::shared_ptr<Component> shared_Component;
 typedef std::weak_ptr<Component> weak_Component;
