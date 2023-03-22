@@ -42,9 +42,9 @@ Transform SceneComponent::GetWorldTransform()
 	auto ownerPtr = owner.lock();
 	RenderableObject* rObj = dynamic_cast<RenderableObject*>(&*ownerPtr);
 	if (!rObj) {
-		return transform.CombineTransform(ownerPtr->GetWorldTransform());
+		return transform.CombineTransform(ownerPtr->GetAbsoluteTransform());
 	}
-	Transform anchorTransf = rObj->GetWorldTransform();
+	Transform anchorTransf = rObj->GetAbsoluteTransform();
 	anchorTransf.position += rObj->GetAnchorOffset(anchor);
 	return transform.CombineTransform(anchorTransf);
 }

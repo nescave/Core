@@ -47,7 +47,7 @@ void Core::Update() {
         if (obj->ShouldRender()) {
             auto rObj = dynamic_cast<RenderableObject*>(&*obj);
             if (rObj) {
-                drawList.push(DrawCall(rObj, rObj->GetWorldTransform()));
+                drawList.push(DrawCall(rObj, rObj->GetAbsoluteTransform()));
             }
             for (auto comp : rObj->GetRenderableComponents()) {
                 drawList.push(DrawCall(comp, comp->GetWorldTransform()));

@@ -29,6 +29,7 @@ struct Transform
 	const Vector2<T> TransformPosition(Vector2<T>& pos);
 	template <typename T>
 	const Vector2<T> TransformVector(Vector2<T>& pos);
+
 	Transform CombineTransform(Transform transf);
 };
 

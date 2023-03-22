@@ -28,42 +28,45 @@ protected:
 
 public:
 	SceneObject();
-	Transform& GetTransform(); // { return transform; }
-	Vector2d& GetLocalPosition(); //{ return transform.position; }
-	double GetLocalRotation(); // { return transform.rotation; }
-	virtual Vector2f& GetLocalPivot(); // { return transform.pivot; }
+	Transform& GetTransform(); 
+	Vector2d& GetPosition(); 
+	double GetRotation();
+	Vector2f& GetScale();
 	
-	Transform GetWorldTransform();
+	virtual Vector2f& GetPivot(); 
+	
+	Transform GetAbsoluteTransform();
+	Vector2d GetAbsolutePosition();
+	double GetAbsoluteRotation();
+	Vector2f GetAbsoluteScale();
 
-	Vector2d GetWorldPosition();
-	double GetWorldRotation();
-	//Vector2f GetWorldPivot();
+	Vector2d GetUpVector() const;
+	Vector2d GetRightVector() const;
 
-	const Vector2d GetUpVector();
-	const Vector2d GetRightVector();
-
-	WeakSceneObject GetParent() { return parent; }
+	double GetLookAtRotation(const Vector2d& pos);
+	
+	WeakSceneObject GetParent() const { return parent; }
 	std::map<const uint32_t, WeakSceneObject>& GetChildren() { return children; }
-	bool HasChildren() { return !children.empty(); }
-	bool IsChild(WeakSceneObject child);
+	bool HasChildren() const { return !children.empty(); }
+	bool IsChild(WeakSceneObject child) const;
 
 	virtual SceneObject& SetTransform(Transform t);
 	virtual SceneObject& SetPosition(Vector2d pos);
-	virtual SceneObject& SetRotation(float rot) { transform.rotation = fmod(rot, 360); return *this; }
+	virtual SceneObject& SetRotation(double rot) { transform.rotation = fmod(rot, 360); return *this; }
 	virtual SceneObject& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
 	virtual SceneObject& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
 	
 	SceneObject& SetParent(WeakSceneObject par, const bool applyPreviousTransform = false);
 
-	bool HasComponents() { return !components.empty(); }
+	bool HasComponents() const { return !components.empty(); }
 	bool HasRenderableComponents();
 	std::vector<RenderableComponent*> GetRenderableComponents();
-	virtual bool HasCollider() override;
+	bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
 
-	virtual void OnSpawn() { Object::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
-	virtual void Begin() { Object::Begin(); }					//happens after full initialization
-	virtual void Update(double dTime) { Object::Update(dTime); }
+	void OnSpawn() override { Object::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
+	void Begin() override { Object::Begin(); }					//happens after full initialization
+	void Update(double dTime) override { Object::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
 	virtual void OnEndOverlap(Collider* col);
 

@@ -17,51 +17,66 @@ Transform& SceneObject::GetTransform()
 {
 	return transform;
 }
-Vector2d& SceneObject::GetLocalPosition()
+Vector2d& SceneObject::GetPosition()
 {
 	return transform.position;
 }
-double SceneObject::GetLocalRotation()
+double SceneObject::GetRotation()
 {
 	return transform.rotation;
 }
-Vector2f& SceneObject::GetLocalPivot()
+
+Vector2f& SceneObject::GetScale()
+{
+	return transform.scale;
+}
+
+Vector2f& SceneObject::GetPivot()
 {
 	return transform.pivot;
 }
-Transform SceneObject::GetWorldTransform() //transform probably should be passed by reference but thats problematic
+Transform SceneObject::GetAbsoluteTransform()
 {
 	auto lParent = parent.lock();
 	if (!lParent) return transform;
-	return transform.CombineTransform(lParent->GetWorldTransform());
+	return transform.CombineTransform(lParent->GetAbsoluteTransform());
 }
 
-Vector2d SceneObject::GetWorldPosition()
+Vector2d SceneObject::GetAbsolutePosition()
 {
 
-	return GetWorldTransform().position;
+	return GetAbsoluteTransform().position;
 }
 
-double SceneObject::GetWorldRotation()
+double SceneObject::GetAbsoluteRotation()
 {
-	return GetWorldTransform().rotation;
+	return GetAbsoluteTransform().rotation;
 }
 
-const Vector2d SceneObject::GetUpVector()
+Vector2f SceneObject::GetAbsoluteScale()
 {
-	Vector2f vec = Vector2f::up;
-	vec.Rotate(transform.rotation);
-	return vec;
+	return GetAbsoluteTransform().scale;
 }
 
-const Vector2d SceneObject::GetRightVector()
+Vector2d SceneObject::GetUpVector () const
 {
-	Vector2f vec = Vector2f::right;
-	vec.Rotate(transform.rotation);
-	return vec;
+	return Vector2f::up.Rotate(transform.rotation);
 }
 
-bool SceneObject::IsChild(WeakSceneObject child)
+Vector2d SceneObject::GetRightVector() const
+{
+	return Vector2f::right.Rotate(transform.rotation);
+}
+
+double SceneObject::GetLookAtRotation(const Vector2d& pos)
+{
+	const Vector2d targetVec = (pos - GetAbsoluteTransform().position).Normalize();
+	return atan2(targetVec.y, targetVec.x) * 180.0/PI+90;
+	//atan gives positive angle from positive x axis to vector
+	//so adding 90 deg fixes 0 rotation to positive y axis
+}
+
+bool SceneObject::IsChild(WeakSceneObject child) const
 {
 	if(!HasChildren()) return false;
 	const uint32_t searched = child.lock()->id;
@@ -86,7 +101,7 @@ void SceneObject::ClearParent()
 }
 
 void SceneObject::ApplyTransform() {
-	transform = GetWorldTransform();
+	transform = GetAbsoluteTransform();
 }
 
 bool SceneObject::ClearChildren()

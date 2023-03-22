@@ -108,7 +108,7 @@ struct Vector2
 	double Length() {
 		return sqrt(this->LengthSqr());
 	}
-	Vector2 Rotate(double angle) {
+	Vector2 Rotate(double angle) const{
 		double rad = angle/180.0f * PI;
 		T x = (T)((double)this->x * cos(rad) - (double)this->y * sin(rad));
 		T y = (T)((double)this->x * sin(-rad) + (double)this->y * cos(rad));
@@ -122,6 +122,10 @@ struct Vector2
 	static double Distance(Vector2 a, Vector2 b) {
 		Vector2 c = b - a;
 		return c.Length();
+	}
+	Vector2 Normalize()
+	{
+		return *this / this->LengthSqr();
 	}
 
 };

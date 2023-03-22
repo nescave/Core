@@ -3,7 +3,7 @@ class ObjectSpawner;
 
 class Object
 {
-	friend class EntitySpawner;
+	friend class ObjectSpawner;
 
 private:
 
