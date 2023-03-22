@@ -171,6 +171,7 @@
     <ClInclude Include="headers\Actor.h" />
     <ClInclude Include="headers\AnchorEnum.h" />
     <ClInclude Include="headers\AssetManager.h" />
+    <ClInclude Include="headers\Avatar.h" />
     <ClInclude Include="headers\Clock.h" />
     <ClInclude Include="headers\Collider.h" />
     <ClInclude Include="headers\Component.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="source\Core\PhysicsCore.cpp" />
     <ClCompile Include="source\Core\RendererCore.cpp" />
     <ClCompile Include="source\Objects\Actor.cpp" />
+    <ClCompile Include="source\Objects\Avatar.cpp" />
     <ClCompile Include="source\Objects\Object.cpp" />
     <ClCompile Include="source\Objects\SceneObject.cpp" />
     <ClCompile Include="source\Objects\Renderable.cpp" />

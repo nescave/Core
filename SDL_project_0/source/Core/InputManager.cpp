@@ -9,8 +9,20 @@ void InputManager::AddCoreButtons()
 {
 	AddActionButton(CONFIRM, SDLK_RETURN);
 	AddActionButton(CANCEL, SDLK_ESCAPE);
+	AddActionButton(UP, SDLK_UP);
+	AddActionButton(LEFT, SDLK_LEFT);
+	AddActionButton(DOWN, SDLK_DOWN);
+	AddActionButton(RIGHT, SDLK_RIGHT);
+	AddActionButton(W, SDLK_w);
+	AddActionButton(A, SDLK_a);
+	AddActionButton(S, SDLK_s);
+	AddActionButton(D, SDLK_d);
+	AddActionButton(L_SHIFT, SDLK_LSHIFT);
+	AddActionButton(TAB, SDLK_TAB);
+
 	AddActionMouseButton(LMB, SDL_BUTTON_LEFT);
 	AddActionMouseButton(RMB, SDL_BUTTON_RIGHT);
+	AddActionMouseButton(MMB, SDL_BUTTON_MIDDLE);
 
 }
 
@@ -43,7 +55,7 @@ void InputManager::AddActionButton(int actionButtonEnum, SDL_Keycode key)
 		return;
 	}
 	actionButtons[key] = actionButtonEnum;
-	actionsMap.emplace(actionButtonEnum, buttonAction() );
+	actionsMap.emplace(actionButtonEnum, ButtonActions() );
 }
 
 void InputManager::AddActionMouseButton(int actionButtonEnum, int button)
@@ -53,12 +65,12 @@ void InputManager::AddActionMouseButton(int actionButtonEnum, int button)
 		return;
 	}
 	mouseActionButtons[button] = actionButtonEnum;
-	actionsMap.emplace(actionButtonEnum, buttonAction());
+	actionsMap.emplace(actionButtonEnum, ButtonActions());
 }
 
-void InputManager::RegisterAction(int actionButtonEnum, std::function<void()> f)
+void InputManager::RegisterAction(int actionButtonEnum, const std::function<void()>& f, EActionType type)
 {
-	actionsMap[actionButtonEnum].push_back(f);
+	actionsMap[actionButtonEnum].push_back(std::make_pair(f, type));
 }
 
 const Vector2d& InputManager::GetPointerScreenPosition() const
@@ -68,30 +80,53 @@ const Vector2d& InputManager::GetPointerScreenPosition() const
 
 void InputManager::ProcessInput()
 {
+	SDL_Keycode key;
+	uint8_t mb;
 	while (SDL_PollEvent(&e)) {
 		switch (e.type)
 		{
 		case SDL_KEYDOWN:
-			if(!e.key.repeat){
-			
-				SDL_Keycode key = e.key.keysym.sym;
-				if (actionsMap.find(actionButtons[key]) != actionsMap.end()) {
-					for (auto f : actionsMap[actionButtons[key]]) {
-						f();
+			key = e.key.keysym.sym;
+			if (actionsMap.find(actionButtons[key]) != actionsMap.end()) {
+				for (auto& tpl : actionsMap[actionButtons[key]]) {
+					if(!e.key.repeat &&
+						(std::get<1>(tpl) == EActionType::REPETABLE ||
+						std::get<1>(tpl) == EActionType::SINGLE))
+					{
+						std::get<0>(tpl)();
+					}else if(!e.key.repeat && std::get<1>(tpl) == EActionType::CONTINUOUS)
+					{
+						continuousButtons.push_back(actionButtons[key]);
 					}
 				}
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			if (e.button.clicks > 0) {
-				auto mb = e.button.button;
-				if (actionsMap.find(mouseActionButtons[mb]) != actionsMap.end()) {
-					for (auto f : actionsMap[mouseActionButtons[mb]]) {
-						f();
+			mb = e.button.button;
+			if (actionsMap.find(mouseActionButtons[mb]) != actionsMap.end()) {
+				for (auto& tpl : actionsMap[mouseActionButtons[mb]]) {
+					if(!(e.button.clicks >0) &&
+						(std::get<1>(tpl) == EActionType::REPETABLE ||
+						std::get<1>(tpl) == EActionType::SINGLE))
+					{
+						std::get<0>(tpl)();
+					}else if(!(e.button.clicks >0) &&
+						std::get<1>(tpl) == EActionType::CONTINUOUS)
+					{
+						continuousButtons.push_back(mouseActionButtons[mb]);
 					}
 				}
 			}
 			break;
+		case SDL_KEYUP:
+			key = e.key.keysym.sym;
+			continuousButtons.remove(actionButtons[key]);
+			break;
+		case SDL_MOUSEBUTTONUP:
+			mb = e.button.button;
+			continuousButtons.remove(mouseActionButtons[mb]);
+			break;
+			
 		case SDL_MOUSEMOTION:
 			mousePosition.x = e.motion.x;
 			mousePosition.y = e.motion.y;
@@ -101,6 +136,13 @@ void InputManager::ProcessInput()
 			break;
 		default:
 			break;
+		}
+	}
+	for(auto button : continuousButtons)
+	{
+		for(auto& tpl : actionsMap[button])
+		{
+			std::get<0>(tpl)();
 		}
 	}
 }

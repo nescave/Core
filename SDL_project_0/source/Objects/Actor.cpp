@@ -6,6 +6,9 @@
 //	RenderObject(iD, n, t, s, tex)
 //{}
 
+Actor::Actor() : maxSpeed(5)
+{}
+
 void Actor::OnSpawn()
 {
 	printf("Actor's OnSpawn called \n");
@@ -13,12 +16,20 @@ void Actor::OnSpawn()
 
 void Actor::Update(double dTime) {
 	SceneObject::Update(dTime);
+
+	Translate(speed);
 }
 
-Actor& Actor::Translate(Vector2d vector){
+Actor& Actor::Translate(Vector2f& vector){
 	transform.position += vector;
 	return *this;
 }
+
+Actor& Actor::TranslateAbsolute(Vector2f& vector)
+{
+	return Translate(vector.RotateThis(GetAbsoluteRotation()));
+}
+
 Actor& Actor::Rotate(double angle) {
 	transform.rotation = fmod((transform.rotation + angle), 360);
 	return *this;
@@ -32,3 +43,13 @@ Actor& Actor::Scale(float scale) {
 	return *this;
 }
 
+Actor& Actor::Accelerate(Vector2f force)
+{
+	speed+= force;
+	return *this;
+}
+
+Actor& Actor::Stop()
+{
+	speed = Vector2f::zero; return *this;
+}

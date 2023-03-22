@@ -65,7 +65,7 @@ void Core::StartMainLoop(){
         input->ProcessInput();
 
         Update();
-        //Sleep(5);
+        Sleep(5);
         physicsCore->Update();
         rendererCore->Update(drawList);
         quit = input->GetQuitEvent();

@@ -7,7 +7,7 @@
 #include <InputManager.h>
 #include "CoreActionButtons.h"
 #include "CoreFonts.h"
-#include "Serf.h"
+#include "PlayerTower.h"
 #include "Text.h"
 //#undef main
 
@@ -27,7 +27,7 @@ int main(int argc, char* args[])
     Core& core = Core::Get();
     if (!core.Init()) return 1;
 
-    WeakSceneObject a = ObjectSpawner::SpawnObject<Serf>(Vector2i(120, 80));
+    WeakSceneObject a = ObjectSpawner::SpawnObject<PlayerTower>(Vector2i(120, 80));
 
     //InputManager::RegisterAction(ECoreActionButton::RMB, deleteObj);
     //InputManager::RegisterAction(ECoreActionButton::LMB, Serf_F);

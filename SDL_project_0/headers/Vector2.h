@@ -61,8 +61,9 @@ struct Vector2
 		this->y -= rVec.y;
 		return *this;
 	}
-	Vector2 operator*(double scale) const {
-		Vector2 vec(this->x * scale, this->y * scale);
+	template <typename T2>
+	Vector2 operator*(T2 scale) const {
+		Vector2 vec(T(this->x * scale), T(this->y * scale));
 		return vec;
 	}
 	Vector2& operator*=(const Vector2& rVec) {
@@ -113,6 +114,12 @@ struct Vector2
 		T x = (T)((double)this->x * cos(rad) - (double)this->y * sin(rad));
 		T y = (T)((double)this->x * sin(-rad) + (double)this->y * cos(rad));
 		return Vector2<T>(x,y);
+	}
+	Vector2& RotateThis(double angle){
+		double rad = angle/180.0f * PI;
+		this->x = (T)((double)this->x * cos(rad) - (double)this->y * sin(rad));
+		this->y = (T)((double)this->x * sin(-rad) + (double)this->y * cos(rad));
+		return *this;
 	}
 	static Vector2 Random(T xMin, T xMax, T yMin, T yMax) {
 		T x = Random::FromRange(xMin, xMax);
