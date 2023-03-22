@@ -8,7 +8,7 @@ Renderable::Renderable() :
 	sortingPriority((uint16_t)ESortingPriority::AVERAGE)
 {}
 
-Vector2i Renderable::GetSizeFromTexture(shared_Texture tex)
+Vector2i Renderable::GetSizeFromTexture(SharedTexture tex)
 {
 	if (!tex) return Vector2i::zero;
 	Vector2i vec;
@@ -31,7 +31,7 @@ Renderable& Renderable::SetBlendMode(SDL_BlendMode mode)
 	return *this;
 }
 
-Renderable& Renderable::SetTexture(shared_Texture tx)
+Renderable& Renderable::SetTexture(SharedTexture tx)
 {
 	if (!tx) return *this;
 	texture = tx;

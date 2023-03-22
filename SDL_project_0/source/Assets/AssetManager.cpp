@@ -37,12 +37,12 @@ AssetManager* AssetManager::Get() {
     return amInst;
 }
 
-shared_Texture AssetManager::SetTextureLock(uint16_t texEnum, bool lock)
+SharedTexture AssetManager::SetTextureLock(uint16_t texEnum, bool lock)
 {
     return SetTextureLock(textures[texEnum].lock(), lock);
 }
 
-shared_Texture AssetManager::SetTextureLock(shared_Texture texture, bool lock)
+SharedTexture AssetManager::SetTextureLock(SharedTexture texture, bool lock)
 {
     auto it = lockedTextures.find(texture);
     if (it == lockedTextures.end()) {
@@ -64,42 +64,42 @@ shared_Texture AssetManager::SetTextureLock(shared_Texture texture, bool lock)
     return texture;
 }
 
-shared_Texture AssetManager::LoadTexture(const char* path, bool lock) {
+SharedTexture AssetManager::LoadTexture(const char* path, bool lock) {
     uint16_t i = (uint16_t)GetFirstFreeID(textures);
     return LoadTexture(path, i, lock);
 }
 
-shared_Texture AssetManager::LoadTexture(const char* path, int texEnum, bool lock) {
+SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock) {
     SDL_Texture* sdlTexture = IMG_LoadTexture(rendererCore->GetRenderer(), path);
     if (!sdlTexture) {
         printf("Failed to load image from path: %s! SDL Error: %s\n", path, SDL_GetError());
         return nullptr;
     }
-    shared_Texture texture(sdlTexture, TextureDeleter());
+    SharedTexture texture(sdlTexture, TextureDeleter());
     textures.emplace(texEnum, texture);
     if (lock) SetTextureLock(textures[texEnum].lock(), lock);
     return textures[texEnum].lock();
 }
 
-shared_Texture AssetManager::GetLoadedTexture(uint16_t texEnum) {
+SharedTexture AssetManager::GetLoadedTexture(uint16_t texEnum) {
     return textures[texEnum].lock();
 }
 
-shared_Font AssetManager::LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID) {
+SharedFont AssetManager::LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID) {
     TTF_Font* sdlFont = TTF_OpenFont(path, fontSizeID);
     if (!sdlFont) {
         printf("Failed to load font from path: %s! SDL Error: %s\n", path, SDL_GetError());
         return nullptr;
     }
-    shared_Font font(sdlFont, FontDeleter());
+    SharedFont font(sdlFont, FontDeleter());
     fonts.emplace(fontEnum, font);
     return fonts[fontEnum];
 }
 
-shared_Texture AssetManager::MakeTextureFromText(uint16_t fontEnum = 0, const char* text = "TEXT", const SDL_Color color = {255,255,255,255}) {
+SharedTexture AssetManager::MakeTextureFromText(uint16_t fontEnum = 0, const char* text = "TEXT", const SDL_Color color = {255,255,255,255}) {
     uint16_t i = (uint16_t)GetFirstFreeID(textures);
     SDL_Surface* surface = TTF_RenderText_Solid(fonts[0].get(), text, color);
-    shared_Texture texture(SDL_CreateTextureFromSurface(rendererCore->GetRenderer(), surface), TextureDeleter());
+    SharedTexture texture(SDL_CreateTextureFromSurface(rendererCore->GetRenderer(), surface), TextureDeleter());
     textures[i] = texture;
     return texture;
 }

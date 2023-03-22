@@ -6,9 +6,9 @@
 #include "AssetManager.h"
 #include "CoreFunctions.h"
 
-EntityManager& EntitySpawner::GetEntityManager()
+ObjectManager& ObjectSpawner::GetObjectManager()
 {
-	return Core::Get().GetEntityManager();
+	return Core::Get().GetObjectManager();
 }
 
 //std::weak_ptr<Text> EntitySpawner::SpawnText(Transform& t, const Vector2i& s, std::string n, std::string txt, CoreFont::ECoreFont font, SDL_Color col)

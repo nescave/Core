@@ -209,13 +209,13 @@
     <ClCompile Include="source\Core\Core.cpp" />
     <ClCompile Include="source\Core\CoreFunctions.cpp" />
     <ClCompile Include="source\Core\CoreTypes.cpp" />
-    <ClCompile Include="source\Core\EntityManager.cpp" />
-    <ClCompile Include="source\Core\EntitySpawner.cpp" />
+    <ClCompile Include="source\Core\ObjectManager.cpp" />
+    <ClCompile Include="source\Core\ObjectSpawner.cpp" />
     <ClCompile Include="source\Core\InputManager.cpp" />
     <ClCompile Include="source\Core\PhysicsCore.cpp" />
     <ClCompile Include="source\Core\RendererCore.cpp" />
     <ClCompile Include="source\Objects\Actor.cpp" />
-    <ClCompile Include="source\Objects\Entity.cpp" />
+    <ClCompile Include="source\Objects\Object.cpp" />
     <ClCompile Include="source\Objects\SceneObject.cpp" />
     <ClCompile Include="source\Objects\Renderable.cpp" />
     <ClCompile Include="source\Objects\RenderableObject.cpp" />

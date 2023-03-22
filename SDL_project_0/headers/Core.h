@@ -8,7 +8,7 @@ constexpr int screen_height = 800;
 class RendererCore;
 class PhysicsCore;
 class AssetManager;
-class EntityManager;
+class ObjectManager;
 class Clock;
 class InputManager;
 class Actor;
@@ -20,7 +20,7 @@ private:
     std::unique_ptr<RendererCore> rendererCore;
     std::unique_ptr<PhysicsCore> physicsCore;
     std::unique_ptr<AssetManager> assetManager;
-    std::unique_ptr<EntityManager> entityManager;
+    std::unique_ptr<ObjectManager> objectManager;
     std::unique_ptr<InputManager> input;
     std::unique_ptr<Clock> clock;
 
@@ -36,7 +36,7 @@ public:
     RendererCore& GetRendererCore() { return *rendererCore; }
     PhysicsCore& GetPhysicsCore() { return *physicsCore; }
     AssetManager& GetAssetManager() { return *assetManager; }
-    EntityManager& GetEntityManager() { return *entityManager; }
+    ObjectManager& GetObjectManager() { return *objectManager; }
     //InputManager& GetInputManager() { return *input; }
 
     void Begin();

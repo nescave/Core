@@ -43,7 +43,7 @@ void InputManager::RegisterAction(int actionButtonEnum, std::function<void()> f)
 	actionsMap[actionButtonEnum].push_back(f);
 }
 
-Vector2i InputManager::GetPointerPosition()
+Vector2i InputManager::GetPointerScreenPosition()
 {
 	return mousePosition;
 }

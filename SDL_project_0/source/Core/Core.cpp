@@ -16,7 +16,7 @@ bool Core::Init() {
     rendererCore = std::make_unique<RendererCore>();
     physicsCore = std::make_unique<PhysicsCore>();
     assetManager = std::make_unique<AssetManager>();
-    entityManager = std::make_unique<EntityManager>();
+    objectManager = std::make_unique<ObjectManager>();
     input = std::make_unique<InputManager>();
     clock = std::make_unique<Clock>();
 
@@ -36,16 +36,16 @@ void Core::Begin() {}
 
 void Core::Update() {
     const double dTime = clock->GetDeltaTime();
-    for (auto& ent : entityManager->GetCreatedEntities()) 
+    for (auto& obj : objectManager->GetCreatedObjects()) 
     {
-        ent.lock()->Begin();
+        obj.lock()->Begin();
     }
-    entityManager->ClearCreatedEntities();
-    for (auto& tpl : entityManager->GetGameEntities())
+    objectManager->ClearCreatedObjects();
+    for (auto& tpl : objectManager->GetGameObjects())
     {
-        auto& ent = tpl.second;
-        if (ent->ShouldRender()) {
-            auto rObj = dynamic_cast<RenderableObject*>(&*ent);
+        auto& obj = tpl.second;
+        if (obj->ShouldRender()) {
+            auto rObj = dynamic_cast<RenderableObject*>(&*obj);
             if (rObj) {
                 drawList.push(DrawCall(rObj, rObj->GetWorldTransform()));
             }
@@ -53,7 +53,7 @@ void Core::Update() {
                 drawList.push(DrawCall(comp, comp->GetWorldTransform()));
             }
         }
-        ent->Update(dTime);
+        obj->Update(dTime);
     }
 }
 

@@ -16,7 +16,7 @@ public:
     Text();
 
     std::string GetText() { return text; }
-    shared_Texture GetTextureFromText();
+    SharedTexture GetTextureFromText();
 
     Text& SetAndUpdateText(std::string txt);
     Text& SetColor(SDL_Color col) { color = col; return *this; }

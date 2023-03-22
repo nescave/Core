@@ -8,11 +8,11 @@ class SceneObject;
 class Actor;
 class Text;
 
-class EntitySpawner
+class ObjectSpawner
 {
 private:
     
-    static EntityManager& GetEntityManager();
+    static ObjectManager& GetObjectManager();
 public:
 
     //ActorSpawners----------------------------------------------------
@@ -20,10 +20,10 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
-    static std::weak_ptr<T> SpawnObject(Transform& t, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
+    static std::weak_ptr<T> SpawnObject(Transform& t, SharedTexture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
         std::shared_ptr<T> actor = std::make_shared<T>();
-        GetEntityManager().AddEntity(actor);
+        GetObjectManager().AddObject(actor);
         actor->SetTransform(t);
         actor->SetSize(s);
         actor->SetTexture(tex);
@@ -36,7 +36,7 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
-    static std::weak_ptr<T> SpawnObject(Transform&& t = Transform(), shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
+    static std::weak_ptr<T> SpawnObject(Transform&& t = Transform(), SharedTexture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
         return SpawnObject<T>(t, tex, s, n);
     }
@@ -45,7 +45,7 @@ public:
         typename T,
         class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>
     >
-    static std::weak_ptr<T> SpawnObject(const Vector2d& p, shared_Texture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "")
+    static std::weak_ptr<T> SpawnObject(const Vector2d& p, SharedTexture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "")
     {
         return SpawnObject<T>(Transform(p), tex, s, n);
     }
@@ -55,12 +55,12 @@ public:
         class = std::enable_if_t<std::is_base_of_v<Object, T>>,
         class = std::enable_if_t<!std::is_base_of_v<SceneObject, T>>
     >
-    static std::weak_ptr<T> SpawnEntity(std::string n = "") 
+    static std::weak_ptr<T> SpawnObject(std::string n = "") 
     {
-        std::shared_ptr<T> entity = std::make_shared<T>();
-        GetEntityManager().AddEntity(entity);
-        entity->name = n;
-        return entity;
+        std::shared_ptr<T> obj = std::make_shared<T>();
+        GetObjectManager().AddObject(obj);
+        obj->name = n;
+        return obj;
     }
 };
 

@@ -8,8 +8,8 @@
 
 SceneObject::SceneObject() :
 	transform(Transform()),
-	parent(weak_Object()),
-	children(std::map<const uint32_t, weak_Object>()),
+	parent(WeakSceneObject()),
+	children(std::map<const uint32_t, WeakSceneObject>()),
 	core(&Core::Get())
 {}
 
@@ -61,7 +61,7 @@ const Vector2d SceneObject::GetRightVector()
 	return vec;
 }
 
-bool SceneObject::IsChild(weak_Object child)
+bool SceneObject::IsChild(WeakSceneObject child)
 {
 	if(!HasChildren()) return false;
 	const uint32_t searched = child.lock()->id;
@@ -82,7 +82,7 @@ SceneObject& SceneObject::SetPosition(Vector2d pos)
 }
 void SceneObject::ClearParent()
 {
-	parent = weak_Object();
+	parent = WeakSceneObject();
 }
 
 void SceneObject::ApplyTransform() {
@@ -92,13 +92,13 @@ void SceneObject::ApplyTransform() {
 bool SceneObject::ClearChildren()
 {
 	for (auto tpl : children) {
-		tpl.second.lock()->SetParent(weak_Object());
+		tpl.second.lock()->SetParent(WeakSceneObject());
 	}
 	children.clear();
 	return children.empty();
 }
 
-bool SceneObject::AddChild(weak_Object child) {
+bool SceneObject::AddChild(WeakSceneObject child) {
 
 	if (IsChild(child)) {
 		printf("Can't add child: it is a child already!\n");
@@ -107,7 +107,7 @@ bool SceneObject::AddChild(weak_Object child) {
 	children.insert({ child.lock()->id, child });
 	return true;
 }
-bool SceneObject::RemoveChild(weak_Object child) {
+bool SceneObject::RemoveChild(WeakSceneObject child) {
 	
 	const uint32_t id = child.lock()->id;
 	if (!IsChild(child)) {
@@ -118,7 +118,7 @@ bool SceneObject::RemoveChild(weak_Object child) {
 	return true;
 }
 
-bool SceneObject::IsParentPossible(weak_Object par)
+bool SceneObject::IsParentPossible(WeakSceneObject par)
 {
 	auto parentToCheck = par.lock();
 	while (parentToCheck) {
@@ -136,7 +136,7 @@ void SceneObject::RegisterCollider(std::weak_ptr<Collider> col)
 	Core::Get().GetPhysicsCore().AddCollider(col);
 }
 
-SceneObject& SceneObject::SetParent(weak_Object par, const bool applyPreviousTransform) {
+SceneObject& SceneObject::SetParent(WeakSceneObject par, const bool applyPreviousTransform) {
 	auto oldParent = parent.lock();
 	auto newParent = par.lock();
 	

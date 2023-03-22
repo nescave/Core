@@ -5,9 +5,9 @@ enum class ECoreFont;
 class AssetManager
 {
 private:
-    std::set<shared_Texture> lockedTextures;
-    std::unordered_map<uint16_t, weak_Texture> textures; //65k textures and fonts should be enough
-    std::unordered_map<uint16_t, shared_Font> fonts;
+    std::set<SharedTexture> lockedTextures;
+    std::unordered_map<uint16_t, WeakTexture> textures; //65k textures and fonts should be enough
+    std::unordered_map<uint16_t, SharedFont> fonts;
 
 public:
     AssetManager();
@@ -15,16 +15,16 @@ public:
     bool Init(bool LoadCoreResources);
     static AssetManager* Get();
     
-    shared_Texture SetTextureLock(uint16_t texEnum, bool lock = false);
-    shared_Texture SetTextureLock(shared_Texture texture, bool lock = false);
-    shared_Texture LoadTexture(const char* path, bool lock = false);
-    shared_Texture LoadTexture(const char* path, int texEnum, bool lock = false);
-    shared_Texture GetLoadedTexture(uint16_t texEnum);
+    SharedTexture SetTextureLock(uint16_t texEnum, bool lock = false);
+    SharedTexture SetTextureLock(SharedTexture texture, bool lock = false);
+    SharedTexture LoadTexture(const char* path, bool lock = false);
+    SharedTexture LoadTexture(const char* path, int texEnum, bool lock = false);
+    SharedTexture GetLoadedTexture(uint16_t texEnum);
 
-    shared_Font LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);
-    shared_Font GetLoadedFont(uint16_t fontEnum) { return fonts[fontEnum]; }
+    SharedFont LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);
+    SharedFont GetLoadedFont(uint16_t fontEnum) { return fonts[fontEnum]; }
 
-    shared_Texture  MakeTextureFromText(uint16_t fontEnum, const char* text, const SDL_Color color);
+    SharedTexture  MakeTextureFromText(uint16_t fontEnum, const char* text, const SDL_Color color);
     void LoadCoreTextures();
 };
 

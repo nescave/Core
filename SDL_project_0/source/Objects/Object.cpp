@@ -6,8 +6,8 @@
 Object::Object() :
 	destroyed(false),
 	bUpdate(true),
-	id(EntityManager::Get()->GetFreeEntityID()),
-	name(((std::string)typeid(this).name()).append("_" + std::to_string(EntityManager::Get()->GetFreeEntityID())))
+	id(ObjectManager::Get()->GetFreeObjectID()),
+	name(((std::string)typeid(this).name()).append("_" + std::to_string(ObjectManager::Get()->GetFreeObjectID())))
 {}
 
 void Object::OnSpawn()
@@ -31,7 +31,7 @@ void Object::Destroy()
 {
 	destroyed = true;
 	OnDestroy();
-	Core::Get().GetEntityManager().DeleteEntity(id);
+	Core::Get().GetObjectManager().DeleteObject(id);
 }
 
 bool Object::IsValid()

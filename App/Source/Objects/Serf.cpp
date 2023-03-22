@@ -11,6 +11,13 @@
 void Serf::Begin()
 {
 }
+
+void Serf::Update(double dTime)
+{
+	Actor::Update(dTime);
+	printf("wakuwaku\n");
+}
+
 void Serf::Serf_F()
 {
 	printf(("wakuwaku\n"));
@@ -18,7 +25,7 @@ void Serf::Serf_F()
 
 void Serf::OnSpawn()
 {
-
+	
 	printf("Serf's OnSpawn called\n");
 	SetTexture(core->GetAssetManager().GetLoadedTexture(CoreTexture::GreenArrow));
 	SetPosition({ 620,480});

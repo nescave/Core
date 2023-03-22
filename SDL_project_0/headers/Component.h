@@ -6,7 +6,7 @@ class Component
 {
 	friend class SceneObject;
 protected:
-	weak_Object owner;
+	WeakSceneObject owner;
 
 	Component();
 public:
@@ -14,7 +14,7 @@ public:
 	
 	virtual ~Component()=default;
 
-	shared_Object GetOwner() { return owner.lock(); }
+	SharedSceneObject GetOwner() { return owner.lock(); }
 	virtual uint32_t GetOwnerId() { return owner.lock()->id; }
 	virtual bool ShouldRender() { return false; }
 

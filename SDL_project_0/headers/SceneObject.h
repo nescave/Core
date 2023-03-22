@@ -11,18 +11,18 @@ class SceneObject : public Object, public std::enable_shared_from_this<SceneObje
 	friend class Collider;
 protected:
 	Transform transform;
-	weak_Object parent;
+	WeakSceneObject parent;
 	Core* core;
 
-	std::map<const uint32_t, weak_Object> children;
-	std::map<const uint32_t, shared_Component> components;
+	std::map<const uint32_t, WeakSceneObject> children;
+	std::map<const uint32_t, SharedComponent> components;
 
 	void ClearParent();
 	void ApplyTransform();
 	bool ClearChildren();
-	bool AddChild(weak_Object child);
-	bool RemoveChild(weak_Object child);
-	bool IsParentPossible(weak_Object par);
+	bool AddChild(WeakSceneObject child);
+	bool RemoveChild(WeakSceneObject child);
+	bool IsParentPossible(WeakSceneObject par);
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
@@ -42,10 +42,10 @@ public:
 	const Vector2d GetUpVector();
 	const Vector2d GetRightVector();
 
-	weak_Object GetParent() { return parent; }
-	std::map<const uint32_t, weak_Object>& GetChildren() { return children; }
+	WeakSceneObject GetParent() { return parent; }
+	std::map<const uint32_t, WeakSceneObject>& GetChildren() { return children; }
 	bool HasChildren() { return !children.empty(); }
-	bool IsChild(weak_Object child);
+	bool IsChild(WeakSceneObject child);
 
 	virtual SceneObject& SetTransform(Transform t);
 	virtual SceneObject& SetPosition(Vector2d pos);
@@ -53,7 +53,7 @@ public:
 	virtual SceneObject& SetScale(Vector2f sc) { transform.scale = sc; return *this; }
 	virtual SceneObject& SetPivot(Vector2f piv) { transform.pivot = piv; return *this; }
 	
-	SceneObject& SetParent(weak_Object par, const bool applyPreviousTransform = false);
+	SceneObject& SetParent(WeakSceneObject par, const bool applyPreviousTransform = false);
 
 	bool HasComponents() { return !components.empty(); }
 	bool HasRenderableComponents();

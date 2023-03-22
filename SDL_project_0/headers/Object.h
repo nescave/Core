@@ -1,5 +1,5 @@
 #pragma once
-class EntitySpawner;
+class ObjectSpawner;
 
 class Object
 {

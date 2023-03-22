@@ -20,6 +20,6 @@ public:
 	static void AddActionMouseButton(int actionButtonEnum, int button);
 
 	static void RegisterAction(int actionButtonEnum, std::function<void()> f);
-	Vector2i GetPointerPosition();
+	Vector2i GetPointerScreenPosition();
 	//static void RegisterSmth
 };

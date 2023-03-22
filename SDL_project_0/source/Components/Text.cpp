@@ -16,7 +16,7 @@ void Text::UpdateText()
 	//AssetManager::Get()->SetTextureLock(texture, false);
 }
 
-shared_Texture Text::GetTextureFromText()
+SharedTexture Text::GetTextureFromText()
 {
 	return AssetManager::Get()->MakeTextureFromText(font, text.c_str(), color);
 }

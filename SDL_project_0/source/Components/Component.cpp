@@ -4,7 +4,7 @@
 
 Component::Component() :
 	componentName(""),
-	owner(weak_Object())
+	owner(WeakSceneObject())
 {}
 
 void Component::OnSpawn(){}
