@@ -19,7 +19,7 @@ private:
 public:
 	PlayerTower();
 
-	void Waku();
+	void Fire();
 	void MoveRight();
 	void MoveLeft();
 

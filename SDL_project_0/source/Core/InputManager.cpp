@@ -105,12 +105,14 @@ void InputManager::ProcessInput()
 			mb = e.button.button;
 			if (actionsMap.find(mouseActionButtons[mb]) != actionsMap.end()) {
 				for (auto& tpl : actionsMap[mouseActionButtons[mb]]) {
-					if(!(e.button.clicks >0) &&
-						(std::get<1>(tpl) == EActionType::REPETABLE ||
-						std::get<1>(tpl) == EActionType::SINGLE))
+
+					if(!(e.button.clicks >1) &&
+						std::get<1>(tpl) == EActionType::SINGLE)
 					{
 						std::get<0>(tpl)();
-					}else if(!(e.button.clicks >0) &&
+					}else if(std::get<1>(tpl) == EActionType::REPETABLE){
+						std::get<0>(tpl)();
+					}else if(!(e.button.clicks >1) &&
 						std::get<1>(tpl) == EActionType::CONTINUOUS)
 					{
 						continuousButtons.push_back(mouseActionButtons[mb]);

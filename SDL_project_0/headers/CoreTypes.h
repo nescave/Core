@@ -1,9 +1,13 @@
 #pragma once
+class Actor;
 class Object;
 class SceneObject;
 class Component;
 class RenderableObject;
 class Collider;
+
+typedef std::shared_ptr<Actor> SharedActor;
+typedef std::weak_ptr<Actor> WeakActor;
 
 typedef std::shared_ptr<Object> SharedObject;
 typedef std::weak_ptr<Object> WeakObject;

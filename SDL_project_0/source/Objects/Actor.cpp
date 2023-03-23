@@ -45,6 +45,12 @@ Actor& Actor::Scale(float scale) {
 
 Actor& Actor::Accelerate(Vector2f force)
 {
+	speed+= force.Rotate(GetAbsoluteRotation());
+	return *this;
+}
+
+Actor& Actor::AccelerateAbsolute(Vector2f force)
+{
 	speed+= force;
 	return *this;
 }

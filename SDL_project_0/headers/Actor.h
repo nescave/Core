@@ -5,12 +5,13 @@
 class Actor :
     public RenderableObject
 {
+    friend class ObjectSpawner;
 protected:
     float maxSpeed;
     Vector2f speed;
 
-    Actor();
 public:
+    Actor();
 
     virtual void OnSpawn() override;
     virtual void Update(double dTime) override;
@@ -23,6 +24,7 @@ public:
     Actor& Scale(float scale);
     
     Actor& Accelerate(Vector2f force);
+    Actor& AccelerateAbsolute(Vector2f force);
     Actor& Stop();
 
     Vector2f GetCurrentSpeed() const {return speed;}

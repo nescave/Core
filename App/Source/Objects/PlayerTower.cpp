@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "Collider.h"
 #include "CoreActionButtons.h"
+#include "ObjectSpawner.h"
 
 PlayerTower::PlayerTower() :
 	input(nullptr),
@@ -14,16 +15,27 @@ PlayerTower::PlayerTower() :
 	bAccelerating(false)
 {}
 
-void PlayerTower::Waku()
+void PlayerTower::Fire()
 {
 	printf("WakuWaku\n");
+
+	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
+		transform.position+ GetUpVector()*10,
+		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot),
+		Vector2d(10,10),
+		"bullet"
+	).lock();//spawn object you object spawner!
+
+	bullet->SetRotation(transform.rotation).SetScale({.5f,3.0f});
+	bullet->AccelerateAbsolute(bullet->GetUpVector() *10);
+	
 }
 
 void PlayerTower::MoveRight()
 {
 	printf("RIGHT\n");
 	
-	Accelerate(Vector2f::right * moveAcc);
+	AccelerateAbsolute(Vector2f::right * moveAcc);
 	bAccelerating = true;
 }
 
@@ -31,7 +43,7 @@ void PlayerTower::MoveLeft()
 {
 	printf("LEFT\n");
 
-	Accelerate(-Vector2f::right* moveAcc);
+	AccelerateAbsolute(-Vector2f::right* moveAcc);
 	bAccelerating = true;
 }
 
@@ -49,7 +61,7 @@ void PlayerTower::OnSpawn()
 
 	auto collider = AddComponent<Collider>().lock();
 
-	RegisterAction(ECoreActionButton::LMB, [this](){this->Waku();});
+	RegisterAction(ECoreActionButton::LMB, [this](){this->Fire();}, EActionType::REPETABLE);
 	RegisterAction(ECoreActionButton::A, BINDFUNC(MoveLeft), EActionType::CONTINUOUS);
 	RegisterAction(ECoreActionButton::D, BINDFUNC(MoveRight), EActionType::CONTINUOUS);
 }
