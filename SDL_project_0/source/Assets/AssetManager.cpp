@@ -69,14 +69,14 @@ SharedTexture AssetManager::LoadTexture(const char* path, bool lock) {
     return LoadTexture(path, i, lock);
 }
 
-SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock) {
+SharedTexture AssetManager::LoadTexture(const char* path, uint16_t texEnum, bool lock) {
     SDL_Texture* sdlTexture = IMG_LoadTexture(rendererCore->GetRenderer(), path);
     if (!sdlTexture) {
         printf("Failed to load image from path: %s! SDL Error: %s\n", path, SDL_GetError());
         return nullptr;
     }
     SharedTexture texture(sdlTexture, TextureDeleter());
-    textures.emplace(texEnum, texture);
+    textures[texEnum] = texture;
     if (lock) SetTextureLock(textures[texEnum].lock(), lock);
     return textures[texEnum].lock();
 }
@@ -92,7 +92,7 @@ SharedFont AssetManager::LoadFont(const char* path, uint16_t fontEnum, uint16_t 
         return nullptr;
     }
     SharedFont font(sdlFont, FontDeleter());
-    fonts.emplace(fontEnum, font);
+    fonts[fontEnum] = font;
     return fonts[fontEnum];
 }
 

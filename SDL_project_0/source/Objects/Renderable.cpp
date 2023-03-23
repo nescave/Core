@@ -33,7 +33,7 @@ Renderable& Renderable::SetBlendMode(SDL_BlendMode mode)
 
 Renderable& Renderable::SetTexture(SharedTexture tx)
 {
-	if (!tx) return *this;
+	// if (!tx) return *this;
 	texture = tx;
 	if (size == Vector2d::zero) SetSize(GetSizeFromTexture(tx), true);
 	return *this;

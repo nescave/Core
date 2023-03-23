@@ -18,7 +18,7 @@ public:
     SharedTexture SetTextureLock(uint16_t texEnum, bool lock = false);
     SharedTexture SetTextureLock(SharedTexture texture, bool lock = false);
     SharedTexture LoadTexture(const char* path, bool lock = false);
-    SharedTexture LoadTexture(const char* path, int texEnum, bool lock = false);
+    SharedTexture LoadTexture(const char* path, uint16_t texEnum, bool lock = false);
     SharedTexture GetLoadedTexture(uint16_t texEnum);
 
     SharedFont LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);

@@ -156,10 +156,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Game\GameSetup.cpp" />
     <ClCompile Include="Source\Objects\PlayerTower.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\GameSetup.h" />
     <ClInclude Include="Headers\PlayerTower.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="res\pngs\crosshair.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

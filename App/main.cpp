@@ -1,14 +1,11 @@
 #include "stdafx.h"
-#include <stdio.h>
 #include <Core.h>
 #include <Object.h>
 #include <ObjectSpawner.h>
 #include <AssetManager.h>
 #include <InputManager.h>
-#include "CoreActionButtons.h"
-#include "CoreFonts.h"
 #include "PlayerTower.h"
-#include "Text.h"
+#include "GameSetup.h"
 //#undef main
 
 void RotMe() {
@@ -27,6 +24,10 @@ int main(int argc, char* args[])
     Core& core = Core::Get();
     if (!core.Init()) return 1;
 
+    GameSetup gs;
+    gs.Setup();
+    // GameSetup::Setup();
+    
     WeakSceneObject a = ObjectSpawner::SpawnObject<PlayerTower>(Vector2i(120, 80));
 
     //InputManager::RegisterAction(ECoreActionButton::RMB, deleteObj);

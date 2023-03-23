@@ -52,6 +52,7 @@ void PlayerTower::OnSpawn()
 	input = InputManager::Get();
 	
 	SetTexture(core->GetAssetManager().GetLoadedTexture(CoreTexture::GreenArrow));
+
 	SetPosition({ 640,740});
 	SetScale({ 2,5 }).SetRotation(0);
 
@@ -76,10 +77,7 @@ void PlayerTower::Update(double dTime)
 {
 	Avatar::Update(dTime);
 	const double lookAtRotation = GetLookAtRotation(input->GetPointerScreenPosition()); 
-	if((int)GetRotation() != (int)lookAtRotation)
-	{
-		SetRotation(lookAtRotation);
-	}
+	SetRotation(lookAtRotation);
 	if (!bAccelerating)
 	{
 		speed *= .99f;
