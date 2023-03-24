@@ -2,13 +2,20 @@
 #include "Core.h"
 #include "Object.h"
 #include "ObjectManager.h"
+#include "TaskManager.h"
 
 Object::Object() :
 	destroyed(false),
 	bUpdate(true),
+	core(&Core::Get()),
 	id(ObjectManager::Get()->GetFreeObjectID()),
 	name(((std::string)typeid(this).name()).append("_" + std::to_string(ObjectManager::Get()->GetFreeObjectID())))
 {}
+
+void Object::SetupTask(double delay, const std::function<void()>& func)
+{
+	core->GetTaskManager().AddTask(shared_from_this(), Task(delay, func));
+}
 
 void Object::OnSpawn()
 {

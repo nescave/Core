@@ -157,9 +157,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source\Game\GameSetup.cpp" />
+    <ClCompile Include="Source\Objects\Asteroid.cpp" />
     <ClCompile Include="Source\Objects\PlayerTower.cpp" />
+    <ClCompile Include="Source\Spawners\UniversalSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Asteroid.h" />
+    <ClInclude Include="Headers\UniversalSpawner.h" />
     <ClInclude Include="Headers\GameSetup.h" />
     <ClInclude Include="Headers\PlayerTower.h" />
   </ItemGroup>

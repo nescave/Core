@@ -17,4 +17,3 @@ double Clock::GetDeltaTime() {
 	lastRecord = clock::now();
 	return dTime / 1000000.0f;// miliseconds 
 }
-//will think what to do about different return types later

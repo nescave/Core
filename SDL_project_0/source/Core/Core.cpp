@@ -10,7 +10,7 @@
 #include "Actor.h"
 #include "Collider.h"
 #include "ObjectSpawner.h"
-#include "CoreFunctions.h"
+#include "TaskManager.h"
 
 bool Core::Init() {
     rendererCore = std::make_unique<RendererCore>();
@@ -19,8 +19,9 @@ bool Core::Init() {
     objectManager = std::make_unique<ObjectManager>();
     input = std::make_unique<InputManager>();
     clock = std::make_unique<Clock>();
+    taskManager = std::make_unique<TaskManager>();
 
-    if (!rendererCore->Init(screen_width, screen_height)) return false;
+    if (!rendererCore->Init(SCREEN_WIDTH, SCREEN_HEIGHT)) return false;
     if (!physicsCore->Init()) return false;
     if (!assetManager->Init(true)) return false;
     if (!input->Init()) return false;
@@ -36,6 +37,9 @@ void Core::Begin() {}
 
 void Core::Update() {
     const double dTime = clock->GetDeltaTime();
+
+    taskManager->UpdateTasks(dTime);
+    
     for (auto& obj : objectManager->GetCreatedObjects()) 
     {
         obj.lock()->Begin();
@@ -63,7 +67,6 @@ void Core::StartMainLoop(){
     bool quit = false;
     while (!quit) {
         input->ProcessInput();
-
         Update();
         Sleep(2);
         physicsCore->Update();

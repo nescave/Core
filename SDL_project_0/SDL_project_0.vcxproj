@@ -195,6 +195,7 @@
     <ClInclude Include="headers\RendererUtils.h" />
     <ClInclude Include="headers\RenderableObject.h" />
     <ClInclude Include="headers\stdafx.h" />
+    <ClInclude Include="headers\TaskManager.h" />
     <ClInclude Include="headers\Text.h" />
     <ClInclude Include="headers\Transform.h" />
     <ClInclude Include="headers\BaseGUI.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="source\Core\InputManager.cpp" />
     <ClCompile Include="source\Core\PhysicsCore.cpp" />
     <ClCompile Include="source\Core\RendererCore.cpp" />
+    <ClCompile Include="source\Core\TaskManager.cpp" />
     <ClCompile Include="source\Objects\Actor.cpp" />
     <ClCompile Include="source\Objects\Avatar.cpp" />
     <ClCompile Include="source\Objects\Object.cpp" />

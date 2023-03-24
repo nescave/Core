@@ -4,13 +4,11 @@
 #include "Collider.h"
 #include "RenderableComponent.h"
 #include "PhysicsCore.h"
-#include "ObjectManager.h"
 
 SceneObject::SceneObject() :
 	transform(Transform()),
 	parent(WeakSceneObject()),
-	children(std::map<const uint32_t, WeakSceneObject>()),
-	core(&Core::Get())
+	children(std::map<const uint32_t, WeakSceneObject>())
 {}
 
 Transform& SceneObject::GetTransform()
@@ -154,10 +152,13 @@ void SceneObject::RegisterCollider(std::weak_ptr<Collider> col)
 SceneObject& SceneObject::SetParent(WeakSceneObject par, const bool applyPreviousTransform) {
 	auto oldParent = parent.lock();
 	auto newParent = par.lock();
+
+	//TODO needs rework!! stupid method of getting weak_from_this
+	WeakSceneObject weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock()); //
 	
 	if (oldParent == newParent) return *this;
 	if (oldParent) {
-		oldParent->RemoveChild(weak_from_this());
+		oldParent->RemoveChild(weakThis );
 		if (applyPreviousTransform)ApplyTransform();
 	}
 	if (!newParent) {
@@ -168,7 +169,7 @@ SceneObject& SceneObject::SetParent(WeakSceneObject par, const bool applyPreviou
 		printf("%s, or one of it's parents, is in %s's children hierarchy!\n", newParent->name.c_str(), this->name.c_str());
 		return *this;
 	}
-	newParent->AddChild(weak_from_this());
+	newParent->AddChild(weakThis);
 	parent = newParent;
 	printf("%s set as a parent of %s\n", newParent->name.c_str(), this->name.c_str());
 	return *this;

@@ -1,7 +1,8 @@
 #pragma once
 class ObjectSpawner;
+class Core;
 
-class Object
+class Object : public std::enable_shared_from_this<Object>
 {
 	friend class ObjectSpawner;
 
@@ -10,8 +11,12 @@ private:
 protected:
 	bool destroyed;
 	bool bUpdate;
+	Core* core;
 	
 	Object();
+
+	void SetupTask(double delay, const std::function<void()>& func);
+
 public:
 	const uint32_t id;
 	std::string name;

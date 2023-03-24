@@ -17,8 +17,6 @@ PlayerTower::PlayerTower() :
 
 void PlayerTower::Fire()
 {
-	printf("WakuWaku\n");
-
 	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
 		transform.position+ GetUpVector()*10,
 		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot),
@@ -31,7 +29,7 @@ void PlayerTower::Fire()
 	
 }
 
-void PlayerTower::MoveRight()
+void PlayerTower::PropelRight()
 {
 	printf("RIGHT\n");
 	
@@ -39,7 +37,7 @@ void PlayerTower::MoveRight()
 	bAccelerating = true;
 }
 
-void PlayerTower::MoveLeft()
+void PlayerTower::PropelLeft()
 {
 	printf("LEFT\n");
 
@@ -63,8 +61,8 @@ void PlayerTower::OnSpawn()
 	auto collider = AddComponent<Collider>().lock();
 
 	RegisterAction(ECoreActionButton::LMB, [this](){this->Fire();}, EActionType::REPETABLE);
-	RegisterAction(ECoreActionButton::A, BINDFUNC(MoveLeft), EActionType::CONTINUOUS);
-	RegisterAction(ECoreActionButton::D, BINDFUNC(MoveRight), EActionType::CONTINUOUS);
+	RegisterAction(ECoreActionButton::A, BINDFUNC(PropelLeft), EActionType::CONTINUOUS);
+	RegisterAction(ECoreActionButton::D, BINDFUNC(PropelRight), EActionType::CONTINUOUS);
 }
 
 void PlayerTower::Begin()

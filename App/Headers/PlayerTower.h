@@ -1,8 +1,6 @@
 #pragma once
 #include "Avatar.h"
 
-#define BINDFUNC(f) [this](){this->f();}
-
 class InputManager;
 class Text;
 
@@ -20,8 +18,8 @@ public:
 	PlayerTower();
 
 	void Fire();
-	void MoveRight();
-	void MoveLeft();
+	void PropelRight();
+	void PropelLeft();
 
 	// void Stear();
 	

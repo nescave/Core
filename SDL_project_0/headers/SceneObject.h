@@ -3,16 +3,16 @@
 #include "CoreTypes.h"
 #include "AnchorEnum.h"
 
-class Core;
 class RenderableComponent;
 
-class SceneObject : public Object, public std::enable_shared_from_this<SceneObject>
+#define BINDFUNC(f) [this](){this->f();}
+
+class SceneObject : public Object
 {
 	friend class Collider;
 protected:
 	Transform transform;
 	WeakSceneObject parent;
-	Core* core;
 
 	std::map<const uint32_t, WeakSceneObject> children;
 	std::map<const uint32_t, SharedComponent> components;
@@ -26,6 +26,7 @@ protected:
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
+	
 public:
 	SceneObject();
 	Transform& GetTransform(); 
@@ -80,8 +81,10 @@ public:
 		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		
 		auto comp = std::make_shared<T>();
-
-		comp->owner = weak_from_this();
+		//TODO needs rework!! stupid method of getting weak_from_this
+		WeakSceneObject weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock()); 
+	
+		comp->owner = weakThis;
 		comp->componentName = name.append("_component_").append(std::to_string(components.size()));
 		components.insert({ hash, comp });
 

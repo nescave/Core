@@ -3,13 +3,14 @@
 #include "RendererUtils.h"
 #include "CoreTypes.h"
 
-constexpr int screen_width = 1280;
-constexpr int screen_height = 800;
+constexpr int SCREEN_WIDTH = 1280;
+constexpr int SCREEN_HEIGHT = 800;
 class RendererCore;
 class PhysicsCore;
 class AssetManager;
 class ObjectManager;
 class Clock;
+class TaskManager;
 class InputManager;
 class Actor;
 class Text;
@@ -23,6 +24,7 @@ private:
     std::unique_ptr<ObjectManager> objectManager;
     std::unique_ptr<InputManager> input;
     std::unique_ptr<Clock> clock;
+    std::unique_ptr<TaskManager> taskManager;
 
     DrawQueue_t drawList;
 
@@ -37,7 +39,7 @@ public:
     PhysicsCore& GetPhysicsCore() { return *physicsCore; }
     AssetManager& GetAssetManager() { return *assetManager; }
     ObjectManager& GetObjectManager() { return *objectManager; }
-    //InputManager& GetInputManager() { return *input; }
+    TaskManager& GetTaskManager() { return *taskManager; }
 
     void Begin();
     void Update();

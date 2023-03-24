@@ -23,6 +23,8 @@ typedef std::weak_ptr<SDL_Texture> WeakTexture;
 
 typedef std::shared_ptr<TTF_Font> SharedFont;
 
+typedef std::pair<double, const std::function<void()>> Task;
+
 //typedef std::vector<Collider*> ColliderList_t;
 //typedef std::vector<Object*> ObjectList_t;
 

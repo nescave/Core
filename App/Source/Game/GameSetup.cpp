@@ -4,8 +4,20 @@
 #include <SDL_mouse.h>
 #include <SDL_render.h>
 
+#include "Asteroid.h"
 #include "Core.h"
+#include "ObjectSpawner.h"
+#include "UniversalSpawner.h"
 
+GameSetup::GameSetup() :
+    core(&Core::Get())
+{}
+
+void GameSetup::Setup()
+{
+    SetupCursor();
+    SetupSpawners();
+}
 
 void GameSetup::SetupCursor()
 {
@@ -22,13 +34,13 @@ void GameSetup::SetupCursor()
     if(!cursor)
     {
         printf("Failed! %s\n", SDL_GetError());
-    }// SDL_Cursor* cursor2 = SDL_CreateSystemCursor(SDL_SystemCursor::SDL_SYSTEM_CURSOR_CROSSHAIR);
+    }
     SDL_SetCursor(cursor);
-    //
-    // SDL_ShowCursor(0);
 }
 
-void GameSetup::Setup()
+void GameSetup::SetupSpawners()
 {
-    SetupCursor();
+    std::shared_ptr<UniversalSpawner> spawner1 = ObjectSpawner::SpawnObject<UniversalSpawner>().lock();
+    spawner1->StartSpawner<Asteroid>(spawner1->GetTransform(), 1,1,1,1);
 }
+
