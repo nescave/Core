@@ -169,7 +169,10 @@
     <ClInclude Include="Headers\PlayerTower.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="res\pngs\asteroid.png" />
     <Content Include="res\pngs\crosshair.png" />
+    <Content Include="res\pngs\enemy_ship_small_0.png" />
+    <Content Include="res\pngs\main_ship.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

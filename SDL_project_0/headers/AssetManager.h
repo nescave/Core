@@ -16,19 +16,19 @@ public:
     bool Init(bool LoadCoreResources);
     static AssetManager* Get();
     
-    SharedTexture SetTextureLock(uint16_t texEnum, bool lock = false);
+    SharedTexture SetTextureLock(int texEnum, bool lock = false);
     SharedTexture SetTextureLock(SharedTexture texture, bool lock = false);
 
-    SharedSurface SetSurfaceeLock(uint16_t surfEnum, bool lock = false);
+    SharedSurface SetSurfaceeLock(int surfEnum, bool lock = false);
     SharedSurface SetSurfaceeLock(SharedSurface surface, bool lock = false);
     
-    SharedTexture LoadTexture(const char* path, bool lock = false);
-    SharedTexture LoadTexture(const char* path, uint16_t texEnum, bool lock = false);
-    SharedTexture GetLoadedTexture(uint16_t texEnum);
+    SharedTexture LoadTexture(const char* path, bool lock = false, bool isCoreRes = false);
+    SharedTexture LoadTexture(const char* path, int texEnum, bool lock = false, bool isCoreRes = false);
+    SharedTexture GetLoadedTexture(int texEnum, bool isCoreRes = false);
 
-    SharedSurface LoadSurface(const char* path, uint16_t texEnum, bool lock = false);
+    SharedSurface LoadSurface(const char* path, int texEnum, bool lock = false);
     SharedSurface LoadSurface(const char* path, bool lock = false);
-    SharedSurface GetLoadedSurface(uint16_t surfEnum);
+    SharedSurface GetLoadedSurface(int surfEnum);
 
 
     SharedFont LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);

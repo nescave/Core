@@ -5,8 +5,11 @@
 
 class Asteroid : public Actor
 {
-public:
-    void OnSpawn() override;
 private:
     Collider* collider;
+public:
+    Asteroid();
+    void OnSpawn() override;
+    void Update(double dTime) override;
 };
+

@@ -10,7 +10,7 @@ public:
 
     bool ShouldRender() override { return texture != nullptr; } 
 
-    Renderable& SetSize(Vector2d s, bool resetScale = true) override;
+    Renderable& SetSize(Vector2d s, bool resetScale = false) override;
     Vector2d GetAnchorOffset(Anchor anch) override;
 
     void OnSpawn() override;

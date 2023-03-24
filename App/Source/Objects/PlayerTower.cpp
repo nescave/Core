@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "Collider.h"
 #include "CoreActionButtons.h"
+#include "GameEnums.h"
 #include "ObjectSpawner.h"
 
 PlayerTower::PlayerTower() :
@@ -19,28 +20,27 @@ void PlayerTower::Fire()
 {
 	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
 		transform.position+ GetUpVector()*10,
-		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot),
+		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot, true),
 		Vector2d(10,10),
 		"bullet"
 	);//spawn object you object spawner!
 
-	bullet->SetRotation(transform.rotation).SetScale({.5f,3.0f});
-	bullet->AccelerateAbsolute(bullet->GetUpVector() *10);
+	bullet->
+	Accelerate(GetUpVector() *3000).
+	SetRotation(transform.rotation).
+	SetScale({.5f,3.0f}).
+	Destroy(.4);
 	
 }
 
 void PlayerTower::PropelRight()
 {
-	printf("RIGHT\n");
-	
 	AccelerateAbsolute(Vector2f::right * moveAcc);
 	bAccelerating = true;
 }
 
 void PlayerTower::PropelLeft()
 {
-	printf("LEFT\n");
-
 	AccelerateAbsolute(-Vector2f::right* moveAcc);
 	bAccelerating = true;
 }
@@ -50,10 +50,10 @@ void PlayerTower::OnSpawn()
 	Avatar::OnSpawn();
 	input = InputManager::Get();
 	
-	SetTexture(core->GetAssetManager().GetLoadedTexture(CoreTexture::GreenArrow));
+	SetTexture(core->GetAssetManager().GetLoadedTexture(GameTextures::MAIN_SHIP));
 
 	SetPosition({ 640,740});
-	SetScale({ 2,5 }).SetRotation(0);
+	SetScale({ .2f,.2f }).SetRotation(0);
 
 	// textComp = &*AddComponent<Text>().lock();
 	// textComp->SetAndUpdateText("w").SetAnchor(Anchor::Top);

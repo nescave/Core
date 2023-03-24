@@ -26,6 +26,7 @@ public:
     >
     void StartSpawner(Transform initTransform, float sRate, float sRandomness, float maxSc, float minSc)
     {
+        inititalTransform = initTransform;
         spawnRate = sRate;
         spawnRandomness = sRandomness;
         maxScale = maxSc;
@@ -39,9 +40,9 @@ public:
     >
     void Spawn()
     {
-        printf("wakuwaku\n");
+        // printf("wakuwaku\n");
         ObjectSpawner::SpawnObject<T>(inititalTransform);
-        if(bSpawning) SetupTask(2000, BINDFUNC(Spawn<T>));
+        if(bSpawning) SetupTask(3, BINDFUNC(Spawn<T>));
     }
     
 private:

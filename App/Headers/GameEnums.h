@@ -5,7 +5,9 @@
 	};
 	enum ETextures
 	{
-		TURRET
+		MAIN_SHIP,
+		ASTEROID,
+		ENEMY_SHIP_SMALL
 	};
 
 }

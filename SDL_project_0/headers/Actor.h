@@ -13,10 +13,12 @@ protected:
 public:
     Actor();
 
-    virtual void OnSpawn() override;
-    virtual void Update(double dTime) override;
-
+    void OnSpawn() override;
+    void Update(double dTime) override;
+    void OnDestroy() override;
+    
     Actor& Translate(Vector2f& vector);
+    Actor& Translate(Vector2f&& vector);
     Actor& TranslateAbsolute(Vector2f& vector);
 
     Actor& Rotate(double angle);

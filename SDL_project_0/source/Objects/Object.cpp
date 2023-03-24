@@ -30,7 +30,7 @@ void Object::Update(double dTime) {
 
 void Object::OnDestroy()
 {
-	printf("%s deleted!\n", name.c_str());
+	printf("%s destroyed!\n", name.c_str());
 }
 
 void Object::Destroy()

@@ -11,11 +11,11 @@ RendererCore* rendererCore;
 
 void AssetManager::LoadCoreTextures()
 {
-    LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true);
-    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true);
-    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true);
+    LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true, true);
         
 }
 
@@ -38,7 +38,7 @@ AssetManager* AssetManager::Get() {
     return amInst;
 }
 
-SharedTexture AssetManager::SetTextureLock(uint16_t texEnum, bool lock)
+SharedTexture AssetManager::SetTextureLock(int texEnum, bool lock)
 {
     return SetTextureLock(textures[texEnum].lock(), lock);
 }
@@ -59,7 +59,7 @@ SharedTexture AssetManager::SetTextureLock(SharedTexture texture, bool lock)
     return texture;
 }
 
-SharedSurface AssetManager::SetSurfaceeLock(uint16_t surfEnum, bool lock)
+SharedSurface AssetManager::SetSurfaceeLock(int surfEnum, bool lock)
 {
     return SetSurfaceeLock(surfaces[surfEnum].lock(), lock);
 }
@@ -80,28 +80,30 @@ SharedSurface AssetManager::SetSurfaceeLock(SharedSurface surface, bool lock)
     return surface;
 }
 
-SharedTexture AssetManager::LoadTexture(const char* path, uint16_t texEnum, bool lock) {
+SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock, bool isCoreRes) {
     SDL_Texture* sdlTexture = IMG_LoadTexture(rendererCore->GetRenderer(), path);
     if (!sdlTexture) {
         printf("Failed to load image from path: %s! SDL Error: %s\n", path, SDL_GetError());
         return nullptr;
     }
     SharedTexture texture(sdlTexture, TextureDeleter());
+    texEnum = isCoreRes ? texEnum : texEnum + CoreTexture::SIZE; 
     textures[texEnum] = texture;
     if (lock) SetTextureLock(textures[texEnum].lock(), lock);
     return textures[texEnum].lock();
 }
 
-SharedTexture AssetManager::LoadTexture(const char* path, bool lock) {
+SharedTexture AssetManager::LoadTexture(const char* path, bool lock, bool isCoreRes) {
     uint16_t i = (uint16_t)GetFirstFreeID(textures);
-    return LoadTexture(path, i, lock);
+    return LoadTexture(path, i, lock, isCoreRes);
 }
 
-SharedTexture AssetManager::GetLoadedTexture(uint16_t texEnum) {
+SharedTexture AssetManager::GetLoadedTexture(int texEnum, bool isCoreRes) {
+    texEnum = isCoreRes ? texEnum : texEnum + CoreTexture::SIZE; 
     return textures[texEnum].lock();
 }
 
-SharedSurface AssetManager::LoadSurface(const char* path, uint16_t texEnum, bool lock)
+SharedSurface AssetManager::LoadSurface(const char* path, int texEnum, bool lock)
 {
     SDL_Surface* sdlSurface = IMG_Load(path);
     if (!sdlSurface) {
@@ -121,7 +123,7 @@ SharedSurface AssetManager::LoadSurface(const char* path, bool lock)
     return LoadSurface(path, i, lock);
 }
 
-SharedSurface AssetManager::GetLoadedSurface(uint16_t surfEnum)
+SharedSurface AssetManager::GetLoadedSurface(int surfEnum)
 {
     return surfaces[surfEnum].lock();
 }

@@ -17,12 +17,22 @@ void Actor::OnSpawn()
 void Actor::Update(double dTime) {
 	SceneObject::Update(dTime);
 
-	Translate(speed);
+	Translate(speed*dTime);
+}
+
+void Actor::OnDestroy()
+{
+	RenderableObject::OnDestroy();
 }
 
 Actor& Actor::Translate(Vector2f& vector){
 	transform.position += vector;
 	return *this;
+}
+
+Actor& Actor::Translate(Vector2f&& vector)
+{
+	return Translate(vector);
 }
 
 Actor& Actor::TranslateAbsolute(Vector2f& vector)

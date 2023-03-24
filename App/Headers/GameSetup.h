@@ -13,4 +13,5 @@ private:
     
     void SetupCursor();
     void SetupSpawners();
+    void LoadTextures();
 };

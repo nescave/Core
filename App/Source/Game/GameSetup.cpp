@@ -14,6 +14,7 @@ GameSetup::GameSetup() :
 
 void GameSetup::Setup()
 {
+    LoadTextures();
     SetupCursor();
     SetupSpawners();
 }
@@ -32,6 +33,15 @@ void GameSetup::SetupCursor()
 void GameSetup::SetupSpawners()
 {
     std::shared_ptr<UniversalSpawner> spawner1 = ObjectSpawner::SpawnObject<UniversalSpawner>();
-    spawner1->StartSpawner<Asteroid>(spawner1->inititalTransform, 1,1,1,1);
+    // spawner1->SetSpawningState(false);
+    spawner1->StartSpawner<Asteroid>(Transform({50,250}, 90, {.3f,.3f}), .2f,2,.5f,1.3f);
+}
+
+void GameSetup::LoadTextures()
+{
+    core->GetAssetManager().LoadTexture("res/pngs/asteroid.png", GameTextures::ASTEROID, true);
+    core->GetAssetManager().LoadTexture("res/pngs/main_ship.png", GameTextures::MAIN_SHIP, true);
+    core->GetAssetManager().LoadTexture("res/pngs/enemy_ship_small_0.png", GameTextures::ENEMY_SHIP_SMALL, true);
+
 }
 

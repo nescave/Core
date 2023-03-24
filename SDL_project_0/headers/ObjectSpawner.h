@@ -2,11 +2,6 @@
 #include "ObjectManager.h"
 #include <optional>
 
-// class Object;
-// class SceneObject;
-// class Actor;
-// class Text;
-
 class ObjectSpawner
 {
 private:
@@ -23,12 +18,12 @@ public:
     {
         std::shared_ptr<T> object = std::make_shared<T>();
         GetObjectManager().AddObject(object);
-        object->SetTransform(t);
-        object->SetSize(s);
-        object->SetTexture(tex);
-        if (n == "")
+        if (n.empty())
             n = ((std::string)typeid(T).name()).erase(0,6).append("_" + std::to_string(object->id));
         object->name = n;
+        object->SetTransform(t);
+        object->SetTexture(tex);
+        object->SetSize(s);
         object->OnSpawn();
         return object;
     }

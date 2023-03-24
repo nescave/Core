@@ -15,5 +15,5 @@ double Clock::GetDeltaTime() {
 	std::chrono::duration<double> deltaTime = clock::now() - lastRecord;
 	double dTime = (double)std::chrono::duration_cast<std::chrono::nanoseconds>(deltaTime).count();
 	lastRecord = clock::now();
-	return dTime / 1000000.0f;// miliseconds 
+	return dTime / 1000000000.0;// miliseconds 
 }

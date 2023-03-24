@@ -35,7 +35,7 @@ Renderable& Renderable::SetTexture(SharedTexture tx)
 {
 	// if (!tx) return *this;
 	texture = tx;
-	if (size == Vector2d::zero) SetSize(GetSizeFromTexture(tx), true);
+	if (size == Vector2d::zero) SetSize(GetSizeFromTexture(tx), false);
 	return *this;
 }
 
