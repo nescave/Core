@@ -47,6 +47,7 @@ void PlayerTower::PropelLeft()
 
 void PlayerTower::OnSpawn()
 {
+	Avatar::OnSpawn();
 	input = InputManager::Get();
 	
 	SetTexture(core->GetAssetManager().GetLoadedTexture(CoreTexture::GreenArrow));

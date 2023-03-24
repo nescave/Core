@@ -49,3 +49,8 @@ Vector2d RenderableObject::GetAnchorOffset(Anchor anch)
 	offset *= transform.scale;
 	return offset.Rotate(transform.rotation);
 }
+
+void RenderableObject::OnSpawn()
+{
+	SceneObject::OnSpawn();
+}

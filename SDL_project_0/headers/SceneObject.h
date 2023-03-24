@@ -9,11 +9,12 @@ class RenderableComponent;
 
 class SceneObject : public Object
 {
-	friend class Collider;
+	WeakSceneObject weakThis;
+
 protected:
 	Transform transform;
 	WeakSceneObject parent;
-
+	
 	std::map<const uint32_t, WeakSceneObject> children;
 	std::map<const uint32_t, SharedComponent> components;
 
@@ -26,8 +27,9 @@ protected:
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
 
-	
 public:
+	friend class Collider;
+
 	SceneObject();
 	Transform& GetTransform(); 
 	Vector2d& GetPosition(); 
@@ -47,6 +49,7 @@ public:
 	double GetLookAtRotation(const Vector2d& pos);
 	
 	WeakSceneObject GetParent() const { return parent; }
+	WeakSceneObject GetWeakThis() const { return weakThis; }
 	std::map<const uint32_t, WeakSceneObject>& GetChildren() { return children; }
 	bool HasChildren() const { return !children.empty(); }
 	bool IsChild(WeakSceneObject child) const;
@@ -65,7 +68,7 @@ public:
 	bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
 
-	void OnSpawn() override { Object::OnSpawn(); }				//happens during actor spawning before actor is fully initialized (constructor behaviour)
+	void OnSpawn() override; 				//happens during actor spawning before actor is fully initialized (constructor behaviour)
 	void Begin() override { Object::Begin(); }					//happens after full initialization
 	void Update(double dTime) override { Object::Update(dTime); }
 	virtual void OnBeginOverlap(Collider* col);
@@ -81,9 +84,6 @@ public:
 		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		
 		auto comp = std::make_shared<T>();
-		//TODO needs rework!! stupid method of getting weak_from_this
-		WeakSceneObject weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock()); 
-	
 		comp->owner = weakThis;
 		comp->componentName = name.append("_component_").append(std::to_string(components.size()));
 		components.insert({ hash, comp });

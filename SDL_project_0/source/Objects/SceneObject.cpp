@@ -6,9 +6,9 @@
 #include "PhysicsCore.h"
 
 SceneObject::SceneObject() :
+	weakThis(WeakSceneObject()),
 	transform(Transform()),
-	parent(WeakSceneObject()),
-	children(std::map<const uint32_t, WeakSceneObject>())
+	parent(WeakSceneObject())
 {}
 
 Transform& SceneObject::GetTransform()
@@ -35,9 +35,9 @@ Vector2f& SceneObject::GetPivot()
 }
 Transform SceneObject::GetAbsoluteTransform()
 {
-	auto lParent = parent.lock();
-	if (!lParent) return transform;
-	return transform.CombineTransform(lParent->GetAbsoluteTransform());
+	auto parentPtr = parent.lock();
+	if (!parentPtr) return transform;
+	return transform.CombineTransform(parentPtr->GetAbsoluteTransform());
 }
 
 Vector2d SceneObject::GetAbsolutePosition()
@@ -153,8 +153,6 @@ SceneObject& SceneObject::SetParent(WeakSceneObject par, const bool applyPreviou
 	auto oldParent = parent.lock();
 	auto newParent = par.lock();
 
-	//TODO needs rework!! stupid method of getting weak_from_this
-	WeakSceneObject weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock()); //
 	
 	if (oldParent == newParent) return *this;
 	if (oldParent) {
@@ -211,6 +209,12 @@ bool SceneObject::RemoveComponent(std::type_index compClass)
 	components[(uint32_t)compClass.hash_code()] = nullptr;
 	components.erase((uint32_t)compClass.hash_code());
 	return true;
+}
+
+void SceneObject::OnSpawn()
+{
+	Object::OnSpawn();
+	weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock());
 }
 
 void SceneObject::OnBeginOverlap(Collider* col)

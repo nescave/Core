@@ -6,14 +6,18 @@ class Component;
 class RenderableObject;
 class Collider;
 
-typedef std::shared_ptr<Actor> SharedActor;
-typedef std::weak_ptr<Actor> WeakActor;
 
 typedef std::shared_ptr<Object> SharedObject;
 typedef std::weak_ptr<Object> WeakObject;
 
 typedef std::shared_ptr<SceneObject> SharedSceneObject;
 typedef std::weak_ptr<SceneObject> WeakSceneObject;
+
+typedef std::shared_ptr<RenderableObject> SharedRenderableObject;
+typedef std::weak_ptr<RenderableObject> WeakRenderableObject;
+
+typedef std::shared_ptr<Actor> SharedActor;
+typedef std::weak_ptr<Actor> WeakActor;
 
 typedef std::shared_ptr<Component> SharedComponent;
 typedef std::weak_ptr<Component> WeakComponent;

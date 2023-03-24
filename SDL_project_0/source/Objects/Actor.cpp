@@ -11,7 +11,7 @@ Actor::Actor() : maxSpeed(5)
 
 void Actor::OnSpawn()
 {
-	printf("Actor's OnSpawn called \n");
+	RenderableObject::OnSpawn();
 }
 
 void Actor::Update(double dTime) {
