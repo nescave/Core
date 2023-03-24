@@ -2,6 +2,8 @@
 class ObjectSpawner;
 class Core;
 
+#define BINDFUNC(f) [this](){this->f();}
+
 class Object : public std::enable_shared_from_this<Object>
 {
 	friend class ObjectSpawner;
@@ -33,6 +35,7 @@ public:
 	virtual void OnDestroy();
 
 	virtual void Destroy();
+	void Destroy(double delay);
 	virtual bool IsValid();
 
 };

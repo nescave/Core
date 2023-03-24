@@ -1,9 +1,13 @@
 #pragma once
 struct TextureDeleter {
 	void operator() (SDL_Texture* t) {
-        //if (!message.empty()) printf((message + " \n").c_str());
 		SDL_DestroyTexture(t);
 	}
+};
+struct SurfaceDeleter {
+    void operator() (SDL_Surface* s) {
+        SDL_FreeSurface(s);
+    }
 };
 struct FontDeleter {
 	void operator() (TTF_Font* f) {

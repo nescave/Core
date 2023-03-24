@@ -8,8 +8,7 @@ Object::Object() :
 	destroyed(false),
 	bUpdate(true),
 	core(&Core::Get()),
-	id(ObjectManager::Get()->GetFreeObjectID()),
-	name(((std::string)typeid(this).name()).append("_" + std::to_string(ObjectManager::Get()->GetFreeObjectID())))
+	id(ObjectManager::Get()->GetFreeObjectID())
 {}
 
 void Object::SetupTask(double delay, const std::function<void()>& func)
@@ -39,6 +38,11 @@ void Object::Destroy()
 	destroyed = true;
 	OnDestroy();
 	Core::Get().GetObjectManager().DeleteObject(id);
+}
+
+void Object::Destroy(double delay)
+{
+	SetupTask(delay, BINDFUNC(Destroy));
 }
 
 bool Object::IsValid()

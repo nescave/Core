@@ -25,6 +25,9 @@ typedef std::weak_ptr<Component> WeakComponent;
 typedef std::shared_ptr<SDL_Texture> SharedTexture;
 typedef std::weak_ptr<SDL_Texture> WeakTexture;
 
+typedef std::shared_ptr<SDL_Surface> SharedSurface;
+typedef std::weak_ptr<SDL_Surface> WeakSurface;
+
 typedef std::shared_ptr<TTF_Font> SharedFont;
 
 typedef std::pair<double, const std::function<void()>> Task;

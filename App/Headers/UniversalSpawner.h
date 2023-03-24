@@ -7,13 +7,14 @@
 
 class Core;
 
-class UniversalSpawner : public SceneObject
+class UniversalSpawner : public Object
 {
 public:
     float spawnRate;
     float spawnRandomness;
     float maxScale;
     float minScale;
+    Transform inititalTransform;
 
     UniversalSpawner();
     
@@ -39,7 +40,7 @@ public:
     void Spawn()
     {
         printf("wakuwaku\n");
-        // ObjectSpawner::SpawnObject<T>(transform)
+        ObjectSpawner::SpawnObject<T>(inititalTransform);
         if(bSpawning) SetupTask(2000, BINDFUNC(Spawn<T>));
     }
     

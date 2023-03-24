@@ -28,7 +28,7 @@ int main(int argc, char* args[])
     gs.Setup();
     // GameSetup::Setup();
     
-    WeakSceneObject a = ObjectSpawner::SpawnObject<PlayerTower>(Vector2i(120, 80));
+    ObjectSpawner::SpawnObject<PlayerTower>(Vector2i(120, 80));
 
     //InputManager::RegisterAction(ECoreActionButton::RMB, deleteObj);
     //InputManager::RegisterAction(ECoreActionButton::LMB, Serf_F);

@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Asteroid.h" />
+    <ClInclude Include="Headers\GameEnums.h" />
     <ClInclude Include="Headers\UniversalSpawner.h" />
     <ClInclude Include="Headers\GameSetup.h" />
     <ClInclude Include="Headers\PlayerTower.h" />

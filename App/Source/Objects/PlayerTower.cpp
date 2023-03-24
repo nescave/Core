@@ -22,7 +22,7 @@ void PlayerTower::Fire()
 		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot),
 		Vector2d(10,10),
 		"bullet"
-	).lock();//spawn object you object spawner!
+	);//spawn object you object spawner!
 
 	bullet->SetRotation(transform.rotation).SetScale({.5f,3.0f});
 	bullet->AccelerateAbsolute(bullet->GetUpVector() *10);
@@ -55,11 +55,11 @@ void PlayerTower::OnSpawn()
 	SetPosition({ 640,740});
 	SetScale({ 2,5 }).SetRotation(0);
 
-	textComp = &*AddComponent<Text>().lock();
-	textComp->SetAndUpdateText("w").SetAnchor(Anchor::Top);
-	textComp->SetScale({.3f,.3f});
+	// textComp = &*AddComponent<Text>().lock();
+	// textComp->SetAndUpdateText("w").SetAnchor(Anchor::Top);
+	// textComp->SetScale({.3f,.3f});
 
-	auto collider = AddComponent<Collider>().lock();
+	// auto collider = AddComponent<Collider>().lock();
 
 	RegisterAction(ECoreActionButton::LMB, [this](){this->Fire();}, EActionType::REPETABLE);
 	RegisterAction(ECoreActionButton::A, BINDFUNC(PropelLeft), EActionType::CONTINUOUS);

@@ -5,8 +5,6 @@
 
 class RenderableComponent;
 
-#define BINDFUNC(f) [this](){this->f();}
-
 class SceneObject : public Object
 {
 	WeakSceneObject weakThis;

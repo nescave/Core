@@ -8,6 +8,17 @@
 
 static AssetManager* amInst;
 RendererCore* rendererCore;
+
+void AssetManager::LoadCoreTextures()
+{
+    LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true);
+    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true);
+    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true);
+        
+}
+
 AssetManager::AssetManager() {
     if(amInst==nullptr) amInst = this;
 }
@@ -18,17 +29,7 @@ bool AssetManager::Init(bool LoadCoreResources)
     if (!rendererCore) return false;
     if (LoadCoreResources) {
         LoadFont("res/calibrib.ttf", CoreFont::CALIBRI, 16);
-
-        //coreTexturesLoading
-        
-        LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true);
-        LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true);
-        LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true);
-        LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true);
-        LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true);
-        
-        //coreTexturesLoading
-
+        LoadCoreTextures();
     }
     return true;
 }
@@ -44,29 +45,39 @@ SharedTexture AssetManager::SetTextureLock(uint16_t texEnum, bool lock)
 
 SharedTexture AssetManager::SetTextureLock(SharedTexture texture, bool lock)
 {
-    auto it = lockedTextures.find(texture);
-    if (it == lockedTextures.end()) {
-        if (lock) {
-            lockedTextures.insert(texture);
-        }
-        else {
-            printf("texture already not on a locked list\n");
-        }
-    }
-    else {
-        if (lock) {
+    if(lock)
+    {
+        if (!lockedTextures.insert(texture).second)
+        {
             printf("texture already locked\n");
         }
-        else {
-            lockedTextures.erase(it);
+    }else{
+        if(!lockedTextures.erase(texture)){
+            printf("texture not on a locked list\n");
         }
     }
     return texture;
 }
 
-SharedTexture AssetManager::LoadTexture(const char* path, bool lock) {
-    uint16_t i = (uint16_t)GetFirstFreeID(textures);
-    return LoadTexture(path, i, lock);
+SharedSurface AssetManager::SetSurfaceeLock(uint16_t surfEnum, bool lock)
+{
+    return SetSurfaceeLock(surfaces[surfEnum].lock(), lock);
+}
+
+SharedSurface AssetManager::SetSurfaceeLock(SharedSurface surface, bool lock)
+{
+    if(lock)
+    {
+        if (!lockedSurfaces.insert(surface).second)
+        {
+            printf("texture already locked\n");
+        }
+    }else{
+        if(!lockedSurfaces.erase(surface)){
+            printf("texture not on a locked list\n");
+        }
+    }
+    return surface;
 }
 
 SharedTexture AssetManager::LoadTexture(const char* path, uint16_t texEnum, bool lock) {
@@ -81,8 +92,38 @@ SharedTexture AssetManager::LoadTexture(const char* path, uint16_t texEnum, bool
     return textures[texEnum].lock();
 }
 
+SharedTexture AssetManager::LoadTexture(const char* path, bool lock) {
+    uint16_t i = (uint16_t)GetFirstFreeID(textures);
+    return LoadTexture(path, i, lock);
+}
+
 SharedTexture AssetManager::GetLoadedTexture(uint16_t texEnum) {
     return textures[texEnum].lock();
+}
+
+SharedSurface AssetManager::LoadSurface(const char* path, uint16_t texEnum, bool lock)
+{
+    SDL_Surface* sdlSurface = IMG_Load(path);
+    if (!sdlSurface) {
+        printf("Failed to load image from path: %s! SDL Error: %s\n", path, SDL_GetError());
+        return nullptr;
+    }
+    SharedSurface surface(sdlSurface, SurfaceDeleter());
+    surfaces[texEnum] = surface;
+    if (lock) SetTextureLock(textures[texEnum].lock(), lock);
+    return surface; 
+    // return surfaces[texEnum].lock();
+}
+
+SharedSurface AssetManager::LoadSurface(const char* path, bool lock)
+{
+    uint16_t i = (uint16_t)GetFirstFreeID(surfaces);
+    return LoadSurface(path, i, lock);
+}
+
+SharedSurface AssetManager::GetLoadedSurface(uint16_t surfEnum)
+{
+    return surfaces[surfEnum].lock();
 }
 
 SharedFont AssetManager::LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID) {

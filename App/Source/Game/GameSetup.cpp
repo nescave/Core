@@ -2,8 +2,7 @@
 #include "GameSetup.h"
 #include <AssetManager.h>
 #include <SDL_mouse.h>
-#include <SDL_render.h>
-
+#include "GameEnums.h"
 #include "Asteroid.h"
 #include "Core.h"
 #include "ObjectSpawner.h"
@@ -21,16 +20,8 @@ void GameSetup::Setup()
 
 void GameSetup::SetupCursor()
 {
-    SDL_Surface* surf =  IMG_Load("res/pngs/crosshair.png");
-    if(!surf)
-    {
-        printf("Failed to load image; SDL Error: %s\n", SDL_GetError());
-    }
-    // Core& core = Core::Get();
-    // SharedTexture tex = core.GetAssetManager().LoadTexture("res/pngs/crosshair.png", true);
-    // SDL_LockTextureToSurface(&*tex, NULL, &surf);
-    // //
-    SDL_Cursor* cursor = SDL_CreateColorCursor(surf,surf->w/2,surf->h/2);
+    SharedSurface surf = AssetManager::Get()->LoadSurface("res/pngs/crosshair.png", GameTextures::CROSSHAIR, true); //TODO try deleting last argument... i dare you
+    SDL_Cursor* cursor = SDL_CreateColorCursor(&*surf,(&*surf)->w/2,(&*surf)->h/2);
     if(!cursor)
     {
         printf("Failed! %s\n", SDL_GetError());
@@ -40,7 +31,7 @@ void GameSetup::SetupCursor()
 
 void GameSetup::SetupSpawners()
 {
-    std::shared_ptr<UniversalSpawner> spawner1 = ObjectSpawner::SpawnObject<UniversalSpawner>().lock();
-    spawner1->StartSpawner<Asteroid>(spawner1->GetTransform(), 1,1,1,1);
+    std::shared_ptr<UniversalSpawner> spawner1 = ObjectSpawner::SpawnObject<UniversalSpawner>();
+    spawner1->StartSpawner<Asteroid>(spawner1->inititalTransform, 1,1,1,1);
 }
 
