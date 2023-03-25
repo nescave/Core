@@ -11,5 +11,7 @@ public:
     Asteroid();
     void OnSpawn() override;
     void Update(double dTime) override;
+
+    void OnBeginOverlap(SharedSceneObject other) override;
 };
 

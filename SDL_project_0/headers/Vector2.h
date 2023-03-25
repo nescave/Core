@@ -106,8 +106,8 @@ struct Vector2
 	T LengthSqr() {
 		return (T)(pow(this->x, 2) + pow(this->y, 2));
 	}
-	double Length() {
-		return sqrt(this->LengthSqr());
+	T Length() {
+		return (T)sqrt(this->LengthSqr());
 	}
 	Vector2 Rotate(double angle) const{
 		double rad = angle/180.0f * PI;
@@ -126,7 +126,7 @@ struct Vector2
 		T y = Random::FromRange(yMin, yMax);
 		return Vector2<T>(x, y);
 	}
-	static double Distance(Vector2 a, Vector2 b) {
+	static T Distance(Vector2 a, Vector2 b) {
 		Vector2 c = b - a;
 		return c.Length();
 	}

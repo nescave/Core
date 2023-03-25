@@ -24,8 +24,8 @@ private:
 
 	void CleanCollisonMap();
 	void UpdateCollisonMap();
-	std::vector<Collider*> GetOverlapingColliders(Collider* col);
-	std::vector<Collider*> GetOverlapingColliders(Vector2i point);
+	std::set<SharedSceneObject> GetOverlapingObjects(Collider* col);
+	std::set<SharedSceneObject> GetOverlapingObjects(Vector2i point);
 
 public:
 	

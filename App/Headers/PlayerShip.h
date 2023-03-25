@@ -4,7 +4,7 @@
 class InputManager;
 class Text;
 
-class PlayerTower : public Avatar
+class PlayerShip : public Avatar
 {
 private:
 	InputManager* input;
@@ -15,7 +15,7 @@ private:
 	bool bAccelerating;
 	
 public:
-	PlayerTower();
+	PlayerShip();
 
 	void Fire();
 	void PropelRight();

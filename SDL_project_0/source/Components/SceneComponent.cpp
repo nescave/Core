@@ -7,7 +7,7 @@ SceneComponent::SceneComponent() :
 	anchor(Anchor::Center)
 {}
 
-SceneComponent& SceneComponent::SetTransform(Transform & t)
+SceneComponent& SceneComponent::SetTransform(Transform& t)
 {
 	transform = t;
 	return *this;

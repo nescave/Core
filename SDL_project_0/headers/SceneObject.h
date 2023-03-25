@@ -69,8 +69,8 @@ public:
 	void OnSpawn() override; 				//happens during actor spawning before actor is fully initialized (constructor behaviour)
 	void Begin() override { Object::Begin(); }					//happens after full initialization
 	void Update(double dTime) override { Object::Update(dTime); }
-	virtual void OnBeginOverlap(Collider* col);
-	virtual void OnEndOverlap(Collider* col);
+	virtual void OnBeginOverlap(SharedSceneObject other);
+	virtual void OnEndOverlap(SharedSceneObject other);
 
 	virtual Vector2d GetAnchorOffset(Anchor anch) {return Vector2d::zero;}
 
@@ -78,12 +78,13 @@ public:
 		typename T,
 		class = std::enable_if_t<std::is_base_of_v<Component, T>>
 	>
-	std::weak_ptr<T> AddComponent() {
+	std::shared_ptr<T> AddComponent() {
 		uint32_t hash = (uint32_t)typeid(T).hash_code();
 		
 		auto comp = std::make_shared<T>();
 		comp->owner = weakThis;
-		comp->componentName = name.append("_component_").append(std::to_string(components.size()));
+		comp->componentName = name;
+		comp->componentName.append("_component_").append(std::to_string(components.size()));
 		components.insert({ hash, comp });
 
 		comp->OnSpawn();

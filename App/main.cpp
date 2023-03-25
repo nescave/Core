@@ -4,7 +4,7 @@
 #include <ObjectSpawner.h>
 #include <AssetManager.h>
 #include <InputManager.h>
-#include "PlayerTower.h"
+#include "PlayerShip.h"
 #include "GameSetup.h"
 //#undef main
 
@@ -28,7 +28,7 @@ int main(int argc, char* args[])
     gs.Setup();
     // GameSetup::Setup();
     
-    ObjectSpawner::SpawnObject<PlayerTower>(Vector2i(120, 80));
+    ObjectSpawner::SpawnObject<PlayerShip>(Vector2i(120, 80));
 
     //InputManager::RegisterAction(ECoreActionButton::RMB, deleteObj);
     //InputManager::RegisterAction(ECoreActionButton::LMB, Serf_F);

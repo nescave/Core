@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "PlayerTower.h"
+#include "PlayerShip.h"
 #include "Core.h"
 #include "AssetManager.h"
 #include "CoreTextures.h"
@@ -9,14 +9,14 @@
 #include "GameEnums.h"
 #include "ObjectSpawner.h"
 
-PlayerTower::PlayerTower() :
+PlayerShip::PlayerShip() :
 	input(nullptr),
 	textComp(nullptr),
-	moveAcc(.004f),
+	moveAcc(.4f),
 	bAccelerating(false)
 {}
 
-void PlayerTower::Fire()
+void PlayerShip::Fire()
 {
 	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
 		transform.position+ GetUpVector()*10,
@@ -25,27 +25,29 @@ void PlayerTower::Fire()
 		"bullet"
 	);//spawn object you object spawner!
 
+	bullet->AddComponent<Collider>();
+	
 	bullet->
 	Accelerate(GetUpVector() *3000).
 	SetRotation(transform.rotation).
 	SetScale({.5f,3.0f}).
 	Destroy(.4);
-	
+
 }
 
-void PlayerTower::PropelRight()
+void PlayerShip::PropelRight()
 {
 	AccelerateAbsolute(Vector2f::right * moveAcc);
 	bAccelerating = true;
 }
 
-void PlayerTower::PropelLeft()
+void PlayerShip::PropelLeft()
 {
 	AccelerateAbsolute(-Vector2f::right* moveAcc);
 	bAccelerating = true;
 }
 
-void PlayerTower::OnSpawn()
+void PlayerShip::OnSpawn()
 {
 	Avatar::OnSpawn();
 	input = InputManager::Get();
@@ -66,20 +68,20 @@ void PlayerTower::OnSpawn()
 	RegisterAction(ECoreActionButton::D, BINDFUNC(PropelRight), EActionType::CONTINUOUS);
 }
 
-void PlayerTower::Begin()
+void PlayerShip::Begin()
 {
 	Avatar::Begin();
 	// SetActive(false);
 }
 
-void PlayerTower::Update(double dTime)
+void PlayerShip::Update(double dTime)
 {
 	Avatar::Update(dTime);
 	const double lookAtRotation = GetLookAtRotation(input->GetPointerScreenPosition()); 
 	SetRotation(lookAtRotation);
 	if (!bAccelerating)
 	{
-		speed *= .99f;
+		speed *= .999f;
 		if(speed.LengthSqr()< .01f) speed = Vector2f::zero;
 
 	}

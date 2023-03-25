@@ -26,9 +26,16 @@ uint32_t ObjectManager::GetFreeObjectID()
 
 void ObjectManager::DeleteObject(uint32_t id)
 {
-    if (gameObjects.find(id) != gameObjects.end()) {
-        gameObjects.erase(gameObjects.find(id));
+    objectsToDelete.insert(id);
+}
+
+void ObjectManager::ApplyDelete()
+{
+    for(auto id : objectsToDelete)
+    {
+        gameObjects.erase(id);
     }
+    objectsToDelete.clear();
 }
 
 void ObjectManager::ClearCreatedObjects()

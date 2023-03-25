@@ -14,7 +14,7 @@ public:
 	
 	virtual ~Component()=default;
 
-	SharedSceneObject GetOwner() { return owner.lock(); }
+	SharedSceneObject GetOwner() const { return owner.lock(); }
 	virtual uint32_t GetOwnerId() { return owner.lock()->id; }
 	virtual bool ShouldRender() { return false; }
 

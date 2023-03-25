@@ -3,7 +3,6 @@
 
 
 Component::Component() :
-	componentName(""),
 	owner(WeakSceneObject())
 {}
 

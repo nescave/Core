@@ -217,15 +217,15 @@ void SceneObject::OnSpawn()
 	weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock());
 }
 
-void SceneObject::OnBeginOverlap(Collider* col)
+void SceneObject::OnBeginOverlap(SharedSceneObject other)
 {
-	printf("%s collided with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());
+	printf("%s collided with %s \n", this->name.c_str(), other->name.c_str());
 }
 
-void SceneObject::OnEndOverlap(Collider* col)
+void SceneObject::OnEndOverlap(SharedSceneObject other)
 {
-	if (col)
-		printf("%s ended collision with %s \n", this->name.c_str(), col->GetOwner()->name.c_str());
+	if (other)
+		printf("%s ended collision with %s \n", this->name.c_str(), other->name.c_str());
 	else
 		printf("%s ended collision with destroyed actor \n", this->name.c_str());
 }

@@ -159,6 +159,8 @@
     <ClCompile Include="Source\Game\GameSetup.cpp" />
     <ClCompile Include="Source\Objects\Asteroid.cpp" />
     <ClCompile Include="Source\Objects\PlayerTower.cpp" />
+    <ClCompile Include="Source\Objects\Weapons\WeaponComponent.cpp" />
+    <ClCompile Include="Source\Objects\Weapons\WeaponProperties.cpp" />
     <ClCompile Include="Source\Spawners\UniversalSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +168,10 @@
     <ClInclude Include="Headers\GameEnums.h" />
     <ClInclude Include="Headers\UniversalSpawner.h" />
     <ClInclude Include="Headers\GameSetup.h" />
-    <ClInclude Include="Headers\PlayerTower.h" />
+    <ClInclude Include="Headers\PlayerShip.h" />
+    <ClInclude Include="Headers\WeaponComponent.h" />
+    <ClInclude Include="Headers\WeaponEnums.h" />
+    <ClInclude Include="Headers\WeaponProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="res\pngs\asteroid.png" />

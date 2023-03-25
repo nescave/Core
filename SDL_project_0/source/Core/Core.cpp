@@ -71,6 +71,8 @@ void Core::StartMainLoop(){
         Sleep(2);
         physicsCore->Update();
         rendererCore->Update(drawList);
+
+        objectManager->ApplyDelete();
         quit = input->GetQuitEvent();
     }
 }

@@ -12,7 +12,7 @@ private:
 
 public:
 	bool moved;
-	std::unordered_set<uint32_t> savedCollisions;
+	std::unordered_map<uint32_t, WeakSceneObject> savedCollisions;
 
 	Collider();
 	//virtual ~Collider();
@@ -21,7 +21,7 @@ public:
 
 	virtual bool PointOverlaps(Vector2i&& point);
 	virtual bool PointOverlaps(Vector2i& point);
-	//virtual bool ColliderOverlaps()
+	virtual bool ColliderOverlaps(Collider* other);
 	//Vector2i GetPosition() override;
 	//Transform GetTransform() override;
 

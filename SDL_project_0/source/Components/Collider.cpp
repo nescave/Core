@@ -1,15 +1,13 @@
 #include "stdafx.h"
 #include "Collider.h"
-#include "Core.h"
-#include "PhysicsCore.h"
 #include "RenderableObject.h"
 
 Collider& Collider::SetMaxReach(SceneObject* own)
 {
-	auto rObj = static_cast<RenderableObject*>(&*own);
+	auto rObj = dynamic_cast<RenderableObject*>(&*own);
 	if (!rObj) return *this;
-	Vector2d scrSize = rObj->GetSize();
-	return SetMaxReach((float)((scrSize * rObj->GetTransform().pivot).Length()));
+	Vector2d size = rObj->GetSize() * rObj->GetScale();
+	return SetMaxReach((float)size.x/2);
 }
 
 Collider& Collider::SetMaxReach(float reach)
@@ -42,8 +40,13 @@ bool Collider::PointOverlaps(Vector2i&& point)
 
 bool Collider::PointOverlaps(Vector2i& point)
 {
-	double dist = Vector2i::Distance(point, this->GetPosition());
+	float dist = Vector2f::Distance(point, this->GetPosition());
 	return dist < this->GetReach();
+}
+
+bool Collider::ColliderOverlaps(Collider* other)
+{
+	return Vector2f::Distance(other->GetPosition(), this->GetPosition()) < (other->maxReach + this->maxReach); 
 }
 
 void Collider::OnSpawn()
