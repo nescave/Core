@@ -94,7 +94,11 @@ SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock
 }
 
 SharedTexture AssetManager::LoadTexture(const char* path, bool lock, bool isCoreRes) {
-    uint16_t i = (uint16_t)GetFirstFreeID(textures);
+    uint16_t i;
+    if(isCoreRes)
+        i = (uint16_t)GetFirstFreeID(textures, CoreTexture::SIZE );
+    else
+        i = (uint16_t)GetFirstFreeID(textures);
     return LoadTexture(path, i, lock, isCoreRes);
 }
 
