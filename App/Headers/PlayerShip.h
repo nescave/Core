@@ -1,5 +1,6 @@
 #pragma once
 #include "Avatar.h"
+#include "WeaponComponent.h"
 
 class InputManager;
 class Text;
@@ -8,7 +9,7 @@ class PlayerShip : public Avatar
 {
 private:
 	InputManager* input;
-	Text* textComp;
+	WeaponComponent* weaponComp;
 
 	Vector2f MoveVector;
 	float moveAcc;
@@ -17,7 +18,7 @@ private:
 public:
 	PlayerShip();
 
-	void Fire();
+	// void Fire();
 	void PropelRight();
 	void PropelLeft();
 

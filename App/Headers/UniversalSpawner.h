@@ -41,8 +41,8 @@ public:
     void Spawn()
     {
         // printf("wakuwaku\n");
-        ObjectSpawner::SpawnObject<T>(inititalTransform);
-        if(bSpawning) SetupTask(3, BINDFUNC(Spawn<T>));
+        // ObjectSpawner::SpawnObject<T>(inititalTransform);
+        // if(bSpawning) SetupTask(3, BINDFUNC(Spawn<T>));
     }
     
 private:

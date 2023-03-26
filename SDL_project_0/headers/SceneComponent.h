@@ -29,6 +29,9 @@ public:
 	virtual double GetRotation();
 	virtual Vector2f GetScale();
 
+	Vector2d GetUpVector() const;
+	Vector2d GetRightVector() const;
+
 	Anchor GetAnchor() { return anchor; }
 
 	void OnSpawn() override;

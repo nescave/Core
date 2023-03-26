@@ -7,33 +7,35 @@
 #include "Collider.h"
 #include "CoreActionButtons.h"
 #include "GameEnums.h"
+#include "KineticWeapon.h"
+#include "LaserWeapon.h"
 #include "ObjectSpawner.h"
 
 PlayerShip::PlayerShip() :
 	input(nullptr),
-	textComp(nullptr),
+	weaponComp(nullptr),
 	moveAcc(.4f),
 	bAccelerating(false)
 {}
-
-void PlayerShip::Fire()
-{
-	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
-		transform.position+ GetUpVector()*10,
-		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot, true),
-		Vector2d(10,10),
-		"bullet"
-	);//spawn object you object spawner!
-
-	bullet->AddComponent<Collider>();
-	
-	bullet->
-	Accelerate(GetUpVector() *3000).
-	SetRotation(transform.rotation).
-	SetScale({.5f,3.0f}).
-	Destroy(.4);
-
-}
+//
+// void PlayerShip::Fire()
+// {
+// 	SharedActor bullet = ObjectSpawner::SpawnObject<Actor>(
+// 		transform.position+ GetUpVector()*10,
+// 		core->GetAssetManager().GetLoadedTexture(CoreTexture::RedDot, true),
+// 		Vector2d(10,10),
+// 		"bullet"
+// 	);//spawn object you object spawner!
+// 	ObjectSpawner::SpawnObject<Actor>(transform);
+// 	bullet->AddComponent<Collider>();
+// 	
+// 	bullet->
+// 	Accelerate(GetUpVector() *3000).
+// 	SetRotation(transform.rotation).
+// 	SetScale({.5f,3.0f}).
+// 	Destroy(.4);
+//
+// }
 
 void PlayerShip::PropelRight()
 {
@@ -57,13 +59,15 @@ void PlayerShip::OnSpawn()
 	SetPosition({ 640,740});
 	SetScale({ .2f,.2f }).SetRotation(0);
 
+	weaponComp = &*AddComponent<KineticWeapon>();
+	
 	// textComp = &*AddComponent<Text>().lock();
 	// textComp->SetAndUpdateText("w").SetAnchor(Anchor::Top);
 	// textComp->SetScale({.3f,.3f});
 
 	// auto collider = AddComponent<Collider>().lock();
 
-	RegisterAction(ECoreActionButton::LMB, [this](){this->Fire();}, EActionType::REPETABLE);
+	RegisterAction(ECoreActionButton::LMB, [this](){this->weaponComp->Fire();}, weaponComp->GetWeaponProperties().fireType);
 	RegisterAction(ECoreActionButton::A, BINDFUNC(PropelLeft), EActionType::CONTINUOUS);
 	RegisterAction(ECoreActionButton::D, BINDFUNC(PropelRight), EActionType::CONTINUOUS);
 }
@@ -86,4 +90,5 @@ void PlayerShip::Update(double dTime)
 
 	}
 	bAccelerating = false;
+	weaponComp->ExhaustHeat(dTime);
 }

@@ -18,11 +18,11 @@ void Object::SetupTask(double delay, const std::function<void()>& func)
 
 void Object::OnSpawn()
 {
-	printf("%s Spawns!\n", name.c_str());
+	// printf("%s Spawns!\n", name.c_str());
 }
 
 void Object::Begin() {
-	printf("%s Begins!\n", name.c_str());
+	// printf("%s Begins!\n", name.c_str());
 
 }
 void Object::Update(double dTime) {
@@ -30,7 +30,7 @@ void Object::Update(double dTime) {
 
 void Object::OnDestroy()
 {
-	printf("%s destroyed!\n", name.c_str());
+	// printf("%s destroyed!\n", name.c_str());
 }
 
 void Object::Destroy()

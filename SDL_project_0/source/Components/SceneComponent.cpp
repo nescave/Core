@@ -69,6 +69,15 @@ Vector2f SceneComponent::GetScale()
 	return GetWorldTransform().scale;
 }
 
+Vector2d SceneComponent::GetUpVector() const
+{
+	return GetOwner()->GetUpVector();
+}
+Vector2d SceneComponent::GetRightVector() const
+{
+	return GetOwner()->GetRightVector();
+}
+
 void SceneComponent::OnSpawn()
 {
 	Component::OnSpawn();
