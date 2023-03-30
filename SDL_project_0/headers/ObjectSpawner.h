@@ -16,7 +16,7 @@ public:
     >
     static std::shared_ptr<T> SpawnObject(Transform& t, SharedTexture tex = nullptr, const Vector2d& s = Vector2d::zero, std::string n = "") 
     {
-        std::shared_ptr<T> object = std::make_shared<T>();
+        std::shared_ptr<T> object(new T);
         GetObjectManager().AddObject(object);
         if (n.empty())
             n = ((std::string)typeid(T).name()).erase(0,6).append("_" + std::to_string(object->id));
@@ -69,6 +69,15 @@ public:
     static std::shared_ptr<T> SpawnObject(Transform&& t = Transform(), std::string n = "") 
     {
         return SpawnObject<T>(t, n);
+    }
+    template<
+    typename T,
+    class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>,
+    class = std::enable_if_t<!std::is_base_of_v<RenderableObject, T>>
+    >
+    static std::shared_ptr<T> SpawnObject(const Vector2d& p, std::string n = "") 
+    {
+        return SpawnObject<T>(Transform(p), n);
     }
     template<
     typename T,

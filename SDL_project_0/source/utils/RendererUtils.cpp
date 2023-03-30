@@ -18,11 +18,11 @@ DrawCall::DrawCall(Renderable* rEl, Transform wTrans) :
 	rect(),
 	rotationPivot()
 {
-	Vector2i scrSize = (Vector2i)renderElement->GetSize();
-	rect.x = int(wTrans.position.x - (double(scrSize.x) / 2 * wTrans.scale.x));
-	rect.y = int(wTrans.position.y - (double(scrSize.y) / 2 * wTrans.scale.y));
-	rect.w = (uint32_t)(double(scrSize.x) * wTrans.scale.x);
-	rect.h = (uint32_t)(double(scrSize.y) * wTrans.scale.y);
-	rotationPivot.x = rect.w / 2;
-	rotationPivot.y = rect.h / 2;
+	Vector2d scrSize = (Vector2i)renderElement->GetSize();
+	rect.x = int(wTrans.position.x - (double(scrSize.x) * wTrans.pivot.x * wTrans.scale.x));
+	rect.y = int(wTrans.position.y - (double(scrSize.y) * wTrans.pivot.y * wTrans.scale.y));
+	rect.w = (int)(scrSize.x * wTrans.scale.x);
+	rect.h = (int)(scrSize.y * wTrans.scale.y);
+	rotationPivot.x = int((float)rect.w * wTrans.pivot.x);
+	rotationPivot.y = int((float)rect.h * wTrans.pivot.y);
 }

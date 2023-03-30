@@ -22,6 +22,9 @@ typedef std::weak_ptr<Actor> WeakActor;
 typedef std::shared_ptr<Component> SharedComponent;
 typedef std::weak_ptr<Component> WeakComponent;
 
+typedef std::shared_ptr<Collider> SharedCollider;
+typedef std::weak_ptr<Collider> WeakCollider;
+
 typedef std::shared_ptr<SDL_Texture> SharedTexture;
 typedef std::weak_ptr<SDL_Texture> WeakTexture;
 

@@ -4,6 +4,7 @@
 
 class RenderableObject : public SceneObject, public Renderable
 {
+    friend class ObjectSpawner; 
 protected:
     RenderableObject();
 public:
@@ -14,4 +15,5 @@ public:
     Vector2d GetAnchorOffset(Anchor anch) override;
 
     void OnSpawn() override;
+
 };

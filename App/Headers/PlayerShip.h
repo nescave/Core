@@ -21,7 +21,8 @@ public:
 	// void Fire();
 	void PropelRight();
 	void PropelLeft();
-
+	void Test();
+	
 	// void Stear();
 	
 	void OnSpawn() override;

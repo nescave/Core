@@ -15,7 +15,7 @@ public:
 	std::unordered_map<uint32_t, WeakSceneObject> savedCollisions;
 
 	Collider();
-	//virtual ~Collider();
+
 	virtual float GetReach() { return maxReach; }
 	virtual void UpdateCollider(Vector2i size);
 

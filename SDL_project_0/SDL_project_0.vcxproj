@@ -163,7 +163,6 @@
     <Image Include="res\pngs\pause.png" />
     <Image Include="res\pngs\play.png" />
     <Image Include="res\pngs\redArrow.png" />
-    <Image Include="res\pngs\redDot.png" />
     <Image Include="res\pngs\redDotCross.png" />
     <Image Include="res\pngs\redRhombus.png" />
   </ItemGroup>
@@ -174,7 +173,10 @@
     <ClInclude Include="headers\Avatar.h" />
     <ClInclude Include="headers\Clock.h" />
     <ClInclude Include="headers\Collider.h" />
+    <ClInclude Include="headers\CollisionData.h" />
+    <ClInclude Include="headers\CollisionLayers.h" />
     <ClInclude Include="headers\Component.h" />
+    <ClInclude Include="headers\DebugDraw.h" />
     <ClInclude Include="headers\SceneComponent.h" />
     <ClInclude Include="headers\Core.h" />
     <ClInclude Include="headers\CoreActionButtons.h" />
@@ -200,8 +202,11 @@
     <ClInclude Include="headers\Transform.h" />
     <ClInclude Include="headers\BaseGUI.h" />
     <ClInclude Include="headers\Vector2.h" />
+    <ClInclude Include="source\utils\Color.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="headers\CollisionData.cpp" />
+    <ClCompile Include="headers\CollisionLayers.cpp" />
     <ClCompile Include="source\Assets\AssetManager.cpp" />
     <ClCompile Include="source\Components\Collider.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
@@ -225,6 +230,8 @@
     <ClCompile Include="source\Objects\RenderableObject.cpp" />
     <ClCompile Include="source\Objects\BaseGUI.cpp" />
     <ClCompile Include="source\utils\Clock.cpp" />
+    <ClCompile Include="source\utils\Color.cpp" />
+    <ClCompile Include="source\utils\DebugDraw.cpp" />
     <ClCompile Include="source\utils\Random.cpp" />
     <ClCompile Include="source\utils\RendererUtils.cpp" />
     <ClCompile Include="source\utils\stdafx.cpp" />

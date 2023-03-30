@@ -49,10 +49,24 @@ std::set<SharedSceneObject> PhysicsCore::GetOverlapingObjects(Collider* col)
 {
 	std::set<SharedSceneObject> overlapingObjects;
 	for (auto& tpl : collisionMap) {
-		auto lCol = &*tpl.second.lock();
-		if (col == lCol) continue;
-		if (lCol->ColliderOverlaps(col)) {
-			overlapingObjects.insert(lCol->GetOwner());
+		auto collider = &*tpl.second.lock();
+		if (col == collider) continue;
+		if (collider->ColliderOverlaps(col)) {
+			overlapingObjects.insert(collider->GetOwner());
+		}
+	}
+	return overlapingObjects;
+}
+
+std::set<SharedSceneObject> PhysicsCore::GetOverlapingObjects(Vector2i point)
+{
+	std::set<SharedSceneObject> overlapingObjects;
+	for (auto& tpl : collisionMap)
+	{
+		auto collider = &*tpl.second.lock();
+		if(collider->PointOverlaps(point))
+		{
+			overlapingObjects.insert(collider->GetOwner());
 		}
 	}
 	return overlapingObjects;
@@ -78,6 +92,42 @@ bool PhysicsCore::Init()
 void PhysicsCore::AddCollider(std::weak_ptr<Collider> col)
 {
 	collidersToAdd.push(col);
+}
+
+std::pair<bool, CollisionData> PhysicsCore::RayCast(
+	const Vector2d& start,
+	Vector2d& direction,
+	const float range,
+	ECollisionLayer layer
+	)
+{
+	Vector2d testPos = start+direction;
+	std::set<SharedSceneObject> foundObjects;
+	float traveledDist = 0;
+	do
+	{
+		foundObjects = GetOverlapingObjects(testPos);
+		testPos += direction;	
+		traveledDist +=1;
+	}
+	while (foundObjects.empty() && traveledDist<range);
+	auto collisionData = CollisionData();
+	collisionData.distance = traveledDist;
+	collisionData.hitPosition = start+direction*traveledDist;
+	if(foundObjects.empty()) return std::make_pair(false, collisionData);
+	const SharedSceneObject foundObject = *foundObjects.begin();
+	collisionData.object = foundObject;
+	return std::make_pair(true, collisionData);
+}
+
+std::pair<bool, CollisionData> PhysicsCore::RayCast(
+	const Vector2d& start,
+	Vector2d&& direction,
+	float range,
+	ECollisionLayer layer
+	)
+{
+	return RayCast(start, direction, range, layer);
 }
 
 void PhysicsCore::Update()

@@ -6,10 +6,12 @@
 #include "Text.h"
 #include "Collider.h"
 #include "CoreActionButtons.h"
+#include "DebugDraw.h"
 #include "GameEnums.h"
 #include "KineticWeapon.h"
 #include "LaserWeapon.h"
 #include "ObjectSpawner.h"
+#include "PhysicsCore.h"
 
 PlayerShip::PlayerShip() :
 	input(nullptr),
@@ -49,6 +51,16 @@ void PlayerShip::PropelLeft()
 	bAccelerating = true;
 }
 
+void PlayerShip::Test()
+{
+	auto mousePos = input->GetPointerScreenPosition();
+	auto startPos = GetAbsolutePosition()+GetUpVector()*10;
+	auto direction = (mousePos-startPos).Normalize();
+	auto hit = core->GetPhysicsCore().RayCast(startPos, direction, 800, ECollisionLayer::GAME);
+	DebugDraw::Point(hit.second.hitPosition, 6, 2, Color::green);
+	DebugDraw::Line(startPos, hit.second.hitPosition, 2.5, 2,Color::red);
+}
+
 void PlayerShip::OnSpawn()
 {
 	Avatar::OnSpawn();
@@ -66,8 +78,9 @@ void PlayerShip::OnSpawn()
 	// textComp->SetScale({.3f,.3f});
 
 	// auto collider = AddComponent<Collider>().lock();
-
-	RegisterAction(ECoreActionButton::LMB, [this](){this->weaponComp->Fire();}, weaponComp->GetWeaponProperties().fireType);
+	ObjectSpawner::SpawnObject<Actor>(transform.position);
+	// RegisterAction(ECoreActionButton::LMB, [this](){this->weaponComp->Fire();}, weaponComp->GetWeaponProperties().fireType);
+	RegisterAction(ECoreActionButton::LMB, [this](){this->Test();}, weaponComp->GetWeaponProperties().fireType);
 	RegisterAction(ECoreActionButton::A, BINDFUNC(PropelLeft), EActionType::CONTINUOUS);
 	RegisterAction(ECoreActionButton::D, BINDFUNC(PropelRight), EActionType::CONTINUOUS);
 }

@@ -6,7 +6,6 @@ class Core;
 
 class Object : public std::enable_shared_from_this<Object>
 {
-	friend class ObjectSpawner;
 
 private:
 
@@ -20,6 +19,8 @@ protected:
 	void SetupTask(double delay, const std::function<void()>& func);
 
 public:
+	friend class ObjectSpawner;
+
 	const uint32_t id;
 	std::string name;
 

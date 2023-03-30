@@ -44,9 +44,6 @@ void WeaponComponent::ExhaustHeat(double dTime)
 {
     if(currentHeat>0)
         currentHeat -= float((double)properties.heatExhaust *dTime);
-
-
-    printf("%f\n", currentHeat);
 }
 
 void WeaponComponent::HeatCheckup()

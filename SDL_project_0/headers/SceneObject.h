@@ -24,11 +24,11 @@ protected:
 	bool IsParentPossible(WeakSceneObject par);
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
+	SceneObject();
 
 public:
 	friend class Collider;
 
-	SceneObject();
 	Transform& GetTransform(); 
 	Vector2d& GetPosition(); 
 	double GetRotation();

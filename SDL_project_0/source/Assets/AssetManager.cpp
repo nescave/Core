@@ -11,11 +11,11 @@ RendererCore* rendererCore;
 
 void AssetManager::LoadCoreTextures()
 {
-    LoadTexture("../SDL_project_0/res/pngs/redDot.png", CoreTexture::RedDot, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GreenSquare, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::OrangeTriangle, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GreenArrow, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RedArrow, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/white_dot.png", CoreTexture::WHITE_DOT, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GREEN_SQUARE, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::ORANGE_TRIANGLE, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GREEN_ARROW, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RED_ARROW, true, true);
         
 }
 
@@ -115,8 +115,8 @@ SharedSurface AssetManager::LoadSurface(const char* path, int texEnum, bool lock
         return nullptr;
     }
     SharedSurface surface(sdlSurface, SurfaceDeleter());
-    surfaces[texEnum] = surface;
-    if (lock) SetTextureLock(textures[texEnum].lock(), lock);
+    surfaces[(uint16_t)texEnum] = surface;
+    if (lock) SetTextureLock(textures[(uint16_t)texEnum].lock(), lock);
     return surface; 
     // return surfaces[texEnum].lock();
 }
@@ -129,7 +129,19 @@ SharedSurface AssetManager::LoadSurface(const char* path, bool lock)
 
 SharedSurface AssetManager::GetLoadedSurface(int surfEnum)
 {
-    return surfaces[surfEnum].lock();
+    return surfaces[(uint16_t)surfEnum].lock();
+}
+
+SharedTexture AssetManager::CreateFlatTexture(uint32_t width, uint32_t height, SDL_Color color, int texEnum)
+{
+    SDL_Surface* surf = SDL_CreateRGBSurface(0,width,height,8,0, 0, 0, 0);
+    SDL_SetSurfaceColorMod(surf, color.r, color.g, color.b);
+    SDL_Texture* sdlTexture =  SDL_CreateTextureFromSurface(rendererCore->GetRenderer(), surf);
+    SDL_FreeSurface(surf);
+    SharedTexture texture(sdlTexture, TextureDeleter());
+    if(texEnum<0)
+        textures[(uint16_t)GetFirstFreeID(textures,CoreTexture::SIZE)] = texture;
+    return texture;
 }
 
 SharedFont AssetManager::LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID) {

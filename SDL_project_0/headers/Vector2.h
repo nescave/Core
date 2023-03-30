@@ -132,7 +132,7 @@ struct Vector2
 	}
 	Vector2 Normalize()
 	{
-		return *this / this->LengthSqr();
+		return *this / this->Length();
 	}
 
 };

@@ -1,16 +1,17 @@
 #include "stdafx.h"
 #include "Core.h"
-#include "RendererCore.h"
-#include "PhysicsCore.h"
-#include "AssetManager.h"
-#include "ObjectManager.h"
-#include "InputManager.h"
-#include "Clock.h"
-#include "Text.h"
+#include <Windows.h>
 #include "Actor.h"
-#include "Collider.h"
+#include "AssetManager.h"
+#include "Clock.h"
+#include "InputManager.h"
+#include "ObjectManager.h"
 #include "ObjectSpawner.h"
+#include "PhysicsCore.h"
+#include "RendererCore.h"
 #include "TaskManager.h"
+#include "Text.h"
+
 
 bool Core::Init() {
     rendererCore = std::make_unique<RendererCore>();
