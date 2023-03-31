@@ -59,6 +59,7 @@ void PlayerShip::Test()
 	auto hit = core->GetPhysicsCore().RayCast(startPos, direction, 800, ECollisionLayer::GAME);
 	DebugDraw::Point(hit.second.hitPosition, 6, 2, Color::green);
 	DebugDraw::Line(startPos, hit.second.hitPosition, 2.5, 2,Color::red);
+	DebugDraw::Circle(transform.position, 100, 3, Color::cyan);
 }
 
 void PlayerShip::OnSpawn()
