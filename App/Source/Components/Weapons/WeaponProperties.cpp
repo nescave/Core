@@ -9,17 +9,18 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
     switch (typeDefault)
     {
     case Weapons::KINETIC:
-        baseDamage = 10;
-        armorDamage = .1f;
-        shieldDamage = 0;
-        armorPiercing = .25f;
-        shieldPiercing = 1;
+        damageData.baseDamage = 10;
+        damageData.armorDamage = .1f;
+        damageData.shieldDamage = 0;
+        damageData.armorPiercing = .25f;
+        damageData.shieldPiercing = 1;
         projectileSpeed = 3500;
-        heatGeneration = 1;
-        heatExhaust = 1.5f;
+        shotCooldown = .1;
+        heatGeneration = 1.2f;
+        heatExhaust = .5f;
         heatMax = 10;
         heatSafety = .5f;
-        fireType = EActionType::REPETABLE;
+        fireType = EActionType::CONTINUOUS;
         ammunitionTexture = AssetManager::Get()->LoadTexture("res/pngs/white_dot.png", GameTextures::KINETIC_SHOT);
 
         if(SDL_SetTextureColorMod(&*ammunitionTexture,255,180,0))
@@ -29,12 +30,13 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
 
         break;
     case Weapons::ENERGY:
-        baseDamage = 12;
-        armorDamage = 1.5f;
-        shieldDamage = .5F;
-        armorPiercing = 0;
-        shieldPiercing = 0;
+        damageData.baseDamage = 12;
+        damageData.armorDamage = 1.5f;
+        damageData.shieldDamage = .5F;
+        damageData.armorPiercing = 0;
+        damageData.shieldPiercing = 0;
         projectileSpeed = 5500;
+        shotCooldown = .01;
         heatGeneration = .02f;
         heatExhaust = .75f;
         heatMax = 10;
@@ -49,11 +51,11 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
 
         break;
     default:
-        baseDamage = 0;
-        armorDamage = 0;
-        shieldDamage = 0;
-        armorPiercing = 0;
-        shieldPiercing = 0;
+        damageData.baseDamage = 0;
+        damageData.armorDamage = 0;
+        damageData.shieldDamage = 0;
+        damageData.armorPiercing = 0;
+        damageData.shieldPiercing = 0;
         projectileSpeed = 0;
         heatGeneration = 0;
         heatExhaust = 0;
@@ -68,11 +70,11 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
 
 WeaponProperties::WeaponProperties()
 {
-    baseDamage = 0;
-    armorDamage = 0;
-    shieldDamage = 0;
-    armorPiercing = 0;
-    shieldPiercing = 0;
+    damageData.baseDamage = 0;
+    damageData.armorDamage = 0;
+    damageData.shieldDamage = 0;
+    damageData.armorPiercing = 0;
+    damageData.shieldPiercing = 0;
     projectileSpeed = 0;
     heatGeneration = 0;
     heatExhaust = 0;

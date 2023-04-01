@@ -16,7 +16,6 @@ protected:
 	
 	Object();
 
-	void SetupTask(double delay, const std::function<void()>& func);
 
 public:
 	friend class ObjectSpawner;
@@ -24,7 +23,7 @@ public:
 	const uint32_t id;
 	std::string name;
 
-	//virtual ~Entity();
+	void SetupTask(double delay, const std::function<void()>& func);
 
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }
 	virtual bool ShouldRender() { return false; }

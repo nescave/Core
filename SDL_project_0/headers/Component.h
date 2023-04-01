@@ -2,11 +2,14 @@
 #include "CoreTypes.h"
 #include "SceneObject.h"
 
+class Core;
+
 class Component 
 {
 	friend class SceneObject;
 protected:
 	WeakSceneObject owner;
+	Core* core;
 
 	Component();
 public:

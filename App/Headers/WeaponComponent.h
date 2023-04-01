@@ -8,6 +8,8 @@ protected:
     WeaponProperties properties;
     float currentHeat;
     bool bOverHeated;
+    bool bOnCooldown;
+
 public:
     WeaponComponent(); //TODO have to finally make all object and component constructors private or protected
 

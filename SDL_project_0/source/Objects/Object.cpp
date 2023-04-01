@@ -23,7 +23,6 @@ void Object::OnSpawn()
 
 void Object::Begin() {
 	// printf("%s Begins!\n", name.c_str());
-
 }
 void Object::Update(double dTime) {
 }

@@ -6,7 +6,8 @@
 
 WeaponComponent::WeaponComponent() :
     currentHeat(0),
-    bOverHeated(true)
+    bOverHeated(true),
+    bOnCooldown(false)
 {}
 
 Actor* WeaponComponent::Fire()
@@ -14,6 +15,10 @@ Actor* WeaponComponent::Fire()
     if(bOverHeated)
     {
         HeatCheckup();
+        return nullptr;
+    }
+    if(bOnCooldown)
+    {
         return nullptr;
     }
     Transform spawnTrans = GetWorldTransform();
@@ -32,18 +37,25 @@ Actor* WeaponComponent::Fire()
     AccumulateHeat();
     HeatCheckup();
 
+    bOnCooldown = true;
+    owner.lock()->SetupTask(properties.shotCooldown, [=](){this->bOnCooldown = false;});
     return &*projectile;
 }
 
+
 void WeaponComponent::AccumulateHeat()
 {
-    currentHeat += properties.heatGeneration;
+    currentHeat += properties.heatGeneration * (float)properties.shotCooldown;
 }
 
 void WeaponComponent::ExhaustHeat(double dTime)
 {
     if(currentHeat>0)
+    {
         currentHeat -= float((double)properties.heatExhaust *dTime);
+        printf("%f\n", currentHeat);
+    }
+
 }
 
 void WeaponComponent::HeatCheckup()

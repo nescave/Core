@@ -81,7 +81,7 @@ void PlayerShip::OnSpawn()
 	// auto collider = AddComponent<Collider>().lock();
 	ObjectSpawner::SpawnObject<Actor>(transform.position);
 	// RegisterAction(ECoreActionButton::LMB, [this](){this->weaponComp->Fire();}, weaponComp->GetWeaponProperties().fireType);
-	RegisterAction(ECoreActionButton::LMB, [this](){this->Test();}, weaponComp->GetWeaponProperties().fireType);
+	RegisterAction(ECoreActionButton::LMB, [this](){this->weaponComp->Fire();}, weaponComp->GetWeaponProperties().fireType);
 	RegisterAction(ECoreActionButton::A, BINDFUNC(PropelLeft), EActionType::CONTINUOUS);
 	RegisterAction(ECoreActionButton::D, BINDFUNC(PropelRight), EActionType::CONTINUOUS);
 }

@@ -19,10 +19,10 @@ void TaskManager::ResolveTasks()
 {
     for(auto it = tasks.begin(); it!=tasks.end();)
     {
-        if(it->first.use_count()<2)
+        if(it->first.use_count()<2) //checks if TaskManager is the only user of that object (object was deleted)
         {
             it = tasks.erase(it);
-        }else if(it->second.first <= 0)
+        }else if(it->second.first <= 0) //checks if delay of task elapsed
         {
             if(it->second.second)
                 it->second.second();
