@@ -23,7 +23,7 @@ public:
 
 	SceneComponent& SetAnchor(Anchor anch);
 
-	virtual Transform GetWorldTransform();
+	virtual Transform GetAbsoluteTransform();
 	virtual Transform& GetLocalTransform();
 	virtual Vector2d GetPosition();
 	virtual double GetRotation();

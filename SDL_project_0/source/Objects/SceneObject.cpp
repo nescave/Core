@@ -217,6 +217,15 @@ void SceneObject::OnSpawn()
 	weakThis = std::static_pointer_cast<SceneObject>(weak_from_this().lock());
 }
 
+void SceneObject::Update(double dTime)
+{
+	Object::Update(dTime);
+	for(auto& tpl : components)
+	{
+		tpl.second->Update(dTime);
+	}
+}
+
 void SceneObject::OnBeginOverlap(SharedSceneObject other)
 {
 	printf("%s collided with %s \n", this->name.c_str(), other->name.c_str());

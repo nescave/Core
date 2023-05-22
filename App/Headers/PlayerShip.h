@@ -1,14 +1,14 @@
 #pragma once
-#include "Avatar.h"
+#include "Actor.h"
+#include "Controlable.h"
 #include "WeaponComponent.h"
 
 class InputManager;
 class Text;
 
-class PlayerShip : public Avatar
+class PlayerShip : public Controlable, public Actor
 {
 private:
-	InputManager* input;
 	WeaponComponent* weaponComp;
 
 	Vector2f MoveVector;
@@ -16,6 +16,7 @@ private:
 	bool bAccelerating;
 	
 public:
+	InputManager* input;
 	PlayerShip();
 
 	// void Fire();

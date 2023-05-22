@@ -13,11 +13,13 @@ protected:
 public:
     WeaponComponent(); //TODO have to finally make all object and component constructors private or protected
 
-    virtual Actor* Fire();
+    virtual bool Fire();
 
     virtual void AccumulateHeat();
     virtual void ExhaustHeat(double dTime);
     virtual void HeatCheckup();
     bool IsOverheated() const {return bOverHeated;}
     WeaponProperties& GetWeaponProperties(){return properties;}
+
+    void Update(double dTime) override;
 };

@@ -22,5 +22,6 @@ public:
 	virtual bool ShouldRender() { return false; }
 
 	virtual void OnSpawn();
-
+	virtual void Update(double dTime);
+	virtual void OnDestroy();
 };

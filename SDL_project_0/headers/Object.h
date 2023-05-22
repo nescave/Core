@@ -24,7 +24,8 @@ public:
 	std::string name;
 
 	void SetupTask(double delay, const std::function<void()>& func);
-
+	void CancelTasks();
+	
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }
 	virtual bool ShouldRender() { return false; }
 	virtual bool HasCollider() { return false; }

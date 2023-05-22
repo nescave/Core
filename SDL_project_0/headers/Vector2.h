@@ -89,7 +89,7 @@ struct Vector2
 	}
 	template <typename T2>
 	Vector2 operator/(T2 rVec) const {
-		Vector2 vec((T2)(this->x / rVec.x), (T2)(this->y / rVec.y));
+		Vector2 vec((T)(this->x / rVec.x), (T)(this->y / rVec.y));
 		return vec;
 	}
 	template <typename T2>

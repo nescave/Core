@@ -16,6 +16,11 @@ void Object::SetupTask(double delay, const std::function<void()>& func)
 	core->GetTaskManager().AddTask(shared_from_this(), Task(delay, func));
 }
 
+void Object::CancelTasks()
+{
+	core->GetTaskManager().CancelClientsTasks(shared_from_this());
+}
+
 void Object::OnSpawn()
 {
 	// printf("%s Spawns!\n", name.c_str());

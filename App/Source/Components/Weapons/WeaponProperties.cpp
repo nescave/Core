@@ -14,8 +14,10 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
         damageData.shieldDamage = 0;
         damageData.armorPiercing = .25f;
         damageData.shieldPiercing = 1;
+        damageData.damageType = DamageType::IMPACT;
+    
         projectileSpeed = 3500;
-        shotCooldown = .1;
+        shotCooldown = .15;
         heatGeneration = 1.2f;
         heatExhaust = .5f;
         heatMax = 10;
@@ -32,9 +34,11 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
     case Weapons::ENERGY:
         damageData.baseDamage = 12;
         damageData.armorDamage = 1.5f;
-        damageData.shieldDamage = .5F;
+        damageData.shieldDamage = .5f;
         damageData.armorPiercing = 0;
         damageData.shieldPiercing = 0;
+        damageData.damageType = DamageType::OVERTIME;
+
         projectileSpeed = 5500;
         shotCooldown = .01;
         heatGeneration = .02f;
@@ -42,12 +46,7 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
         heatMax = 10;
         heatSafety = .66f;
         fireType = EActionType::CONTINUOUS;
-        ammunitionTexture = AssetManager::Get()->LoadTexture("res/pngs/white_dot.png", GameTextures::ENERGY_SHOT);
-
-        if(SDL_SetTextureColorMod(&*ammunitionTexture,128,0,228))
-        {
-            printf("Texture coloring failed! %s\n", SDL_GetError());
-        }
+        ammunitionTexture = AssetManager::Get()->CreateFlatTexture(4,4, Color::blue);
 
         break;
     default:
@@ -56,6 +55,8 @@ WeaponProperties::WeaponProperties(Weapons::Types typeDefault)
         damageData.shieldDamage = 0;
         damageData.armorPiercing = 0;
         damageData.shieldPiercing = 0;
+        damageData.damageType = DamageType::IMPACT;
+
         projectileSpeed = 0;
         heatGeneration = 0;
         heatExhaust = 0;
@@ -75,6 +76,8 @@ WeaponProperties::WeaponProperties()
     damageData.shieldDamage = 0;
     damageData.armorPiercing = 0;
     damageData.shieldPiercing = 0;
+    damageData.damageType = DamageType::IMPACT;
+
     projectileSpeed = 0;
     heatGeneration = 0;
     heatExhaust = 0;

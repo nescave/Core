@@ -12,9 +12,11 @@ enum class ESortingPriority {
 };
 
 struct DrawCall {
-    Renderable* renderElement;
+    SDL_Texture* texture;
+    int16_t sortingPriority;
     double rotation;
-    SDL_Rect rect;
+    SDL_Rect srcRect;
+    SDL_Rect dstRect;
     SDL_Point rotationPivot;
 
     DrawCall(Renderable* rEl, Transform wTrans);

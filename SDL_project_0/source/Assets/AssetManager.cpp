@@ -11,12 +11,12 @@ RendererCore* rendererCore;
 
 void AssetManager::LoadCoreTextures()
 {
-    LoadTexture("../SDL_project_0/res/pngs/white_dot.png", CoreTexture::WHITE_DOT, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTexture::GREEN_SQUARE, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTexture::ORANGE_TRIANGLE, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTexture::GREEN_ARROW, true, true);
-    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTexture::RED_ARROW, true, true);
-        
+    LoadTexture("../SDL_project_0/res/pngs/white_dot.png", CoreTextures::WHITE_DOT, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenSquare.png", CoreTextures::GREEN_SQUARE, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/orangeTriangle.png", CoreTextures::ORANGE_TRIANGLE, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/greenArrow.png", CoreTextures::GREEN_ARROW, true, true);
+    LoadTexture("../SDL_project_0/res/pngs/redArrow.png", CoreTextures::RED_ARROW, true, true);
+    SetTextureLock(CreateFlatTexture(32,32, Color::white, CoreTextures::FLAT_WHITE, true), true);
 }
 
 AssetManager::AssetManager() {
@@ -87,7 +87,7 @@ SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock
         return nullptr;
     }
     SharedTexture texture(sdlTexture, TextureDeleter());
-    texEnum = isCoreRes ? texEnum : texEnum + CoreTexture::SIZE; 
+    texEnum = isCoreRes ? texEnum : texEnum + CoreTextures::SIZE; 
     textures[texEnum] = texture;
     if (lock) SetTextureLock(textures[texEnum].lock(), lock);
     return textures[texEnum].lock();
@@ -95,15 +95,15 @@ SharedTexture AssetManager::LoadTexture(const char* path, int texEnum, bool lock
 
 SharedTexture AssetManager::LoadTexture(const char* path, bool lock, bool isCoreRes) {
     uint16_t i;
-    if(isCoreRes)
-        i = (uint16_t)GetFirstFreeID(textures, CoreTexture::SIZE );
+    if(!isCoreRes)
+        i = (uint16_t)GetFirstFreeID(textures, CoreTextures::SIZE );
     else
         i = (uint16_t)GetFirstFreeID(textures);
     return LoadTexture(path, i, lock, isCoreRes);
 }
 
 SharedTexture AssetManager::GetLoadedTexture(int texEnum, bool isCoreRes) {
-    texEnum = isCoreRes ? texEnum : texEnum + CoreTexture::SIZE; 
+    texEnum = isCoreRes ? texEnum : texEnum + CoreTextures::SIZE; 
     return textures[texEnum].lock();
 }
 
@@ -132,7 +132,7 @@ SharedSurface AssetManager::GetLoadedSurface(int surfEnum)
     return surfaces[(uint16_t)surfEnum].lock();
 }
 
-SharedTexture AssetManager::CreateFlatTexture(uint32_t width, uint32_t height, SDL_Color color, int texEnum)
+SharedTexture AssetManager::CreateFlatTexture(uint32_t width, uint32_t height, Color color, int texEnum, bool coreRes)
 {
     SDL_Surface* surf = SDL_CreateRGBSurface(0,width,height,8,0, 0, 0, 0);
     SDL_SetSurfaceColorMod(surf, color.r, color.g, color.b);
@@ -140,7 +140,7 @@ SharedTexture AssetManager::CreateFlatTexture(uint32_t width, uint32_t height, S
     SDL_FreeSurface(surf);
     SharedTexture texture(sdlTexture, TextureDeleter());
     if(texEnum<0)
-        textures[(uint16_t)GetFirstFreeID(textures,CoreTexture::SIZE)] = texture;
+        textures[(uint16_t)GetFirstFreeID(textures,coreRes? 0 : CoreTextures::SIZE)] = texture;
     return texture;
 }
 

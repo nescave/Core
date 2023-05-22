@@ -61,6 +61,7 @@ public:
         object->name = n;
         return object;
     }
+    
     template<
     typename T,
     class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>,
@@ -70,6 +71,7 @@ public:
     {
         return SpawnObject<T>(t, n);
     }
+    
     template<
     typename T,
     class = std::enable_if_t<std::is_base_of_v<SceneObject, T>>,
@@ -79,6 +81,7 @@ public:
     {
         return SpawnObject<T>(Transform(p), n);
     }
+    
     template<
     typename T,
     class = std::enable_if_t<std::is_base_of_v<Object, T>>,
@@ -93,5 +96,6 @@ public:
         object->name = n;
         return object;
     }
+    
 };
 

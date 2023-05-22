@@ -1,5 +1,7 @@
 #pragma once
 #include "CoreTypes.h"
+#include "Color.h"
+
 enum class ECoreFont;
 class AssetManager
 {
@@ -30,7 +32,7 @@ public:
     SharedSurface LoadSurface(const char* path, bool lock = false);
     SharedSurface GetLoadedSurface(int surfEnum);
 
-    SharedTexture CreateFlatTexture(uint32_t width, uint32_t height, SDL_Color color, int texEnum =-1);
+    SharedTexture CreateFlatTexture(uint32_t width, uint32_t height, Color color, int texEnum =-1, bool coreRes = false);
 
     SharedFont LoadFont(const char* path, uint16_t fontEnum, uint16_t fontSizeID);
     SharedFont GetLoadedFont(uint16_t fontEnum) { return fonts[fontEnum]; }

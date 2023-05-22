@@ -1,10 +1,5 @@
 #include "stdafx.h"
 #include "Actor.h"
-#include "ObjectManager.h"
-
-//Actor::Actor(uint32_t iD, std::string n, Transform t, Vector2i s, shared_Texture tex) :
-//	RenderObject(iD, n, t, s, tex)
-//{}
 
 Actor::Actor() : maxSpeed(5)
 {}
@@ -15,7 +10,7 @@ void Actor::OnSpawn()
 }
 
 void Actor::Update(double dTime) {
-	SceneObject::Update(dTime);
+	RenderableObject::Update(dTime);
 
 	Translate(speed*dTime);
 }

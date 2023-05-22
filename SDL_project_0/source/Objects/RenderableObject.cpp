@@ -4,6 +4,23 @@
 RenderableObject::RenderableObject()
 {}
 
+SDL_Rect RenderableObject::GetDstRect()
+{
+	auto wTrans = GetAbsoluteTransform();
+	Vector2d scrSize = GetSize() * wTrans.scale;
+	return SDL_Rect{
+		int(wTrans.position.x - scrSize.x * (double)wTrans.pivot.x),
+		int(wTrans.position.y - scrSize.y * (double)wTrans.pivot.y),
+		int(scrSize.x),
+		int(scrSize.y)
+	};
+}
+
+SDL_Rect RenderableObject::GetSrcRect()
+{
+	return Renderable::GetSrcRect();
+}
+
 Renderable& RenderableObject::SetSize(Vector2d s, bool resetScale)
 {
 	if (resetScale) transform.scale = Vector2f::one;
@@ -45,7 +62,6 @@ Vector2d RenderableObject::GetAnchorOffset(Anchor anch)
 	default:
 		break;
 	};
-		
 	offset *= transform.scale;
 	return offset.Rotate(transform.rotation);
 }
@@ -53,4 +69,13 @@ Vector2d RenderableObject::GetAnchorOffset(Anchor anch)
 void RenderableObject::OnSpawn()
 {
 	SceneObject::OnSpawn();
+}
+
+void RenderableObject::Update(double dTime)
+{
+	SceneObject::Update(dTime);
+	if(animation)
+	{
+		animation->Update(dTime);
+	}
 }

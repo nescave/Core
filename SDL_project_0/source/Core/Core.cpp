@@ -22,6 +22,8 @@ bool Core::Init() {
     clock = std::make_unique<Clock>();
     taskManager = std::make_unique<TaskManager>();
 
+    lastUpdateDuration = 0;
+    
     if (!rendererCore->Init(SCREEN_WIDTH, SCREEN_HEIGHT)) return false;
     if (!physicsCore->Init()) return false;
     if (!assetManager->Init(true)) return false;
@@ -38,7 +40,7 @@ void Core::Begin() {}
 
 void Core::Update() {
     const double dTime = clock->GetDeltaTime();
-
+    lastUpdateDuration = dTime;
     taskManager->UpdateTasks(dTime);
     
     for (auto& obj : objectManager->GetCreatedObjects()) 
@@ -49,13 +51,14 @@ void Core::Update() {
     for (auto& tpl : objectManager->GetGameObjects())
     {
         auto& obj = tpl.second;
-        if (obj->ShouldRender()) {
-            auto rObj = dynamic_cast<RenderableObject*>(&*obj);
+        const auto rObj = dynamic_cast<RenderableObject*>(&*obj);
+        if(!rObj) continue;
+        if (obj->ShouldRender() || !rObj->GetRenderableComponents().empty()) {
             if (rObj) {
                 drawList.push(DrawCall(rObj, rObj->GetAbsoluteTransform()));
             }
             for (auto comp : rObj->GetRenderableComponents()) {
-                drawList.push(DrawCall(comp, comp->GetWorldTransform()));
+                drawList.push(DrawCall(comp, comp->GetAbsoluteTransform()));
             }
         }
         obj->Update(dTime);

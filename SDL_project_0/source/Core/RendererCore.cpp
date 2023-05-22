@@ -90,12 +90,11 @@ void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
 
     //SDL_RenderGeometry(renderer, rObj->GetTexture().get(), v, 4, i, 6 );
 //geometry render test 
-
     SDL_RenderCopyEx(
         renderer,
-        drawCall->renderElement->GetTexture().get(),
-        NULL,
-        &drawCall->rect,
+        drawCall->texture,
+        &drawCall->srcRect,
+        &drawCall->dstRect,
         drawCall->rotation,
         &drawCall->rotationPivot,
         SDL_FLIP_NONE

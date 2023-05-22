@@ -101,7 +101,7 @@ void InputManager::ProcessInput()
 				}
 			}
 			break;
-		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONDOWN:		//TODO fix repeatable button clicks not registering as continouos key states
 			mb = e.button.button;
 			if (actionsMap.find(mouseActionButtons[mb]) != actionsMap.end()) {
 				for (auto& tpl : actionsMap[mouseActionButtons[mb]]) {

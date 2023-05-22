@@ -1,8 +1,6 @@
 ﻿#include "stdafx.h"
 #include "WeaponComponent.h"
 #include "Actor.h"
-#include "ObjectSpawner.h"
-#include "Collider.h"
 
 WeaponComponent::WeaponComponent() :
     currentHeat(0),
@@ -10,36 +8,18 @@ WeaponComponent::WeaponComponent() :
     bOnCooldown(false)
 {}
 
-Actor* WeaponComponent::Fire()
+bool WeaponComponent::Fire()
 {
     if(bOverHeated)
     {
         HeatCheckup();
-        return nullptr;
+        return false;
     }
-    if(bOnCooldown)
-    {
-        return nullptr;
-    }
-    Transform spawnTrans = GetWorldTransform();
-    spawnTrans.position += GetUpVector() * 10;
-    const auto projectile = ObjectSpawner::SpawnObject<Actor>(spawnTrans);
-    projectile->
-        SetTexture(properties.ammunitionTexture);
-    
-    projectile->
-        Accelerate(Vector2f::up * properties.projectileSpeed).
-        SetScale({.2f,.5f}).
-        AddComponent<Collider>();
-
-    projectile->Destroy(.5);
     
     AccumulateHeat();
     HeatCheckup();
 
-    bOnCooldown = true;
-    owner.lock()->SetupTask(properties.shotCooldown, [=](){this->bOnCooldown = false;});
-    return &*projectile;
+     return true;
 }
 
 
@@ -53,7 +33,7 @@ void WeaponComponent::ExhaustHeat(double dTime)
     if(currentHeat>0)
     {
         currentHeat -= float((double)properties.heatExhaust *dTime);
-        printf("%f\n", currentHeat);
+        // printf("%f\n", currentHeat);
     }
 
 }
@@ -64,4 +44,10 @@ void WeaponComponent::HeatCheckup()
         bOverHeated = currentHeat>properties.heatMax*properties.heatSafety;
     else
         bOverHeated = currentHeat>properties.heatMax;
+}
+
+void WeaponComponent::Update(double dTime)
+{
+    SceneComponent::Update(dTime);
+    ExhaustHeat(dTime);
 }

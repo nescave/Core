@@ -33,6 +33,8 @@ public:
     //Core();
     bool Init();
 
+    double lastUpdateDuration;
+    
     static Core& Get();
     RendererCore& GetRendererCore() { return *rendererCore; }
     PhysicsCore& GetPhysicsCore() { return *physicsCore; }

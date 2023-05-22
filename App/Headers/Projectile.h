@@ -1,10 +1,8 @@
 ﻿#pragma once
-#include "CoreTypes.h"
-#include "DamageData.h"
+#include "DamageSource.h"
 
-class Projectile
+class Projectile : public DamageSource
 {
 public:
-    DamageData damageData;
-    SharedActor source;
+    void OnDestroy() override;
 };

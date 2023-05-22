@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreTypes.h"
-#include "../source/utils/Color.h"
+#include "Color.h"
 
 class DebugDraw
 {

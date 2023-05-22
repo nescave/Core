@@ -68,7 +68,7 @@ public:
 
 	void OnSpawn() override; 				//happens during actor spawning before actor is fully initialized (constructor behaviour)
 	void Begin() override { Object::Begin(); }					//happens after full initialization
-	void Update(double dTime) override { Object::Update(dTime); }
+	void Update(double dTime) override;
 	virtual void OnBeginOverlap(SharedSceneObject other);
 	virtual void OnEndOverlap(SharedSceneObject other);
 

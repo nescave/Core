@@ -5,4 +5,6 @@ class BaseGUI :
 {
 public:
     BaseGUI();
+    void OnSpawn() override;
+    void Update(double dTime) override;
 };

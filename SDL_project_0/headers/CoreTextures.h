@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
-namespace CoreTexture {
+namespace CoreTextures {
 	enum ECoreTexture {
 		FLAT_WHITE,
 		WHITE_DOT,

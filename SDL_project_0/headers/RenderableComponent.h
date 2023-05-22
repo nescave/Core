@@ -11,6 +11,7 @@ protected:
 public:
 	RenderableComponent();
 
+	SDL_Rect GetDstRect() override;
 	void OnSpawn() override;
 };
 

@@ -10,10 +10,13 @@ protected:
 public:
 
     bool ShouldRender() override { return texture != nullptr; } 
-
+    
+    SDL_Rect GetDstRect() override;
+    SDL_Rect GetSrcRect() override;
+    
     Renderable& SetSize(Vector2d s, bool resetScale = false) override;
     Vector2d GetAnchorOffset(Anchor anch) override;
 
     void OnSpawn() override;
-
+    void Update(double dTime) override;
 };

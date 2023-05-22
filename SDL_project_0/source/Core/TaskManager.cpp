@@ -1,9 +1,14 @@
 ﻿#include "stdafx.h"
 #include "TaskManager.h"
 
-void TaskManager::AddTask(SharedObject object, Task task)
+void TaskManager::AddTask(SharedObject client, Task task)
 {
-    tasks.insert(std::make_pair(object,task));
+    tasks.insert(std::make_pair(client,task));
+}
+
+void TaskManager::CancelClientsTasks(SharedObject client)
+{
+    tasks.erase(client);
 }
 
 void TaskManager::UpdateTasks(double dTime)

@@ -2,7 +2,6 @@
 #include "PlayerShip.h"
 #include "Core.h"
 #include "AssetManager.h"
-#include "CoreTextures.h"
 #include "Text.h"
 #include "Collider.h"
 #include "CoreActionButtons.h"
@@ -57,14 +56,14 @@ void PlayerShip::Test()
 	auto startPos = GetAbsolutePosition()+GetUpVector()*10;
 	auto direction = (mousePos-startPos).Normalize();
 	auto hit = core->GetPhysicsCore().RayCast(startPos, direction, 800, ECollisionLayer::GAME);
-	DebugDraw::Point(hit.second.hitPosition, 6, 2, Color::green);
-	DebugDraw::Line(startPos, hit.second.hitPosition, 2.5, 2,Color::red);
-	DebugDraw::Circle(transform.position, 100, 3, Color::cyan);
+	// DebugDraw::Point(hit.second.hitPosition, 6, 2, Color::green);
+	// DebugDraw::Line(startPos, hit.second.hitPosition, 2.5, 2,Color::red);
+	DebugDraw::Circle(mousePos, 100, 3, Color::cyan);
 }
 
 void PlayerShip::OnSpawn()
 {
-	Avatar::OnSpawn();
+	Actor::OnSpawn();
 	input = InputManager::Get();
 	
 	SetTexture(core->GetAssetManager().GetLoadedTexture(GameTextures::MAIN_SHIP));
@@ -72,7 +71,7 @@ void PlayerShip::OnSpawn()
 	SetPosition({ 640,740});
 	SetScale({ .2f,.2f }).SetRotation(0);
 
-	weaponComp = &*AddComponent<KineticWeapon>();
+	weaponComp = &*AddComponent<LaserWeapon>();
 	
 	// textComp = &*AddComponent<Text>().lock();
 	// textComp->SetAndUpdateText("w").SetAnchor(Anchor::Top);
@@ -88,13 +87,13 @@ void PlayerShip::OnSpawn()
 
 void PlayerShip::Begin()
 {
-	Avatar::Begin();
+	Actor::Begin();
 	// SetActive(false);
 }
 
 void PlayerShip::Update(double dTime)
 {
-	Avatar::Update(dTime);
+	Actor::Update(dTime);
 	const double lookAtRotation = GetLookAtRotation(input->GetPointerScreenPosition()); 
 	SetRotation(lookAtRotation);
 	if (!bAccelerating)
@@ -104,5 +103,4 @@ void PlayerShip::Update(double dTime)
 
 	}
 	bAccelerating = false;
-	weaponComp->ExhaustHeat(dTime);
 }

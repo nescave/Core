@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderableComponent.h"
 #include "CoreFonts.h"
+#include "Color.h"
 
 class Text :
     public RenderableComponent
@@ -8,7 +9,7 @@ class Text :
 private:
     CoreFont::ECoreFont font;
     std::string text;
-    SDL_Color color;
+    Color color;
     
     void UpdateText();
 
@@ -16,11 +17,11 @@ public:
     Text();
 
     std::string GetText() { return text; }
-    SharedTexture GetTextureFromText();
+    SharedTexture GetTextureFromText() const;
 
-    Text& SetAndUpdateText(std::string txt);
-    Text& SetColor(SDL_Color col) { color = col; return *this; }
-    Text& SetFont(CoreFont::ECoreFont fnt) { font = fnt; return *this; }
+    Text& SetText(std::string txt);
+    Text& SetColor(Color col); 
+    Text& SetFont(CoreFont::ECoreFont fnt);
 
     void OnSpawn() override;
 };

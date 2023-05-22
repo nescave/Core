@@ -8,3 +8,11 @@ Component::Component() :
 {}
 
 void Component::OnSpawn(){}
+
+void Component::Update(double dTime)
+{
+}
+
+void Component::OnDestroy()
+{
+}

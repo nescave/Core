@@ -37,7 +37,7 @@ SceneComponent& SceneComponent::SetAnchor(Anchor anch)
 	return *this;
 }
 
-Transform SceneComponent::GetWorldTransform()
+Transform SceneComponent::GetAbsoluteTransform()
 {
 	auto ownerPtr = owner.lock();
 	RenderableObject* rObj = dynamic_cast<RenderableObject*>(&*ownerPtr);
@@ -56,17 +56,17 @@ Transform& SceneComponent::GetLocalTransform()
 
 Vector2d SceneComponent::GetPosition()
 {
-	return GetWorldTransform().position;
+	return GetAbsoluteTransform().position;
 }
 
 double SceneComponent::GetRotation()
 {
-	return GetWorldTransform().rotation;
+	return GetAbsoluteTransform().rotation;
 }
 
 Vector2f SceneComponent::GetScale()
 {
-	return GetWorldTransform().scale;
+	return GetAbsoluteTransform().scale;
 }
 
 Vector2d SceneComponent::GetUpVector() const
