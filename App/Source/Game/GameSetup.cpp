@@ -37,21 +37,9 @@ void GameSetup::SetupCursor()
 void GameSetup::SetupSpawners()
 {
     auto spawner1 = ObjectSpawner::SpawnObject<UniversalSpawner>();
-    // spawner1->SetSpawningState(false);
-    // spawner1->StartSpawner<Asteroid>(Transform({50,250}, 90, {.3f,.3f}), .2f,2,.5f,1.3f);
-    auto testShip = ObjectSpawner::SpawnObject<BasicShip>({600,300});
-    testShip->SetTexture(AssetManager::Get()->GetLoadedTexture(GameTextures::MAIN_SHIP));
-    testShip->SetScale({.25,.25});
-    testShip->AddComponent<Collider>();
-    auto expl = ObjectSpawner::SpawnObject<ExplosionAnim>({700,400});
 }
 
 void GameSetup::LoadTextures()
 {
-    core->GetAssetManager().LoadTexture("res/pngs/asteroid.png", GameTextures::ASTEROID, true);
-    core->GetAssetManager().LoadTexture("res/pngs/main_ship.png", GameTextures::MAIN_SHIP, true);
-    core->GetAssetManager().LoadTexture("res/pngs/enemy_ship_small_0.png", GameTextures::ENEMY_SHIP_SMALL, true);
-    core->GetAssetManager().LoadTexture("res/pngs/enemy_ship_small_0.png", GameTextures::ENEMY_SHIP_SMALL, true);
-    core->GetAssetManager().LoadTexture("res/pngs/expl_0.png", GameTextures::EXPOLOSION, true);
 }
 
