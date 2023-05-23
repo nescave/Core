@@ -234,28 +234,13 @@
     <ClCompile Include="Source\Spawners\UniversalSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Asteroid.h" />
-    <ClInclude Include="Headers\BasicShip.h" />
-    <ClInclude Include="Headers\Damageable.h" />
-    <ClInclude Include="Headers\DamageData.h" />
-    <ClInclude Include="Headers\DamageSource.h" />
     <ClInclude Include="Headers\ExplosionAnim.h" />
     <ClInclude Include="Headers\GameEnums.h" />
-    <ClInclude Include="Headers\KineticWeapon.h" />
-    <ClInclude Include="Headers\LaserWeapon.h" />
-    <ClInclude Include="Headers\Projectile.h" />
     <ClInclude Include="Headers\UniversalSpawner.h" />
     <ClInclude Include="Headers\GameSetup.h" />
-    <ClInclude Include="Headers\PlayerShip.h" />
-    <ClInclude Include="Headers\WeaponComponent.h" />
-    <ClInclude Include="Headers\WeaponEnums.h" />
-    <ClInclude Include="Headers\WeaponProperties.h" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="res\pngs\asteroid.png" />
     <Content Include="res\pngs\crosshair.png" />
-    <Content Include="res\pngs\enemy_ship_small_0.png" />
-    <Content Include="res\pngs\main_ship.png" />
     <Content Include="res\pngs\white_dot.png" />
   </ItemGroup>
   <ItemGroup>
