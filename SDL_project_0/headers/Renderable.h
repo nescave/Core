@@ -20,6 +20,8 @@ public:
     SharedTexture GetTexture() { return texture; }
     SDL_BlendMode GetBlendMode() const { return blendMode; }
     int16_t GetSortingPriority() const { return sortingPriority; }
+
+    bool hidden;
     
     virtual SDL_Rect GetDstRect();
     virtual SDL_Rect GetSrcRect();

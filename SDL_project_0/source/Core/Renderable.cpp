@@ -6,7 +6,8 @@ Renderable::Renderable() :
 	texture(nullptr),
 	size(Vector2d::zero),
 	blendMode(SDL_BLENDMODE_BLEND),
-	sortingPriority((uint16_t)ESortingPriority::AVERAGE)
+	sortingPriority((uint16_t)ESortingPriority::AVERAGE),
+	hidden(false)
 {}
 
 Vector2d Renderable::GetSize()

@@ -53,11 +53,11 @@ void Core::Update() {
         auto& obj = tpl.second;
         const auto rObj = dynamic_cast<RenderableObject*>(&*obj);
         if(!rObj) continue;
-        if (obj->ShouldRender() || !rObj->GetRenderableComponents().empty()) {
-            if (rObj) {
-                drawList.push(DrawCall(rObj, rObj->GetAbsoluteTransform()));
-            }
-            for (auto comp : rObj->GetRenderableComponents()) {
+        if(rObj->hidden) continue;
+        drawList.push(DrawCall(rObj, rObj->GetAbsoluteTransform()));
+        auto rComponents = rObj->GetRenderableComponents(); 
+        if (!rComponents.empty()) {
+            for (auto comp : rComponents) {
                 drawList.push(DrawCall(comp, comp->GetAbsoluteTransform()));
             }
         }
