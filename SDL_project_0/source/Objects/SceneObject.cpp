@@ -195,7 +195,7 @@ std::vector<RenderableComponent*> SceneObject::GetRenderableComponents()
 
 bool SceneObject::HasCollider()
 {
-	//if (!this->GetComponentOfClass<Collider>(false).expired()) return true;
+	if (!this->GetComponentOfClass<Collider>(false).expired()) return true;
 	return false;
 }
 

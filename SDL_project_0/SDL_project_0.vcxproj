@@ -179,6 +179,7 @@
     <ClInclude Include="headers\CollisionData.h" />
     <ClInclude Include="headers\CollisionLayers.h" />
     <ClInclude Include="headers\Component.h" />
+    <ClInclude Include="headers\Damageable.h" />
     <ClInclude Include="headers\DebugDraw.h" />
     <ClInclude Include="headers\FloatingTextUI.h" />
     <ClInclude Include="headers\SceneComponent.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="source\Assets\AssetManager.cpp" />
     <ClCompile Include="source\Components\Collider.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
+    <ClCompile Include="source\Components\Damageable.cpp" />
     <ClCompile Include="source\Components\SceneComponent.cpp" />
     <ClCompile Include="source\Components\RenderableComponent.cpp" />
     <ClCompile Include="source\Components\Text.cpp" />
