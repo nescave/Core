@@ -27,7 +27,6 @@ public:
 	void CancelTasks();
 	
 	virtual bool IsUpdating() { return bUpdate && !destroyed; }
-	virtual bool ShouldRender() { return false; }
 	virtual bool HasCollider() { return false; }
 
 	virtual void OnSpawn();
