@@ -3,14 +3,10 @@
 #include <AssetManager.h>
 #include <SDL_mouse.h>
 
-#include "AnimatedObject.h"
 #include "GameEnums.h"
-#include "BasicShip.h"
 #include "Core.h"
 #include "ObjectSpawner.h"
 #include "UniversalSpawner.h"
-#include "Collider.h"
-#include "ExplosionAnim.h"
 
 GameSetup::GameSetup() :
     core(&Core::Get())

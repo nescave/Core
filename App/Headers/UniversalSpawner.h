@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "Core.h"
 #include "SceneObject.h"
 #include "ObjectSpawner.h"
 #include "CoreTypes.h"
