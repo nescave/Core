@@ -63,8 +63,8 @@ public:
 	bool HasComponents() const { return !components.empty(); }
 	bool HasRenderableComponents();
 	std::vector<RenderableComponent*> GetRenderableComponents();
-	bool HasCollider() override;
 	bool RemoveComponent(std::type_index compClass);
+	bool HasCollider() override;
 
 	void OnSpawn() override; 				//happens during actor spawning before actor is fully initialized (constructor behaviour)
 	void Begin() override { Object::Begin(); }					//happens after full initialization
