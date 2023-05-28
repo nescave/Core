@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Renderable.h"
 
+#include <utility>
+
 
 Renderable::Renderable() :
 	texture(nullptr),
@@ -39,13 +41,13 @@ SDL_Rect Renderable::GetSrcRect()
 			(int)GetSize().y
 		};
 	}
-	auto size = GetSizeFromTexture(texture);
-	return SDL_Rect{0,0, size.x, size.y};
+	const auto sourceSize = GetSizeFromTexture(texture);
+	return SDL_Rect{0,0, sourceSize.x, sourceSize.y};
 }
 
 Renderable& Renderable::SetSortingPriority(ESortingPriority priority, int16_t offset)
 {
-	sortingPriority = (int16_t)priority + offset;
+	sortingPriority = int16_t((int16_t)priority + offset);
 	return *this;
 }
 
@@ -61,8 +63,7 @@ Renderable& Renderable::SetBlendMode(SDL_BlendMode mode)
 Renderable& Renderable::SetTexture(SharedTexture tx)
 {
 	// if (!tx) return *this;
-	texture = tx;
-	if (size == Vector2d::zero) SetSize(GetSizeFromTexture(tx), false);
+	texture = std::move(tx);
 	return *this;
 }
 
@@ -92,6 +93,7 @@ Renderable& Renderable::SetupAnimation(
 
 Renderable& Renderable::SetSize(Vector2d s, bool)
 {
+	if(texture && s == Vector2d::zero) s = GetSizeFromTexture(texture);
 	size = s;
 	return *this;
 }

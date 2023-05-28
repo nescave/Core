@@ -243,10 +243,6 @@
     <Content Include="res\pngs\crosshair.png" />
     <Content Include="res\pngs\white_dot.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\Components" />
-    <Folder Include="Source\Datas" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

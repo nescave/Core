@@ -14,7 +14,7 @@ protected:
 	WeakSceneObject parent;
 	
 	std::map<const uint32_t, WeakSceneObject> children;
-	std::map<const uint32_t, SharedComponent> components;
+	std::map<const size_t, SharedComponent> components;
 
 	void ClearParent();
 	void ApplyTransform();
@@ -84,7 +84,7 @@ public:
 		auto comp = std::make_shared<T>();
 		comp->owner = weakThis;
 		comp->componentName = name;
-		comp->componentName.append("_component_").append(std::to_string(components.size()));
+		comp->componentName.append("_").append(typeid(T).name()).append("_component_").append(std::to_string(components.size()));
 		components.insert({ hash, comp });
 
 		comp->OnSpawn();
@@ -95,14 +95,13 @@ public:
 		class = std::enable_if_t<std::is_base_of_v<Component, T>>
 	>
 	std::weak_ptr<T> GetComponentOfClass(bool log = true) {
-		//std::weak_ptr<T> oComp = &*components[typeid(T).hash_code()];
-		uint32_t hash = (uint32_t)typeid(T).hash_code();
+		auto const hash = typeid(T).hash_code();
 		if (components.find(hash) == components.end()) {
 			if (log) printf("No component matches %s class!\n", typeid(T).name());
 			return std::weak_ptr<T>();
 		}
 
-		auto oComp = (std::weak_ptr<T>) components[typeid(T).hash_code()];
+		auto oComp = std::static_pointer_cast<T>(components[hash]);
 		return oComp;
 	}
 };

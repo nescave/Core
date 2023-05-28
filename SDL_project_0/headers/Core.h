@@ -25,7 +25,6 @@ private:
     std::unique_ptr<Clock> clock;
     std::unique_ptr<TaskManager> taskManager;
 
-    DrawQueue_t drawList;
 
     Core() = default;
 
@@ -43,6 +42,7 @@ public:
     TaskManager& GetTaskManager() { return *taskManager; }
 
     void Begin();
+    void AddToDrawList(DrawQueue_t& drawList, std::shared_ptr<Object>& obj);
     void Update();
     void StartMainLoop();
 };

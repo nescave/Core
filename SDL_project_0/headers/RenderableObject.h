@@ -9,7 +9,6 @@ protected:
     RenderableObject();
 public:
 
-    bool ShouldRender() override { return texture != nullptr; } 
     
     SDL_Rect GetDstRect() override;
     SDL_Rect GetSrcRect() override;

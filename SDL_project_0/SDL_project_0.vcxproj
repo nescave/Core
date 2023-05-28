@@ -172,6 +172,7 @@
     <ClInclude Include="headers\AnimatedObject.h" />
     <ClInclude Include="headers\Animation.h" />
     <ClInclude Include="headers\AssetManager.h" />
+    <ClInclude Include="headers\Camera.h" />
     <ClInclude Include="headers\Color.h" />
     <ClInclude Include="headers\Controlable.h" />
     <ClInclude Include="headers\Clock.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="headers\Damageable.h" />
     <ClInclude Include="headers\DebugDraw.h" />
     <ClInclude Include="headers\FloatingTextUI.h" />
+    <ClInclude Include="headers\Rect.h" />
     <ClInclude Include="headers\SceneComponent.h" />
     <ClInclude Include="headers\Core.h" />
     <ClInclude Include="headers\CoreActionButtons.h" />
@@ -211,6 +213,7 @@
   <ItemGroup>
     <ClCompile Include="headers\CollisionLayers.cpp" />
     <ClCompile Include="source\Assets\AssetManager.cpp" />
+    <ClCompile Include="source\Components\Camera.cpp" />
     <ClCompile Include="source\Components\Collider.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
     <ClCompile Include="source\Components\Damageable.cpp" />

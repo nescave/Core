@@ -9,8 +9,15 @@ public:
     static void Point(
         const Vector2d& point,
         double size,
-        double time = -1, Color color = Color::red
+        double time = -1,
+        Color color = Color::red
     );
+    // static void Point(
+    //     Vector2d&& point,
+    //     double size,
+    //     double time = -1,
+    //     Color color = Color::red
+    // );
     static void Line(
         const Vector2d& firstPoint,
         const Vector2d& secondPoint,

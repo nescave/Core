@@ -30,6 +30,11 @@ void DebugDraw::Point(const Vector2d& point, double size, double time, Color col
     else
         sketches.insert(sketch);
 }
+//
+// void DebugDraw::Point(Vector2d&& point, double size, double time, Color color)
+// {
+//     Point(point, size, time, color);
+// }
 
 void DebugDraw::Line(const Vector2d& firstPoint, const Vector2d& secondPoint, double thickness, double time, Color color)
 {

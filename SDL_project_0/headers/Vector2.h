@@ -43,22 +43,25 @@ struct Vector2
 		Vector2 vec(this->x + rVec.x, this->y + rVec.y);
 		return vec;
 	}
-	Vector2& operator+=(const Vector2& rVec) {
-		this->x += rVec.x;
-		this->y += rVec.y;
+	template<typename T2>
+	Vector2& operator+=(const T2& rVec) {
+		this->x += (T)rVec.x;
+		this->y += (T)rVec.y;
 		return *this;
 	}
-	Vector2 operator-(const Vector2& rVec) const {
-		Vector2 vec(this->x - rVec.x, this->y - rVec.y);
+	template<typename T2>
+	Vector2 operator-(const T2& rVec) const {
+		Vector2 vec(this->x - (T)rVec.x, this->y - (T)rVec.y);
 		return vec;
 	}
 	Vector2 operator-() const {
 		Vector2 vec(-this->x, -this->y);
 		return vec;
 	}
-	Vector2& operator-=(const Vector2& rVec) {
-		this->x -= rVec.x;
-		this->y -= rVec.y;
+	template<typename T2>
+	Vector2& operator-=(const T2& rVec) {
+		this->x -= (T)rVec.x;
+		this->y -= (T)rVec.y;
 		return *this;
 	}
 	template <typename T2>

@@ -26,22 +26,22 @@ struct Transform
 	}
 	
 	template <typename T>
-	const Vector2<T> TransformPosition(Vector2<T>& pos);
+	Vector2<T> TransformPosition(Vector2<T>& pos);
 	template <typename T>
-	const Vector2<T> TransformVector(Vector2<T>& pos);
+	Vector2<T> TransformVector(Vector2<T>& vec);
 
 	Transform CombineTransform(Transform transf);
 };
 
 template<typename T>
-inline const Vector2<T> Transform::TransformPosition(Vector2<T>& pos)
+inline Vector2<T> Transform::TransformPosition(Vector2<T>& pos)
 {
 	Vector2<T> newPos = pos.Rotate(this->rotation)* scale + this->position;
 	return newPos;
 }
 
 template<typename T>
-inline const Vector2<T> Transform::TransformVector(Vector2<T>& vec)
+inline Vector2<T> Transform::TransformVector(Vector2<T>& vec)
 {
 	Vector2<T> newVec = vec.Rotate(this->rotation) * scale;
 	return newVec;
