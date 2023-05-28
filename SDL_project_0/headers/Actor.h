@@ -17,7 +17,7 @@ public:
     void Update(double dTime) override;
     void OnDestroy() override;
     
-    Actor& Translate(Vector2f& vector);
+    Actor& Translate(const Vector2f& vector);
     Actor& Translate(Vector2f&& vector);
     Actor& TranslateAbsolute(Vector2f& vector);
 

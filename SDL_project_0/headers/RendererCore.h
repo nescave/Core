@@ -1,7 +1,7 @@
 #pragma once
 #include "RendererUtils.h"
-#include "CoreTypes.h"
 
+class Camera;
 class RendererCore
 {
 private:

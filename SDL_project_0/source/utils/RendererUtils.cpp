@@ -3,9 +3,6 @@
 #include "RenderableObject.h"
 #include "Collider.h"
 
-bool DrawCallComparator::operator()( DrawCall& lho, DrawCall& rho) const {
-    return lho.sortingPriority < rho.sortingPriority;
-}
 
 //bool ColliderComparator::operator()(Collider* lhc, Collider* rhc) const
 //{
@@ -16,14 +13,17 @@ DrawCall::DrawCall(Renderable* rEl, Transform wTrans) :
 	texture(&*rEl->GetTexture()),
 	sortingPriority(rEl->GetSortingPriority()),
 	rotation(wTrans.rotation),
-	srcRect(),
-	dstRect(),
+	size(rEl->GetSize()),
+	srcRect(rEl->GetSrcRect()),
+	wTransform(wTrans),
 	rotationPivot()
 {
 	// Vector2d scrSize = (Vector2i)rEl->GetSize();
-	srcRect = rEl->GetSrcRect();
-	dstRect = rEl->GetDstRect();
 	
-	rotationPivot.x = int((float)dstRect.w * wTrans.pivot.x);
-	rotationPivot.y = int((float)dstRect.h * wTrans.pivot.y);
+	rotationPivot.x = int((float)rEl->GetSize().x * wTrans.scale.x * wTrans.pivot.x);
+	rotationPivot.y = int((float)rEl->GetSize().y * wTrans.scale.y * wTrans.pivot.y);
+}
+
+bool DrawCallComparator::operator()( DrawCall& lho, DrawCall& rho) const {
+    return lho.sortingPriority < rho.sortingPriority;
 }

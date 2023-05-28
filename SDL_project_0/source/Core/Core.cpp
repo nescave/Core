@@ -67,18 +67,15 @@ void Core::Update() {
     for (auto& tpl : objectManager->GetGameObjects())
     {
         auto& obj = tpl.second;
-        const auto rObj = dynamic_cast<RenderableObject*>(&*obj);
-        if(!rObj) continue;
-        if(rObj->hidden) continue;
-        drawList.push(DrawCall(rObj, rObj->GetAbsoluteTransform()));
-        auto rComponents = rObj->GetRenderableComponents(); 
-        if (!rComponents.empty()) {
-            for (auto comp : rComponents) {
-                drawList.push(DrawCall(comp, comp->GetAbsoluteTransform()));
-            }
-        }
+        AddToDrawList(drawList, obj);
         obj->Update(dTime);
     }
+
+    Sleep(2);
+    physicsCore->Update();
+    
+    rendererCore->Update(drawList);
+
 }
 
 void Core::StartMainLoop(){
@@ -88,9 +85,6 @@ void Core::StartMainLoop(){
     while (!quit) {
         input->ProcessInput();
         Update();
-        Sleep(2);
-        physicsCore->Update();
-        rendererCore->Update(drawList);
 
         objectManager->ApplyDelete();
         quit = input->GetQuitEvent();

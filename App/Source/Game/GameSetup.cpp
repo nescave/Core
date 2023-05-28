@@ -7,6 +7,12 @@
 #include "GameEnums.h"
 #include "BasicShip.h"
 #include "Core.h"
+#include "Actor.h"
+#include "Camera.h"
+#include "CoreActionButtons.h"
+#include "CoreTextures.h"
+#include "DebugDraw.h"
+#include "InputManager.h"
 #include "ObjectSpawner.h"
 #include "UniversalSpawner.h"
 #include "Collider.h"
@@ -32,6 +38,7 @@ void GameSetup::SetupCursor()
         printf("Failed! %s\n", SDL_GetError());
     }
     SDL_SetCursor(cursor);
+    core->Begin();
 }
 
 void GameSetup::SetupSpawners()

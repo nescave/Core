@@ -15,8 +15,9 @@ struct DrawCall {
     SDL_Texture* texture;
     int16_t sortingPriority;
     double rotation;
+    Vector2d size;
     SDL_Rect srcRect;
-    SDL_Rect dstRect;
+    Transform wTransform;
     SDL_Point rotationPivot;
 
     DrawCall(Renderable* rEl, Transform wTrans);

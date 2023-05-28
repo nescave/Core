@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Text.h"
 #include "AssetManager.h"
-#include "ObjectManager.h"
 
 Text::Text() : 
 	font(CoreFont::CALIBRI),

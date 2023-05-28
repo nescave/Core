@@ -25,7 +25,6 @@ private:
     std::unique_ptr<Clock> clock;
     std::unique_ptr<TaskManager> taskManager;
 
-    DrawQueue_t drawList;
 
     Core() = default;
 

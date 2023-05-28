@@ -7,12 +7,13 @@ Actor::Actor() : maxSpeed(5)
 void Actor::OnSpawn()
 {
 	RenderableObject::OnSpawn();
+	printf("%s spawned \n", name.c_str());
 }
 
 void Actor::Update(double dTime) {
 	RenderableObject::Update(dTime);
 
-	Translate(speed*dTime);
+	Translate(speed*dTime); //hehe fyshix brrrr
 }
 
 void Actor::OnDestroy()
@@ -20,13 +21,13 @@ void Actor::OnDestroy()
 	RenderableObject::OnDestroy();
 }
 
-Actor& Actor::Translate(Vector2f& vector){
+Actor& Actor::Translate(const Vector2f& vector)
+{
 	transform.position += vector;
 	return *this;
 }
 
-Actor& Actor::Translate(Vector2f&& vector)
-{
+Actor& Actor::Translate(Vector2f&& vector){
 	return Translate(vector);
 }
 

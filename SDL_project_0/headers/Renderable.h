@@ -23,7 +23,7 @@ public:
 
     bool hidden;
     
-    virtual SDL_Rect GetDstRect();
+    virtual SDL_Rect GetDstRect(); //obsolete? TODO: clean this shit up
     virtual SDL_Rect GetSrcRect();
 
     Renderable& SetSortingPriority(ESortingPriority priority, int16_t offset = 0);

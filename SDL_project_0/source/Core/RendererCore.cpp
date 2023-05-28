@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RendererCore.h"
-#include "RenderableObject.h"
+#include "Camera.h"
 #include "RenderableComponent.h"
 
 bool RendererCore::CameraRegistered(Camera* cam)
@@ -63,16 +63,14 @@ void RendererCore::UpdateScreen() {
     SDL_RenderPresent(renderer);
 }
 
-//bool RendererCore::AddRenderObjects(std::queue<RenderObject*> rObjs) {
-//    while (rObjs.size()) {
-//        renderObjects.insert(rObjs.front());
-//        rObjs.pop();
-//    }
-//    return true;
-//}
+Vector2i RendererCore::GetRenderWindowSize()
+{
+    Vector2i windowSize;
+    SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
+    return windowSize;
+}
 
-void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
-
+void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
 
 //geometry render test (as stupid as SDL copy rendering)
     //auto pos = rObj->GetWorldPosition();
@@ -94,26 +92,11 @@ void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
 
     //SDL_RenderGeometry(renderer, rObj->GetTexture().get(), v, 4, i, 6 );
 //geometry render test 
-
-    auto pos = drawCall->wTransform.position;
-    //transform to camera space
-    pos -= camera->GetAbsoluteTransform().position;
-    //offset position so object's center appears in where pivot is located, not on the left-top corner
-    pos -=  drawCall->size*drawCall->wTransform.pivot;
-    //scale on-screen offset of object caused by camera zoom
-    pos *= camera->zoom;
-    
-    SDL_Rect finalDstRect= {(int)pos.x, (int)pos.y,int(drawCall->size.x* camera->zoom),int(drawCall->size.y* camera->zoom)};
-
-    //offset to center of the screen
-    finalDstRect.x += GetRenderWindowSize().x/2;
-    finalDstRect.y += GetRenderWindowSize().y/2;
-
     SDL_RenderCopyEx(
         renderer,
         drawCall->texture,
         &drawCall->srcRect,
-        &drawCall->dstRect,
+        &finalDstRect,
         drawCall->rotation,
         &drawCall->rotationPivot,
         SDL_FLIP_NONE
