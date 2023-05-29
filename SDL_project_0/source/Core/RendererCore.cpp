@@ -66,19 +66,21 @@ Vector2i RendererCore::GetRenderWindowSize()
 }
 
 void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
-    // 
-    auto pos = drawCall->wTransform.position;
-    auto posCameraSpace = (pos - camera->GetAbsoluteTransform().position - Vector2d(drawCall->size.x/2, drawCall->size.y/2)) * camera->zoom;
-    SDL_Rect finalDstRect= {(int)posCameraSpace.x, (int)posCameraSpace.y,int(drawCall->size.x* camera->zoom),int(drawCall->size.y* camera->zoom)};
-    // printf("%f\n", pos.x);
-    // printf("%f\n", posCameraSpace.x);
 
+    auto pos = drawCall->wTransform.position;
+    //transform to camera space
+    pos -= camera->GetAbsoluteTransform().position;
+    //offset position so object's center appears in where pivot is located, not on the left-top corner
+    pos -=  drawCall->size*drawCall->wTransform.pivot;
+    //scale on-screen offset of object caused by camera zoom
+    pos *= camera->zoom;
+    
+    SDL_Rect finalDstRect= {(int)pos.x, (int)pos.y,int(drawCall->size.x* camera->zoom),int(drawCall->size.y* camera->zoom)};
+
+    //offset to center of the screen
     finalDstRect.x += GetRenderWindowSize().x/2;
     finalDstRect.y += GetRenderWindowSize().y/2;
-    //
-    // finalDstRect.w *= camera->zoom;
-    // finalDstRect.h *= camera->zoom;
-    //
+
     SDL_RenderCopyEx(
         renderer,
         drawCall->texture,
@@ -97,34 +99,34 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
     for(; !drawCalls.empty(); drawCalls.pop())
     {
         //drawCall borders
-        auto left = drawCalls.top().wTransform.position.x - (double)drawCalls.top().size.x/2;
-        auto top = drawCalls.top().wTransform.position.y + (double)drawCalls.top().size.y/2;
-        auto right = drawCalls.top().wTransform.position.x + (double)drawCalls.top().size.x/2;
-        auto bot = drawCalls.top().wTransform.position.y - (double)drawCalls.top().size.y/2;
+        auto left = drawCalls.top().wTransform.position.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x;
+        auto top = drawCalls.top().wTransform.position.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y;
+        auto right = drawCalls.top().wTransform.position.x + (drawCalls.top().size.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x);
+        auto bot = drawCalls.top().wTransform.position.y + (drawCalls.top().size.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y);
 
-        // if(
-        //     left > cullRect.position.x+cullRect.extents.x   ||
-        //     right < cullRect.position.x-cullRect.extents.x  ||
-        //     top > cullRect.position.y+cullRect.extents.y    ||
-        //     bot < cullRect.position.y-cullRect.extents.x  
-        //     ) continue;
+        if(
+            left > cullRect.position.x+cullRect.extents.x   ||
+            right < cullRect.position.x-cullRect.extents.x  ||
+            top > cullRect.position.y+cullRect.extents.y    ||
+            bot < cullRect.position.y-cullRect.extents.y  
+            ) continue;
 
-        if (left > cullRect.position.x+cullRect.extents.x)
-        {
-            continue;
-        }
-        if (right < cullRect.position.x-cullRect.extents.x)
-        {
-            continue;
-        }
-        if (top < cullRect.position.y-cullRect.extents.y)
-        {
-            continue;
-        }
-        if (bot > cullRect.position.y+cullRect.extents.y)
-        {
-            continue;
-        }
+        // if (left > cullRect.position.x+cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (right < cullRect.position.x-cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (bot < cullRect.position.y-cullRect.extents.y)
+        // {
+        //     continue;
+        // }
+        // if (top > cullRect.position.y+cullRect.extents.y)
+        // {
+        //     continue;
+        // }
         leftDrawCalls.push(drawCalls.top());
     }
     return leftDrawCalls;
