@@ -70,28 +70,22 @@ Vector2i RendererCore::GetRenderWindowSize()
     return windowSize;
 }
 
-void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
+void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
 
-//geometry render test (as stupid as SDL copy rendering)
-    //auto pos = rObj->GetWorldPosition();
-    //auto rect = rObj->GetRect();
-    //
-    //SDL_Vertex v[4];
-    //v[0] = { {(float)pos.x - rect->w, (float)pos.y - rect->h}, {255,255,255,255}, {0,0} };
-    //v[1] = { {(float)pos.x + rect->w, (float)pos.y - rect->h}, {255,255,255,255}, {1,0} };
-    //v[2] = { {(float)pos.x - rect->w, (float)pos.y + rect->h}, {255,255,255,255}, {0,1} };
-    //v[3] = { {(float)pos.x + rect->w, (float)pos.y + rect->h}, {255,255,255,255}, {1,1} };
+    auto pos = drawCall->wTransform.position;
+    //transform to camera space
+    pos -= camera->GetAbsoluteTransform().position;
+    //offset position so object's center appears in where pivot is located, not on the left-top corner
+    pos -=  drawCall->size*drawCall->wTransform.pivot;
+    //scale on-screen offset of object caused by camera zoom
+    pos *= camera->zoom;
+    
+    SDL_Rect finalDstRect= {(int)pos.x, (int)pos.y,int(drawCall->size.x* camera->zoom),int(drawCall->size.y* camera->zoom)};
 
-    //int i[6];
-    //i[0] = 0;
-    //i[1] = 1;
-    //i[2] = 2;
-    //i[3] = 1;
-    //i[4] = 2;
-    //i[5] = 3;
+    //offset to center of the screen
+    finalDstRect.x += GetRenderWindowSize().x/2;
+    finalDstRect.y += GetRenderWindowSize().y/2;
 
-    //SDL_RenderGeometry(renderer, rObj->GetTexture().get(), v, 4, i, 6 );
-//geometry render test 
     SDL_RenderCopyEx(
         renderer,
         drawCall->texture,
@@ -110,10 +104,10 @@ DrawQueue_t RendererCore::GetCulledAndSortedDrawCalls(const std::vector<DrawCall
     for(const auto& drawCall : drawCalls)
     {
         //drawCall borders
-        auto left = drawCall.wTransform.position.x - drawCall.size.x * (double)drawCall.wTransform.pivot.x;
-        auto top = drawCall.wTransform.position.y - drawCall.size.y * (double)drawCall.wTransform.pivot.y;
-        auto right = drawCall.wTransform.position.x + (drawCall.size.x - drawCall.size.x * (double)drawCall.wTransform.pivot.x);
-        auto bot = drawCall.wTransform.position.y + (drawCall.size.y - drawCall.size.y * (double)drawCall.wTransform.pivot.y);
+        auto left = drawCalls.top().wTransform.position.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x;
+        auto top = drawCalls.top().wTransform.position.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y;
+        auto right = drawCalls.top().wTransform.position.x + (drawCalls.top().size.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x);
+        auto bot = drawCalls.top().wTransform.position.y + (drawCalls.top().size.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y);
 
         if(
             left > cullRect.position.x+cullRect.extents.x   ||
@@ -121,7 +115,24 @@ DrawQueue_t RendererCore::GetCulledAndSortedDrawCalls(const std::vector<DrawCall
             top > cullRect.position.y+cullRect.extents.y    ||
             bot < cullRect.position.y-cullRect.extents.y  
             ) continue;
-        leftDrawCalls.push(drawCall);
+
+        // if (left > cullRect.position.x+cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (right < cullRect.position.x-cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (bot < cullRect.position.y-cullRect.extents.y)
+        // {
+        //     continue;
+        // }
+        // if (top > cullRect.position.y+cullRect.extents.y)
+        // {
+        //     continue;
+        // }
+        leftDrawCalls.push(drawCalls.top());
     }
     return leftDrawCalls;
 }
