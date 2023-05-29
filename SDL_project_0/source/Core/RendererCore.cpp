@@ -68,7 +68,8 @@ void RendererCore::UpdateScreen() {
 //    return true;
 //}
 
-void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
+void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
+
 
 //geometry render test (as stupid as SDL copy rendering)
     //auto pos = rObj->GetWorldPosition();
@@ -90,6 +91,21 @@ void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
 
     //SDL_RenderGeometry(renderer, rObj->GetTexture().get(), v, 4, i, 6 );
 //geometry render test 
+
+    auto pos = drawCall->wTransform.position;
+    //transform to camera space
+    pos -= camera->GetAbsoluteTransform().position;
+    //offset position so object's center appears in where pivot is located, not on the left-top corner
+    pos -=  drawCall->size*drawCall->wTransform.pivot;
+    //scale on-screen offset of object caused by camera zoom
+    pos *= camera->zoom;
+    
+    SDL_Rect finalDstRect= {(int)pos.x, (int)pos.y,int(drawCall->size.x* camera->zoom),int(drawCall->size.y* camera->zoom)};
+
+    //offset to center of the screen
+    finalDstRect.x += GetRenderWindowSize().x/2;
+    finalDstRect.y += GetRenderWindowSize().y/2;
+
     SDL_RenderCopyEx(
         renderer,
         drawCall->texture,
@@ -100,10 +116,54 @@ void RendererCore::ExecuteDrawCall(const DrawCall * drawCall) {
         SDL_FLIP_NONE
     );
 }
-void RendererCore::DrawSorted(DrawQueue_t& drawCalls) {
-    while (drawCalls.size()) {
-        ExecuteDrawCall(&drawCalls.top());
-        drawCalls.pop();
+
+DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera* camera)
+{
+    auto cullRect = camera->GetRenderRect();
+    DrawQueue_t leftDrawCalls;
+    for(; !drawCalls.empty(); drawCalls.pop())
+    {
+        //drawCall borders
+        auto left = drawCalls.top().wTransform.position.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x;
+        auto top = drawCalls.top().wTransform.position.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y;
+        auto right = drawCalls.top().wTransform.position.x + (drawCalls.top().size.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x);
+        auto bot = drawCalls.top().wTransform.position.y + (drawCalls.top().size.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y);
+
+        if(
+            left > cullRect.position.x+cullRect.extents.x   ||
+            right < cullRect.position.x-cullRect.extents.x  ||
+            top > cullRect.position.y+cullRect.extents.y    ||
+            bot < cullRect.position.y-cullRect.extents.y  
+            ) continue;
+
+        // if (left > cullRect.position.x+cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (right < cullRect.position.x-cullRect.extents.x)
+        // {
+        //     continue;
+        // }
+        // if (bot < cullRect.position.y-cullRect.extents.y)
+        // {
+        //     continue;
+        // }
+        // if (top > cullRect.position.y+cullRect.extents.y)
+        // {
+        //     continue;
+        // }
+        leftDrawCalls.push(drawCalls.top());
+    }
+    return leftDrawCalls;
+}
+
+void RendererCore::DrawCulled(DrawQueue_t& drawCalls, Camera* camera) {
+
+    DrawQueue_t leftDrawCalls = GetDrawCallsAfterCulling(drawCalls, camera);
+    printf("%d\n", (int)leftDrawCalls.size());
+    for(; !leftDrawCalls.empty(); leftDrawCalls.pop())
+    {
+        ExecuteDrawCall(&leftDrawCalls.top(), camera);
     }
 }
 bool RendererCore::Update(DrawQueue_t& rObjs) {
