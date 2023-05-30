@@ -1,5 +1,5 @@
 ## Core
-It is my education/passion project of 2D game engine using c++ and SDL2 library.
+It is my education/passion project of a 2D game engine using c++ and SDL2 library.
 
 ### Core's working functionalities are:
 - Loading and managing image files (textures) and fonts
