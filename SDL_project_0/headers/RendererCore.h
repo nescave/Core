@@ -14,9 +14,12 @@ private:
 	void UpdateScreen();
 
 	//bool AddRenderObjects(std::queue<RenderObject*> rObjs);
-	void ExecuteDrawCall(const DrawCall * drawCall);
-	void DrawSorted(DrawQueue_t& rObjs);
-
+	void ExecuteDrawCall(const DrawCall* drawCall, Camera* camera);
+	DrawQueue_t GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera* camera);
+	void DrawCulled(DrawQueue_t& rObjs, Camera* camera);
+	std::unordered_set<Camera*> cameras;
+	bool CameraRegistered(Camera* cam);
+	
 public:
 	RendererCore();
 	~RendererCore();
@@ -26,6 +29,10 @@ public:
 	SDL_Renderer* GetRenderer() { return renderer; }
 	SDL_Surface* GetScreenSurface() { return screen; }
 
-	bool Update(DrawQueue_t& rObjs);
+	void RegisterCamera(Camera* cam);
+	void UnregisterCamera(Camera* cam);
+	void SetMain(Camera* cam);
+	bool Update(DrawQueue_t& drawCalls);
+	Vector2i GetRenderWindowSize();
 };
 

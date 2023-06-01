@@ -2,8 +2,11 @@
 #include "RendererCore.h"
 #include "RenderableObject.h"
 #include "RenderableComponent.h"
-//#include "Core.h"
-#include "AssetManager.h"
+
+bool RendererCore::CameraRegistered(Camera* cam)
+{
+    return cameras.find(cam) != cameras.end();
+}
 
 RendererCore::RendererCore() :
     window(NULL),
@@ -135,23 +138,6 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
             top > cullRect.position.y+cullRect.extents.y    ||
             bot < cullRect.position.y-cullRect.extents.y  
             ) continue;
-
-        // if (left > cullRect.position.x+cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (right < cullRect.position.x-cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (bot < cullRect.position.y-cullRect.extents.y)
-        // {
-        //     continue;
-        // }
-        // if (top > cullRect.position.y+cullRect.extents.y)
-        // {
-        //     continue;
-        // }
         leftDrawCalls.push(drawCalls.top());
     }
     return leftDrawCalls;
@@ -160,16 +146,48 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
 void RendererCore::DrawCulled(DrawQueue_t& drawCalls, Camera* camera) {
 
     DrawQueue_t leftDrawCalls = GetDrawCallsAfterCulling(drawCalls, camera);
-    printf("%d\n", (int)leftDrawCalls.size());
     for(; !leftDrawCalls.empty(); leftDrawCalls.pop())
     {
         ExecuteDrawCall(&leftDrawCalls.top(), camera);
     }
 }
-bool RendererCore::Update(DrawQueue_t& rObjs) {
-    ClearScreen();
-    DrawSorted(rObjs);
 
+void RendererCore::RegisterCamera(Camera* cam)
+{
+    if (CameraRegistered(cam))  return;
+    if(cam->mainCamera)
+    {
+        for(auto& camera : cameras)
+        {
+            camera->mainCamera = false;
+        }
+    }
+    cameras.insert(cam);
+}
+
+void RendererCore::UnregisterCamera(Camera* cam)
+{
+    if (!CameraRegistered(cam))  return;
+    cameras.erase(cam);
+}
+
+void RendererCore::SetMain(Camera* cam)
+{
+    if (!CameraRegistered(cam)) return;
+    for(auto& camera : cameras)
+    {
+        camera->mainCamera = false;
+    }
+    cam->mainCamera = true;
+}
+
+bool RendererCore::Update(DrawQueue_t& drawCalls) {
+    ClearScreen();
+
+    for(auto camera : cameras)
+    {
+        if(camera->mainCamera) DrawCulled(drawCalls, camera); //draws to main screen
+    }
     UpdateScreen();
     return true;
 }
