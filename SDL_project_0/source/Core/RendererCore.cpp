@@ -115,23 +115,6 @@ DrawQueue_t RendererCore::GetCulledAndSortedDrawCalls(const std::vector<DrawCall
             top > cullRect.position.y+cullRect.extents.y    ||
             bot < cullRect.position.y-cullRect.extents.y  
             ) continue;
-
-        // if (left > cullRect.position.x+cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (right < cullRect.position.x-cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (bot < cullRect.position.y-cullRect.extents.y)
-        // {
-        //     continue;
-        // }
-        // if (top > cullRect.position.y+cullRect.extents.y)
-        // {
-        //     continue;
-        // }
         leftDrawCalls.push(drawCalls.top());
     }
     return leftDrawCalls;
@@ -139,7 +122,8 @@ DrawQueue_t RendererCore::GetCulledAndSortedDrawCalls(const std::vector<DrawCall
 
 void RendererCore::Draw(std::vector<DrawCall>& drawCalls, Camera* camera) {
 
-    DrawQueue_t leftDrawCalls = GetCulledAndSortedDrawCalls(drawCalls, camera);
+    DrawQueue_t leftDrawCalls = GetDrawCallsAfterCulling(drawCalls, camera);
+    printf("%d\n", (int)leftDrawCalls.size());
     for(; !leftDrawCalls.empty(); leftDrawCalls.pop())
     {
         ExecuteDrawCall(&leftDrawCalls.top(), camera);
@@ -165,22 +149,12 @@ void RendererCore::UnregisterCamera(Camera* cam)
     cameras.erase(cam);
 }
 
-void RendererCore::SetMain(Camera* cam)
-{
-    if (!CameraRegistered(cam)) return;
-    for(auto& camera : cameras)
-    {
-        camera->mainCamera = false;
-    }
-    cam->mainCamera = true;
-}
-
-bool RendererCore::Update(std::vector<DrawCall>& drawCalls) {
+bool RendererCore::Update(DrawQueue_t& drawCalls) {
     ClearScreen();
 
     for(auto camera : cameras)
     {
-        if(camera->mainCamera) Draw(drawCalls, camera); //draws to main screen
+        if(camera->mainCamera) DrawCulled(drawCalls, camera); //draws to main screen
     }
     UpdateScreen();
     return true;
