@@ -48,20 +48,21 @@ void GameSetup::SetupSpawners()
 
     act->SetPivot({.75f, .75f});
     auto cam = camController->AddComponent<Camera>();
-
+    cam->SetMain();
+    
     InputManager::Get()->RegisterAction(ECoreActionButton::DOWN, [=](){cam->zoom *= 0.99;}, EActionType::CONTINUOUS);
     InputManager::Get()->RegisterAction(ECoreActionButton::UP, [=](){cam->zoom *= 1.01;}, EActionType::CONTINUOUS);
     
     InputManager::Get()->RegisterAction(ECoreActionButton::W, [=]()
     {
-        camController->Translate(Vector2f::up);
+        act->Translate(Vector2f::up* core->lastUpdateDuration*100);
     }, EActionType::CONTINUOUS);
     InputManager::Get()->RegisterAction(ECoreActionButton::S, [=]()
     {
-        camController->Translate(-Vector2f::up);
+        act->Translate(-Vector2f::up* core->lastUpdateDuration*100);
     }, EActionType::CONTINUOUS);
-    InputManager::Get()->RegisterAction(ECoreActionButton::A, [=](){camController->Translate(-Vector2f::right);}, EActionType::CONTINUOUS);
-    InputManager::Get()->RegisterAction(ECoreActionButton::D, [=](){camController->Translate(Vector2f::right);}, EActionType::CONTINUOUS);
+    InputManager::Get()->RegisterAction(ECoreActionButton::A, [=](){act->Translate(-Vector2f::right* core->lastUpdateDuration*100);}, EActionType::CONTINUOUS);
+    InputManager::Get()->RegisterAction(ECoreActionButton::D, [=](){act->Translate(Vector2f::right* core->lastUpdateDuration*100);}, EActionType::CONTINUOUS);
 
     // DebugDraw::Point({0,0}, 40, -1, Color::cyan);
 }

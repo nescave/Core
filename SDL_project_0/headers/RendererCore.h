@@ -18,6 +18,7 @@ private:
 	DrawQueue_t GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera* camera);
 	void DrawCulled(DrawQueue_t& rObjs, Camera* camera);
 	std::unordered_set<Camera*> cameras;
+	bool CameraRegistered(Camera* cam);
 	
 public:
 	RendererCore();
@@ -30,6 +31,7 @@ public:
 
 	void RegisterCamera(Camera* cam);
 	void UnregisterCamera(Camera* cam);
+	void SetMain(Camera* cam);
 	bool Update(DrawQueue_t& drawCalls);
 	Vector2i GetRenderWindowSize();
 };

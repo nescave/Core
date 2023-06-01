@@ -6,9 +6,8 @@
 
 Camera::Camera() :
     zoom(1),
-    // forceCorrectAspectRatio(true),
-    renderToScreen(true),
     clearAfterRender(true),
+    mainCamera(false),
     renderTarget(nullptr)
 {
     core->GetRendererCore().RegisterCamera(this);
@@ -27,4 +26,9 @@ Rect<double> Camera::GetRenderRect()
     cullRect.position = position;
     cullRect.extents = Vector2d(windowSize.x*.5/zoom, windowSize.y*.5/zoom);
     return cullRect;
+}
+
+void Camera::SetMain()
+{
+    core->GetRendererCore().SetMain(this);
 }

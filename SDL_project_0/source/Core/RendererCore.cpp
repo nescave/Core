@@ -3,6 +3,11 @@
 #include "Camera.h"
 #include "RenderableComponent.h"
 
+bool RendererCore::CameraRegistered(Camera* cam)
+{
+    return cameras.find(cam) != cameras.end();
+}
+
 RendererCore::RendererCore() :
     window(NULL),
     renderer(NULL),
@@ -110,23 +115,6 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
             top > cullRect.position.y+cullRect.extents.y    ||
             bot < cullRect.position.y-cullRect.extents.y  
             ) continue;
-
-        // if (left > cullRect.position.x+cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (right < cullRect.position.x-cullRect.extents.x)
-        // {
-        //     continue;
-        // }
-        // if (bot < cullRect.position.y-cullRect.extents.y)
-        // {
-        //     continue;
-        // }
-        // if (top > cullRect.position.y+cullRect.extents.y)
-        // {
-        //     continue;
-        // }
         leftDrawCalls.push(drawCalls.top());
     }
     return leftDrawCalls;
@@ -135,7 +123,6 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
 void RendererCore::DrawCulled(DrawQueue_t& drawCalls, Camera* camera) {
 
     DrawQueue_t leftDrawCalls = GetDrawCallsAfterCulling(drawCalls, camera);
-    printf("%d\n", (int)leftDrawCalls.size());
     for(; !leftDrawCalls.empty(); leftDrawCalls.pop())
     {
         ExecuteDrawCall(&leftDrawCalls.top(), camera);
@@ -144,14 +131,31 @@ void RendererCore::DrawCulled(DrawQueue_t& drawCalls, Camera* camera) {
 
 void RendererCore::RegisterCamera(Camera* cam)
 {
-    if (cameras.find(cam) != cameras.end())  return;
+    if (CameraRegistered(cam))  return;
+    if(cam->mainCamera)
+    {
+        for(auto& camera : cameras)
+        {
+            camera->mainCamera = false;
+        }
+    }
     cameras.insert(cam);
 }
 
 void RendererCore::UnregisterCamera(Camera* cam)
 {
-    if (cameras.find(cam) == cameras.end())  return;
+    if (!CameraRegistered(cam))  return;
     cameras.erase(cam);
+}
+
+void RendererCore::SetMain(Camera* cam)
+{
+    if (!CameraRegistered(cam)) return;
+    for(auto& camera : cameras)
+    {
+        camera->mainCamera = false;
+    }
+    cam->mainCamera = true;
 }
 
 bool RendererCore::Update(DrawQueue_t& drawCalls) {
@@ -159,12 +163,8 @@ bool RendererCore::Update(DrawQueue_t& drawCalls) {
 
     for(auto camera : cameras)
     {
-        DrawCulled(drawCalls, camera);
+        if(camera->mainCamera) DrawCulled(drawCalls, camera); //draws to main screen
     }
-    //debug pixel 
-    SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0x00);
-    SDL_RenderDrawPoint(renderer, GetRenderWindowSize().x/2, GetRenderWindowSize().y/2);
-    //debug pixel 
     UpdateScreen();
     return true;
 }

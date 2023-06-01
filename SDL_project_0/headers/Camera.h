@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Rect.h"
+#include "RendererUtils.h"
 #include "SceneComponent.h"
 
 class Camera : public SceneComponent
@@ -9,14 +10,14 @@ public:
     double zoom;
     // bool forceCorrectAspectRatio;
 
-    bool renderToScreen;
     bool clearAfterRender;
+    bool mainCamera;
     SDL_Texture* renderTarget;
 
     Camera();
     ~Camera();
     Rect<double> GetRenderRect();
-
+    void SetMain();
     // bool ShouldRender();
 
 };
