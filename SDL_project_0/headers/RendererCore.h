@@ -32,7 +32,7 @@ public:
 	void RegisterCamera(Camera* cam);
 	void UnregisterCamera(Camera* cam);
 	void SetMain(Camera* cam);
-	bool Update(DrawQueue_t& drawCalls);
+	bool Update(std::vector<DrawCall>& drawCalls);
 	Vector2i GetRenderWindowSize();
 };
 
