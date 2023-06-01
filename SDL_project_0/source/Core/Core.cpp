@@ -38,7 +38,23 @@ Core& Core::Get() {
 
 void Core::Begin() {}
 
+void Core::AddToDrawList(std::vector<DrawCall>& drawList, const std::shared_ptr<Object>& obj)
+{
+    const auto rObj = dynamic_cast<RenderableObject*>(&*obj);
+    if(!rObj) return;
+    if(rObj->hidden) return;
+    if(rObj->GetTexture() != nullptr) drawList.emplace_back(rObj, rObj->GetAbsoluteTransform());
+    if (const auto rComponents = rObj->GetRenderableComponents(); !rComponents.empty()) {
+        for (auto comp : rComponents) {
+            drawList.emplace_back(comp, comp->GetAbsoluteTransform());
+        }
+    }
+}
+
 void Core::Update() {
+
+    std::vector<DrawCall> drawList;
+    
     const double dTime = clock->GetDeltaTime();
     lastUpdateDuration = dTime;
     taskManager->UpdateTasks(dTime);
