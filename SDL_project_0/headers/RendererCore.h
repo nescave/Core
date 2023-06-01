@@ -15,8 +15,8 @@ private:
 
 	//bool AddRenderObjects(std::queue<RenderObject*> rObjs);
 	void ExecuteDrawCall(const DrawCall* drawCall, Camera* camera);
-	DrawQueue_t GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera* camera);
-	void DrawCulled(DrawQueue_t& rObjs, Camera* camera);
+	DrawQueue_t GetCulledAndSortedDrawCalls(const std::vector<DrawCall>& drawCalls, Camera* camera);
+	void Draw(std::vector<DrawCall>& rObjs, Camera* camera);
 	std::unordered_set<Camera*> cameras;
 	bool CameraRegistered(Camera* cam);
 	
@@ -32,7 +32,7 @@ public:
 	void RegisterCamera(Camera* cam);
 	void UnregisterCamera(Camera* cam);
 	void SetMain(Camera* cam);
-	bool Update(DrawQueue_t& drawCalls);
+	bool Update(std::vector<DrawCall>& drawCalls);
 	Vector2i GetRenderWindowSize();
 };
 

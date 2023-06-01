@@ -17,7 +17,6 @@ Camera::~Camera()
 {
     core->GetRendererCore().UnregisterCamera(this);
 }
-
 Rect<double> Camera::GetRenderRect()
 {
     const auto position = GetPosition(); 

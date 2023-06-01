@@ -42,7 +42,7 @@ public:
     TaskManager& GetTaskManager() { return *taskManager; }
 
     void Begin();
-    void AddToDrawList(DrawQueue_t& drawList, std::shared_ptr<Object>& obj);
+    void AddToDrawList(std::vector<DrawCall>& drawList, const std::shared_ptr<Object>& obj);
     void Update();
     void StartMainLoop();
 };

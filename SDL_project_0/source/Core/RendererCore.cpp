@@ -97,17 +97,17 @@ void RendererCore::ExecuteDrawCall(const DrawCall* drawCall, Camera* camera) {
     );
 }
 
-DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera* camera)
+DrawQueue_t RendererCore::GetCulledAndSortedDrawCalls(const std::vector<DrawCall>& drawCalls, Camera* camera)
 {
     auto cullRect = camera->GetRenderRect();
     DrawQueue_t leftDrawCalls;
-    for(; !drawCalls.empty(); drawCalls.pop())
+    for(const auto& drawCall : drawCalls)
     {
         //drawCall borders
-        auto left = drawCalls.top().wTransform.position.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x;
-        auto top = drawCalls.top().wTransform.position.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y;
-        auto right = drawCalls.top().wTransform.position.x + (drawCalls.top().size.x - drawCalls.top().size.x * (double)drawCalls.top().wTransform.pivot.x);
-        auto bot = drawCalls.top().wTransform.position.y + (drawCalls.top().size.y - drawCalls.top().size.y * (double)drawCalls.top().wTransform.pivot.y);
+        auto left = drawCall.wTransform.position.x - drawCall.size.x * (double)drawCall.wTransform.pivot.x;
+        auto top = drawCall.wTransform.position.y - drawCall.size.y * (double)drawCall.wTransform.pivot.y;
+        auto right = drawCall.wTransform.position.x + (drawCall.size.x - drawCall.size.x * (double)drawCall.wTransform.pivot.x);
+        auto bot = drawCall.wTransform.position.y + (drawCall.size.y - drawCall.size.y * (double)drawCall.wTransform.pivot.y);
 
         if(
             left > cullRect.position.x+cullRect.extents.x   ||
@@ -115,14 +115,14 @@ DrawQueue_t RendererCore::GetDrawCallsAfterCulling(DrawQueue_t drawCalls, Camera
             top > cullRect.position.y+cullRect.extents.y    ||
             bot < cullRect.position.y-cullRect.extents.y  
             ) continue;
-        leftDrawCalls.push(drawCalls.top());
+        leftDrawCalls.push(drawCall);
     }
     return leftDrawCalls;
 }
 
-void RendererCore::DrawCulled(DrawQueue_t& drawCalls, Camera* camera) {
+void RendererCore::Draw(std::vector<DrawCall>& drawCalls, Camera* camera) {
 
-    DrawQueue_t leftDrawCalls = GetDrawCallsAfterCulling(drawCalls, camera);
+    DrawQueue_t leftDrawCalls = GetCulledAndSortedDrawCalls(drawCalls, camera);
     for(; !leftDrawCalls.empty(); leftDrawCalls.pop())
     {
         ExecuteDrawCall(&leftDrawCalls.top(), camera);
@@ -158,12 +158,12 @@ void RendererCore::SetMain(Camera* cam)
     cam->mainCamera = true;
 }
 
-bool RendererCore::Update(DrawQueue_t& drawCalls) {
+bool RendererCore::Update(std::vector<DrawCall>& drawCalls) {
     ClearScreen();
 
     for(auto camera : cameras)
     {
-        if(camera->mainCamera) DrawCulled(drawCalls, camera); //draws to main screen
+        if(camera->mainCamera) Draw(drawCalls, camera); //draws to main screen
     }
     UpdateScreen();
     return true;
