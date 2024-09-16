@@ -146,7 +146,7 @@ bool SceneObject::IsParentPossible(WeakSceneObject par)
 
 void SceneObject::RegisterCollider(std::weak_ptr<Collider> col)
 {
-	Core::Get().GetPhysicsCore().AddCollider(col);
+	core->GetPhysicsCore().AddCollider(col);
 }
 
 SceneObject& SceneObject::SetParent(WeakSceneObject par, const bool applyPreviousTransform) {

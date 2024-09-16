@@ -2,8 +2,10 @@
 
 enum class ECollisionLayer
 {
-    GAME,
-    UI,
+    GAME = 1,
+    PLAYER = 2,
+    ENEMY = 4,
+    UI = 8,
 #undef IGNORE
-    IGNORE
+    IGNORE = 1024
 };
