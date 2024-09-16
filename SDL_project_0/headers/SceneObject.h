@@ -24,6 +24,7 @@ protected:
 	bool IsParentPossible(WeakSceneObject par);
 
 	void RegisterCollider(std::weak_ptr<Collider> col);
+
 	SceneObject();
 
 public:

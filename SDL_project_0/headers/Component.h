@@ -18,8 +18,7 @@ public:
 	virtual ~Component()=default;
 
 	SharedSceneObject GetOwner() const { return owner.lock(); }
-	virtual uint32_t GetOwnerId() { return owner.lock()->id; }
-	virtual bool ShouldRender() { return false; }
+	uint32_t GetOwnerId() const { return owner.lock()->id; }
 
 	virtual void OnSpawn();
 	virtual void Update(double dTime);
