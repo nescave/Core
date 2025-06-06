@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Renderable.h"
 
+#include <utility>
 
 Renderable::Renderable() :
 	texture(nullptr),
