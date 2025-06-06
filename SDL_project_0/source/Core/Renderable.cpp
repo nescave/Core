@@ -3,7 +3,6 @@
 
 #include <utility>
 
-
 Renderable::Renderable() :
 	texture(nullptr),
 	size(Vector2d::zero),

@@ -1,4 +1,5 @@
 .vs/
+.idea/
 App/Debug/
 Debug/
 SDL_project_0/Debug/
