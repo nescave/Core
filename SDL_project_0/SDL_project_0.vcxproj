@@ -262,7 +262,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <ObjectFileName>x64\Debug\</ObjectFileName>
       <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>C:\Users\Nesca\ProjectCore\x64\Debug\SDL_project_0.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
@@ -294,7 +294,7 @@
       <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Nesca\ProjectCore\\SDL_project_0\headers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
       <LibCompiled>true</LibCompiled>
     </ClCompile>
     <ClCompile Include="source\Core\RendererCore.cpp" />
@@ -339,7 +339,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <ObjectFileName>x64\Debug\</ObjectFileName>
       <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>C:\Users\Nesca\ProjectCore\x64\Debug\SDL_project_0.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
@@ -371,7 +371,7 @@
       <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Nesca\ProjectCore\\SDL_project_0\headers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
       <LibCompiled>true</LibCompiled>
     </ClCompile>
     <ClCompile Include="source\Objects\Controlable.cpp" />
@@ -414,7 +414,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <ObjectFileName>x64\Debug\</ObjectFileName>
       <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>C:\Users\Nesca\ProjectCore\x64\Debug\SDL_project_0.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
@@ -446,7 +446,7 @@
       <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Nesca\ProjectCore\\SDL_project_0\headers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
       <LibCompiled>true</LibCompiled>
     </ClCompile>
     <ClCompile Include="source\Objects\Object.cpp" />
