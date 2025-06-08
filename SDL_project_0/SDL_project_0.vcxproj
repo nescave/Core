@@ -237,6 +237,7 @@
     <ClInclude Include="headers\ObjectSpawner.h" />
     <ClInclude Include="headers\PhysicsCore.h" />
     <ClInclude Include="headers\Random.h" />
+    <ClInclude Include="headers\Rect.h" />
     <ClInclude Include="headers\Renderable.h" />
     <ClInclude Include="headers\RenderableComponent.h" />
     <ClInclude Include="headers\RenderableObject.h" />
