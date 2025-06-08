@@ -169,8 +169,12 @@
   <ItemGroup>
     <ClCompile Include="headers\CollisionLayers.cpp" />
     <ClCompile Include="source\Assets\AssetManager.cpp" />
+    <ClCompile Include="source\Components\BoxCollider.cpp" />
+    <ClCompile Include="source\Components\Camera.cpp" />
+    <ClCompile Include="source\Components\CircleCollider.cpp" />
     <ClCompile Include="source\Components\Collider.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
+    <ClCompile Include="source\Components\Damageable.cpp" />
     <ClCompile Include="source\Components\RenderableComponent.cpp" />
     <ClCompile Include="source\Components\SceneComponent.cpp" />
     <ClCompile Include="source\Components\Text.cpp" />
@@ -208,6 +212,9 @@
     <ClInclude Include="headers\Animation.h" />
     <ClInclude Include="headers\AssetManager.h" />
     <ClInclude Include="headers\BaseGUI.h" />
+    <ClInclude Include="headers\BoxCollider.h" />
+    <ClInclude Include="headers\Camera.h" />
+    <ClInclude Include="headers\CircleCollider.h" />
     <ClInclude Include="headers\Clock.h" />
     <ClInclude Include="headers\Collider.h" />
     <ClInclude Include="headers\CollisionData.h" />
@@ -221,6 +228,7 @@
     <ClInclude Include="headers\CoreFunctions.h" />
     <ClInclude Include="headers\CoreTextures.h" />
     <ClInclude Include="headers\CoreTypes.h" />
+    <ClInclude Include="headers\Damageable.h" />
     <ClInclude Include="headers\DebugDraw.h" />
     <ClInclude Include="headers\FloatingTextUI.h" />
     <ClInclude Include="headers\InputManager.h" />
@@ -241,6 +249,9 @@
     <ClInclude Include="headers\Text.h" />
     <ClInclude Include="headers\Transform.h" />
     <ClInclude Include="headers\Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SDL_project_0.aps" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
