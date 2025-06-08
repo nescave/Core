@@ -37,7 +37,7 @@ bool LaserWeapon::Fire()
         auto target =  std::dynamic_pointer_cast<BasicShip>(hit.second.object);
         if(target)
         {
-            target->TakeDamage()
+            //target->TakeDamage()
         }
     }
 

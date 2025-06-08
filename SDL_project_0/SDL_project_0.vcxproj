@@ -167,292 +167,32 @@
     <Image Include="res\pngs\redRhombus.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\Actor.h" />
-    <ClInclude Include="headers\AnchorEnum.h" />
-    <ClInclude Include="headers\AnimatedObject.h" />
-    <ClInclude Include="headers\Animation.h" />
-    <ClInclude Include="headers\AssetManager.h" />
-    <ClInclude Include="headers\Color.h" />
-    <ClInclude Include="headers\Controlable.h" />
-    <ClInclude Include="headers\Clock.h" />
-    <ClInclude Include="headers\Collider.h" />
-    <ClInclude Include="headers\CollisionData.h" />
-    <ClInclude Include="headers\CollisionLayers.h" />
-    <ClInclude Include="headers\Component.h" />
-    <ClInclude Include="headers\DebugDraw.h" />
-    <ClInclude Include="headers\FloatingTextUI.h" />
-    <ClInclude Include="headers\SceneComponent.h" />
-    <ClInclude Include="headers\Core.h" />
-    <ClInclude Include="headers\CoreActionButtons.h" />
-    <ClInclude Include="headers\CoreFonts.h" />
-    <ClInclude Include="headers\CoreFunctions.h" />
-    <ClInclude Include="headers\CoreTextures.h" />
-    <ClInclude Include="headers\CoreTypes.h" />
-    <ClInclude Include="headers\Object.h" />
-    <ClInclude Include="headers\ObjectManager.h" />
-    <ClInclude Include="headers\ObjectSpawner.h" />
-    <ClInclude Include="headers\InputManager.h" />
-    <ClInclude Include="headers\SceneObject.h" />
-    <ClInclude Include="headers\PhysicsCore.h" />
-    <ClInclude Include="headers\Random.h" />
-    <ClInclude Include="headers\Renderable.h" />
-    <ClInclude Include="headers\RenderableComponent.h" />
-    <ClInclude Include="headers\RendererCore.h" />
-    <ClInclude Include="headers\RendererUtils.h" />
-    <ClInclude Include="headers\RenderableObject.h" />
-    <ClInclude Include="headers\stdafx.h" />
-    <ClInclude Include="headers\TaskManager.h" />
-    <ClInclude Include="headers\Text.h" />
-    <ClInclude Include="headers\Transform.h" />
-    <ClInclude Include="headers\BaseGUI.h" />
-    <ClInclude Include="headers\Vector2.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="headers\CollisionLayers.cpp" />
     <ClCompile Include="source\Assets\AssetManager.cpp" />
     <ClCompile Include="source\Components\Collider.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
-    <ClCompile Include="source\Components\SceneComponent.cpp" />
     <ClCompile Include="source\Components\RenderableComponent.cpp" />
+    <ClCompile Include="source\Components\SceneComponent.cpp" />
     <ClCompile Include="source\Components\Text.cpp" />
     <ClCompile Include="source\Core\Animation.cpp" />
     <ClCompile Include="source\Core\Core.cpp" />
     <ClCompile Include="source\Core\CoreFunctions.cpp" />
     <ClCompile Include="source\Core\CoreTypes.cpp" />
+    <ClCompile Include="source\Core\InputManager.cpp" />
     <ClCompile Include="source\Core\ObjectManager.cpp" />
     <ClCompile Include="source\Core\ObjectSpawner.cpp" />
-    <ClCompile Include="source\Core\InputManager.cpp" />
     <ClCompile Include="source\Core\PhysicsCore.cpp" />
-    <ClCompile Include="source\Core\Renderable.cpp">
-      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <Optimization>Disabled</Optimization>
-      <SupportJustMyCode>true</SupportJustMyCode>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-      <CompileAs>Default</CompileAs>
-      <ConformanceMode>true</ConformanceMode>
-      <DiagnosticsFormat>Column</DiagnosticsFormat>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <ErrorReporting>Prompt</ErrorReporting>
-      <ExpandAttributedSource>false</ExpandAttributedSource>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <EnableASAN>false</EnableASAN>
-      <EnableFuzzer>false</EnableFuzzer>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Precise</FloatingPointModel>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <GenerateModuleDependencies>false</GenerateModuleDependencies>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-      <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-      <OmitDefaultLibName>false</OmitDefaultLibName>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ObjectFileName>x64\Debug\</ObjectFileName>
-      <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-      <ShowIncludes>false</ShowIncludes>
-      <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <SmallerTypeCheck>false</SmallerTypeCheck>
-      <SpectreMitigation>false</SpectreMitigation>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\SDL_project_0.tlog\</TrackerLogDirectory>
-      <TranslateIncludes>false</TranslateIncludes>
-      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <UseFullPaths>true</UseFullPaths>
-      <WarningLevel>Level3</WarningLevel>
-      <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <IntelJCCErratum>false</IntelJCCErratum>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
-      <LibCompiled>true</LibCompiled>
-    </ClCompile>
+    <ClCompile Include="source\Core\Renderable.cpp" />
     <ClCompile Include="source\Core\RendererCore.cpp" />
     <ClCompile Include="source\Core\TaskManager.cpp" />
     <ClCompile Include="source\Objects\Actor.cpp" />
-    <ClCompile Include="source\Objects\AnimatedObject.cpp">
-      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <Optimization>Disabled</Optimization>
-      <SupportJustMyCode>true</SupportJustMyCode>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-      <CompileAs>Default</CompileAs>
-      <ConformanceMode>true</ConformanceMode>
-      <DiagnosticsFormat>Column</DiagnosticsFormat>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <ErrorReporting>Prompt</ErrorReporting>
-      <ExpandAttributedSource>false</ExpandAttributedSource>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <EnableASAN>false</EnableASAN>
-      <EnableFuzzer>false</EnableFuzzer>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Precise</FloatingPointModel>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <GenerateModuleDependencies>false</GenerateModuleDependencies>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-      <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-      <OmitDefaultLibName>false</OmitDefaultLibName>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ObjectFileName>x64\Debug\</ObjectFileName>
-      <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-      <ShowIncludes>false</ShowIncludes>
-      <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <SmallerTypeCheck>false</SmallerTypeCheck>
-      <SpectreMitigation>false</SpectreMitigation>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\SDL_project_0.tlog\</TrackerLogDirectory>
-      <TranslateIncludes>false</TranslateIncludes>
-      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <UseFullPaths>true</UseFullPaths>
-      <WarningLevel>Level3</WarningLevel>
-      <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <IntelJCCErratum>false</IntelJCCErratum>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
-      <LibCompiled>true</LibCompiled>
-    </ClCompile>
-    <ClCompile Include="source\Objects\Controlable.cpp" />
-    <ClCompile Include="source\Objects\FloatingTextUI.cpp">
-      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <Optimization>Disabled</Optimization>
-      <SupportJustMyCode>true</SupportJustMyCode>
-      <AssemblerOutput>NoListing</AssemblerOutput>
-      <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-      <BrowseInformation>false</BrowseInformation>
-      <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-      <CompileAs>Default</CompileAs>
-      <ConformanceMode>true</ConformanceMode>
-      <DiagnosticsFormat>Column</DiagnosticsFormat>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
-      <ErrorReporting>Prompt</ErrorReporting>
-      <ExpandAttributedSource>false</ExpandAttributedSource>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <EnableASAN>false</EnableASAN>
-      <EnableFuzzer>false</EnableFuzzer>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Precise</FloatingPointModel>
-      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-      <GenerateModuleDependencies>false</GenerateModuleDependencies>
-      <GenerateSourceDependencies>false</GenerateSourceDependencies>
-      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <LanguageStandard_C>Default</LanguageStandard_C>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-      <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-      <OmitDefaultLibName>false</OmitDefaultLibName>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <ObjectFileName>x64\Debug\</ObjectFileName>
-      <CallingConvention>Cdecl</CallingConvention>
-      <ProgramDataBaseFileName>E:\Projects\Private\ProjectCore\x64\Debug\SDL_project_0\SDL_project_0.pdb</ProgramDataBaseFileName>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Debug\SDL_project_0.pch</PrecompiledHeaderOutputFile>
-      <PreprocessToFile>false</PreprocessToFile>
-      <PreprocessKeepComments>false</PreprocessKeepComments>
-      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-      <ShowIncludes>false</ShowIncludes>
-      <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <BufferSecurityCheck>true</BufferSecurityCheck>
-      <SmallerTypeCheck>false</SmallerTypeCheck>
-      <SpectreMitigation>false</SpectreMitigation>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <TrackerLogDirectory>x64\Debug\SDL_project_0.tlog\</TrackerLogDirectory>
-      <TranslateIncludes>false</TranslateIncludes>
-      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <UseFullPaths>true</UseFullPaths>
-      <WarningLevel>Level3</WarningLevel>
-      <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <IntelJCCErratum>false</IntelJCCErratum>
-      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>E:\Projects\Private\ProjectCore\SDL_project_0\headers;</AdditionalIncludeDirectories>
-      <LibCompiled>true</LibCompiled>
-    </ClCompile>
-    <ClCompile Include="source\Objects\Object.cpp" />
-    <ClCompile Include="source\Objects\SceneObject.cpp" />
-    <ClCompile Include="source\Objects\RenderableObject.cpp" />
+    <ClCompile Include="source\Objects\AnimatedObject.cpp" />
     <ClCompile Include="source\Objects\BaseGUI.cpp" />
+    <ClCompile Include="source\Objects\Controlable.cpp" />
+    <ClCompile Include="source\Objects\FloatingTextUI.cpp" />
+    <ClCompile Include="source\Objects\Object.cpp" />
+    <ClCompile Include="source\Objects\RenderableObject.cpp" />
+    <ClCompile Include="source\Objects\SceneObject.cpp" />
     <ClCompile Include="source\utils\Clock.cpp" />
     <ClCompile Include="source\utils\Color.cpp" />
     <ClCompile Include="source\utils\DebugDraw.cpp" />
@@ -460,6 +200,47 @@
     <ClCompile Include="source\utils\RendererUtils.cpp" />
     <ClCompile Include="source\utils\stdafx.cpp" />
     <ClCompile Include="source\utils\Transform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\Actor.h" />
+    <ClInclude Include="headers\AnchorEnum.h" />
+    <ClInclude Include="headers\AnimatedObject.h" />
+    <ClInclude Include="headers\Animation.h" />
+    <ClInclude Include="headers\AssetManager.h" />
+    <ClInclude Include="headers\BaseGUI.h" />
+    <ClInclude Include="headers\Clock.h" />
+    <ClInclude Include="headers\Collider.h" />
+    <ClInclude Include="headers\CollisionData.h" />
+    <ClInclude Include="headers\CollisionLayers.h" />
+    <ClInclude Include="headers\Color.h" />
+    <ClInclude Include="headers\Component.h" />
+    <ClInclude Include="headers\Controlable.h" />
+    <ClInclude Include="headers\Core.h" />
+    <ClInclude Include="headers\CoreActionButtons.h" />
+    <ClInclude Include="headers\CoreFonts.h" />
+    <ClInclude Include="headers\CoreFunctions.h" />
+    <ClInclude Include="headers\CoreTextures.h" />
+    <ClInclude Include="headers\CoreTypes.h" />
+    <ClInclude Include="headers\DebugDraw.h" />
+    <ClInclude Include="headers\FloatingTextUI.h" />
+    <ClInclude Include="headers\InputManager.h" />
+    <ClInclude Include="headers\Object.h" />
+    <ClInclude Include="headers\ObjectManager.h" />
+    <ClInclude Include="headers\ObjectSpawner.h" />
+    <ClInclude Include="headers\PhysicsCore.h" />
+    <ClInclude Include="headers\Random.h" />
+    <ClInclude Include="headers\Renderable.h" />
+    <ClInclude Include="headers\RenderableComponent.h" />
+    <ClInclude Include="headers\RenderableObject.h" />
+    <ClInclude Include="headers\RendererCore.h" />
+    <ClInclude Include="headers\RendererUtils.h" />
+    <ClInclude Include="headers\SceneComponent.h" />
+    <ClInclude Include="headers\SceneObject.h" />
+    <ClInclude Include="headers\stdafx.h" />
+    <ClInclude Include="headers\TaskManager.h" />
+    <ClInclude Include="headers\Text.h" />
+    <ClInclude Include="headers\Transform.h" />
+    <ClInclude Include="headers\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

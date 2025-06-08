@@ -1,11 +1,13 @@
 #pragma once
+
+#include "stdafx.h"
+
 class Actor;
 class Object;
 class SceneObject;
 class Component;
 class RenderableObject;
 class Collider;
-
 
 typedef std::shared_ptr<Object> SharedObject;
 typedef std::weak_ptr<Object> WeakObject;

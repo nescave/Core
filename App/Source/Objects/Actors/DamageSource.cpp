@@ -1,5 +1,10 @@
 ﻿#include "DamageSource.h"
 
+DamageSource::DamageSource() : Actor()
+    , damageData()
+{
+}
+
 void DamageSource::OnBeginOverlap(SharedSceneObject other)
 {
     Actor::OnBeginOverlap(other);

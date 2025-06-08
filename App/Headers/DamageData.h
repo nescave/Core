@@ -15,6 +15,6 @@ struct DamageData
     float shieldPiercing;   //fraction of base damage that goes through even if there still is shield
 
     DamageType damageType;
-
+    DamageData();
     DamageData(float bDamage, float aDamage, float sDamage, float aPiercing, float sPiercing, DamageType dType);
 };

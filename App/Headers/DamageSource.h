@@ -11,6 +11,8 @@ class DamageSource : public Actor
 {
 
 public:
+    DamageSource();
+
     DamageData damageData;
     SharedSceneObject source;
     std::shared_ptr<Damageable> target;
