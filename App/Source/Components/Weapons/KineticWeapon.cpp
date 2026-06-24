@@ -2,7 +2,7 @@
 #include "KineticWeapon.h"
 #include "ObjectSpawner.h"
 #include "Projectile.h"
-#include "Collider.h"
+#include "BoxCollider.h"
 
 KineticWeapon::KineticWeapon()
 {
@@ -30,7 +30,7 @@ bool KineticWeapon::Fire()
     projectile->
         Accelerate(Vector2f::up * properties.projectileSpeed).
         SetScale({.2f,.5f}).
-        AddComponent<Collider>();
+        AddComponent<BoxCollider>();
     projectile->Destroy(.5);
 
     return true;

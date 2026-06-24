@@ -1,17 +1,20 @@
 ﻿#pragma once
 #include "Actor.h"
-#include "Damageable.h"
+#include "DamageData.h"
 
-class BasicShip : public Damageable
+class Damageable;
+
+class BasicShip : public Actor
 {
     friend class ObjectSpawner;
 protected:
     float armor;
     float shield;
     BasicShip();
-    
+    class std::weak_ptr<Damageable> damageableComponent;
 public:
-    void TakeDamage(DamageData data, SharedSceneObject source) override;
+    void OnSpawn() override;
+    void TakeDamage(DamageData data, SharedSceneObject source);
     // void ReportDamage(float hullDamage, float armorDamage, float shieldDamage);
 
     void OnBeginOverlap(SharedSceneObject other) override;

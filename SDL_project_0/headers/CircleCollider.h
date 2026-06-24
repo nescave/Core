@@ -7,5 +7,5 @@ class CircleCollider : public Collider
 public:
     bool PointOverlaps(Vector2i& point) override;
     bool ColliderOverlaps(Collider* other) override;
-    void OnSpawn() override;
+    //void OnSpawn() override;
 };

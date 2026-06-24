@@ -18,6 +18,7 @@ protected:
 
 
 public:
+	virtual ~Object() = default;
 	friend class ObjectSpawner;
 
 	const uint32_t id;

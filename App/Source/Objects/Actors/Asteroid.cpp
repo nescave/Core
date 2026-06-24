@@ -4,7 +4,7 @@
 #include "AssetManager.h"
 #include "Core.h"
 #include "CoreTextures.h"
-#include "Collider.h"
+#include "CircleCollider.h"
 #include "GameEnums.h"
 
 Asteroid::Asteroid()
@@ -16,7 +16,7 @@ void Asteroid::OnSpawn()
     Actor::OnSpawn();
     SetTexture(core->GetAssetManager().GetLoadedTexture(GameTextures::ASTEROID));
     Accelerate(Vector2f::up*50);
-    collider = &*(AddComponent<Collider>());
+    collider = &*(AddComponent<CircleCollider>());
 }
 
 void Asteroid::Update(double dTime)

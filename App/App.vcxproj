@@ -164,7 +164,6 @@
     <ClCompile Include="Source\Components\Weapons\WeaponProperties.cpp" />
     <ClCompile Include="Source\Objects\Actors\Asteroid.cpp" />
     <ClCompile Include="Source\Objects\Actors\BasicShip.cpp" />
-    <ClCompile Include="Source\Objects\Actors\Damageable.cpp" />
     <ClCompile Include="Source\Objects\Actors\DamageSource.cpp" />
     <ClCompile Include="Source\Objects\Actors\PlayerShip.cpp" />
     <ClCompile Include="Source\Objects\Actors\Projectile.cpp" />
@@ -174,7 +173,6 @@
   <ItemGroup>
     <ClInclude Include="Headers\Asteroid.h" />
     <ClInclude Include="Headers\BasicShip.h" />
-    <ClInclude Include="Headers\Damageable.h" />
     <ClInclude Include="Headers\DamageData.h" />
     <ClInclude Include="Headers\DamageSource.h" />
     <ClInclude Include="Headers\ExplosionAnim.h" />

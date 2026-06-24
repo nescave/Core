@@ -11,6 +11,11 @@ BasicShip::BasicShip() :
     shield(100)     //temp
 {}
 
+void BasicShip::OnSpawn()
+{
+    damageableComponent = AddComponent<Damageable>();
+}
+
 void BasicShip::TakeDamage(DamageData data, SharedSceneObject source)
 {
     float finalHullDamage = data.baseDamage;
